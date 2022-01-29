@@ -1,5 +1,10 @@
 import React from 'react'
+import { GlobalStyles } from './global-styles'
 
 export const Application = () => {
-  return <div>hello world</div>
+  return (
+    <div>
+      <GlobalStyles />
+    </div>
+  )
 }
