@@ -29,6 +29,7 @@
     "@types/styled-components": "^5.1.21",
     "@typescript-eslint/parser": "^5.10.1",
     "babel-loader": "^8.2.3",
+    "babel-plugin-styled-components": "^2.0.2",
     "eslint": "7.10.0",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "2.3.0",
