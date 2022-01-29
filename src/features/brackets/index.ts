@@ -12,7 +12,7 @@ type Result = {
   error?: string
 }
 
-export const createControlBrakets = (config: {
+export const createControlBrackets = (config: {
   source: Store<string>
   clock: Clock<unknown>
   delay?: number
