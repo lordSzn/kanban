@@ -1,0 +1,38 @@
+{
+  "name": "kanban-tasks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack server"
+  },
+  "dependencies": {
+    "effector": "^22.1.2",
+    "effector-react": "^22.0.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@eslint-kit/eslint-config-base": "^5.0.2",
+    "@eslint-kit/eslint-config-node": "^2.0.0",
+    "@eslint-kit/eslint-config-patch": "^1.0.0",
+    "@eslint-kit/eslint-config-prettier": "^4.0.0",
+    "@eslint-kit/eslint-config-react": "^3.0.0",
+    "@eslint-kit/eslint-config-typescript": "^5.1.0",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/parser": "^5.10.1",
+    "babel-loader": "^8.2.3",
+    "eslint": "7.10.0",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "2.3.0",
+    "typescript": "^4.5.5",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.3"
+  }
+}
