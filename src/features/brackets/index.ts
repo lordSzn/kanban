@@ -46,14 +46,13 @@ export const createControlBrackets = (config: {
   delay?: number
 }): Result => {
   const $delay = createStore(config.delay ?? 1000)
-  const update = createEvent()
 
   const debounce = createEffect<number, void>((delay) => {
     return new Promise((res) => setTimeout(res, delay))
   })
 
   sample({
-    clock: update,
+    clock: config.clock,
     source: $delay,
     target: debounce,
   })
