@@ -7,20 +7,46 @@ import {
   Store,
 } from 'effector'
 
-type Result = {
-  valid: boolean
-  error?: string
+interface Result {
+  $validBrackets: Store<boolean>
+}
+
+const validateBrackets = (string: string) => {
+  const stack: string[] = []
+
+  const bracketsOpened = ['(', '[', '{']
+  const bracketsClosed = [')', '[', '{']
+
+  const allBracketsRule = [...bracketsOpened, ...bracketsClosed]
+
+  for (const char of string) {
+    if (!(char in allBracketsRule)) continue
+
+    const lastLetter = stack[stack.length - 1]
+
+    if (char in bracketsOpened) {
+      stack.push(char)
+    } else {
+      if (stack.length === 0) return false
+
+      const idx = bracketsOpened.indexOf(lastLetter)
+
+      if (char === bracketsClosed[idx]) {
+        stack.pop()
+      }
+    }
+  }
+
+  return true
 }
 
 export const createControlBrackets = (config: {
   source: Store<string>
   clock: Clock<unknown>
   delay?: number
-}) => {
+}): Result => {
   const $delay = createStore(config.delay ?? 1000)
-  const $stack = createStore<string[]>([])
   const update = createEvent()
-  const $indexStack = createStore<number[]>([])
 
   const debounce = createEffect<number, void>((delay) => {
     return new Promise((res) => setTimeout(res, delay))
@@ -32,28 +58,16 @@ export const createControlBrackets = (config: {
     target: debounce,
   })
 
-  const updated = sample({
+  const $validBrackets = createStore(false)
+
+  sample({
     clock: debounce.done,
-    source: [config.source, $stack, $indexStack],
+    source: config.source,
+    fn: validateBrackets,
+    target: $validBrackets,
   })
 
-  const validateBrackets = (
-    str: string,
-    stack: string[],
-    idxStack: string[]
-  ) => {
-    const brackets_rule = {
-      '(': ')',
-      '[': ']',
-      '{': '}',
-    }
-
-    for (const char of str) {
-      const last_brackets = stack[stack.length - 1]
-
-      if (char in brackets_rule) {
-        stack.push(char)
-      }
-    }
+  return {
+    $validBrackets,
   }
 }
