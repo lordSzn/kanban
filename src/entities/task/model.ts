@@ -11,6 +11,16 @@ export interface TaskInfo {
   description: string
 }
 
+export type Status = 'idle' | 'take' | 'resolve'
+
+export interface TaskLifecycle {
+  taskID: string
+  projectID: string
+  status: Status
+}
+
+export const $taskLifecycle = createStore<TaskLifecycle[]>([])
+
 export type CreatedTask = Pick<TaskInfo, 'title' | 'description'>
 
 export const addTask = createEvent<CreatedTask>()
