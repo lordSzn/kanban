@@ -1,11 +1,4 @@
-import {
-  Clock,
-  createEffect,
-  createEvent,
-  createStore,
-  sample,
-  Store,
-} from 'effector'
+import { Unit, createEffect, createStore, sample, Store } from 'effector'
 
 interface Result {
   $validBrackets: Store<boolean>
@@ -40,9 +33,9 @@ const validateBrackets = (string: string) => {
   return true
 }
 
-export const createControlBrackets = (config: {
+export const createControlBrackets = <T>(config: {
   source: Store<string>
-  clock: Clock<unknown>
+  clock: Unit<T>
   delay?: number
 }): Result => {
   const $delay = createStore(config.delay ?? 1000)
