@@ -4,9 +4,9 @@ import { GlobalStyles } from './global-styles'
 
 export const Application = () => {
   return (
-    <div>
+    <>
       <GlobalStyles />
       <Main />
-    </div>
+    </>
   )
 }
