@@ -1,4 +1,11 @@
-import { Unit, createEffect, createStore, sample, Store } from 'effector'
+import {
+  Unit,
+  createEffect,
+  createStore,
+  sample,
+  Store,
+  attach,
+} from 'effector'
 
 interface Result {
   $validBrackets: Store<boolean>
@@ -44,16 +51,20 @@ export const createControlBrackets = <T>(config: {
     return new Promise((res) => setTimeout(res, delay))
   })
 
+  const debounced = attach({
+    source: $delay,
+    effect: debounce,
+  })
+
   sample({
     clock: config.clock,
-    source: $delay,
-    target: debounce,
+    target: debounced,
   })
 
   const $validBrackets = createStore(false)
 
   sample({
-    clock: debounce.done,
+    clock: debounced.done,
     source: config.source,
     fn: validateBrackets,
     target: $validBrackets,
