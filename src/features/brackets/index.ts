@@ -13,11 +13,11 @@ const validateBrackets = (string: string) => {
   const allBracketsRule = [...bracketsOpened, ...bracketsClosed]
 
   for (const char of string) {
-    if (!(char in allBracketsRule)) continue
+    if (!allBracketsRule.includes(char)) continue
 
     const lastLetter = stack[stack.length - 1]
 
-    if (char in bracketsOpened) {
+    if (bracketsOpened.includes(char)) {
       stack.push(char)
     } else {
       if (stack.length === 0) return false
@@ -30,7 +30,7 @@ const validateBrackets = (string: string) => {
     }
   }
 
-  return true
+  return stack.length === 0
 }
 
 export const createControlBrackets = <T>(config: {
