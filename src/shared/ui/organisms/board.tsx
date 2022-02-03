@@ -1,11 +1,7 @@
-import React, { ReactNode } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
-interface Props {
-  children: ReactNode
-}
-
-export const Board = ({ children }: Props) => {
+export const Board: FC = ({ children }) => {
   return (
     <Container>
       <Heading></Heading>
