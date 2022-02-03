@@ -16,7 +16,7 @@ export type CreatedTask = Pick<TaskInfo, 'title' | 'description'>
 export const addTask = createEvent<CreatedTask>()
 export const taskAdded = createEvent<TaskInfo>()
 
-export const updateTaskInfo = createEvent<{ TaskID: string }>()
+export const updateTaskInfo = createEvent<{ taskID: string }>()
 
 export const $tasks = createStore<Task[]>([])
 export const $taskInfo = createStore<TaskInfo>({} as TaskInfo)
