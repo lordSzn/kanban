@@ -6,9 +6,10 @@ export interface Task {
 }
 
 export interface TaskInfo {
-  taskID: string
-  title: string
-  description: string
+  [taskID: string]: {
+    title: string
+    description: string
+  }
 }
 
 export type CreatedTask = Pick<TaskInfo, 'title' | 'description'>
