@@ -13,6 +13,12 @@ export const GlobalStyles = createGlobalStyle`
     --sienna100: hsl(23, 57%, 64%);
     --sienna200: hsl(23, 57%, 60%);
     --sienna300: hsl(23, 57%, 56%);
+
+    --font-desktop-xs: 1.2rem;
+    --font-desktop-sm: 1.4rem;
+    --font-desktop-base: 1.6rem;
+    --font-desktop-md: 2.1rem;
+    --font-desktop-md: 2.4rem;
   }
 
   html{
