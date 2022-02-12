@@ -1,0 +1,25 @@
+name: eslint
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+  jobs:
+    eslint: 
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: asdf_install
+          uses: asdf-vm/actions/install@v1
+        - name asdf_node_plugin:
+          run: asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+        - name install node:
+          env:
+            NODE_VERSIONS: 14.7.0
+          run: asdf install nodejs $NODE_VERSIONS 
+        - name install dependencies:
+          run: yarn install --frozen-lockfile 
+        - name started lint:
+          run: yarn lint 
