@@ -1,4 +1,11 @@
-import { Unit, createEffect, createStore, sample, Store } from 'effector'
+import {
+  Unit,
+  createEffect,
+  createStore,
+  sample,
+  Store,
+  attach,
+} from 'effector'
 
 interface Result {
   $validBrackets: Store<boolean>
@@ -13,11 +20,11 @@ const validateBrackets = (string: string) => {
   const allBracketsRule = [...bracketsOpened, ...bracketsClosed]
 
   for (const char of string) {
-    if (!(char in allBracketsRule)) continue
+    if (!allBracketsRule.includes(char)) continue
 
     const lastLetter = stack[stack.length - 1]
 
-    if (char in bracketsOpened) {
+    if (bracketsOpened.includes(char)) {
       stack.push(char)
     } else {
       if (stack.length === 0) return false
@@ -30,7 +37,7 @@ const validateBrackets = (string: string) => {
     }
   }
 
-  return true
+  return stack.length === 0
 }
 
 export const createControlBrackets = <T>(config: {
@@ -44,16 +51,20 @@ export const createControlBrackets = <T>(config: {
     return new Promise((res) => setTimeout(res, delay))
   })
 
+  const debounced = attach({
+    source: $delay,
+    effect: debounce,
+  })
+
   sample({
     clock: config.clock,
-    source: $delay,
-    target: debounce,
+    target: debounced,
   })
 
   const $validBrackets = createStore(false)
 
   sample({
-    clock: debounce.done,
+    clock: debounced.done,
     source: config.source,
     fn: validateBrackets,
     target: $validBrackets,
