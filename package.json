@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack server"
+    "dev": "webpack server",
+    "lint": "eslint"
   },
   "dependencies": {
     "@dnd-kit/core": "^5.0.1",
