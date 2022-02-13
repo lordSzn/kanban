@@ -15,7 +15,7 @@ jobs:
           run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
         - name: install node
           env:
-            NODE_VERSIONS: 14.7.0
+            NODE_VERSIONS: 14.17.0
           run: nvm install $NODE_VERSIONS 
         - name: install dependencies
           run: npm install
