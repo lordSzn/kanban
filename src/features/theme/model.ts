@@ -36,3 +36,7 @@ sample({
 export const $theme = createStore<Theme>('light')
   .on(loadSystemTheme, (_, theme) => theme)
   .on(getSystemThemeFx.doneData, (_, theme) => theme)
+
+$theme.watch((theme) => {
+  window.localStorage.setItem('ui-theme', theme)
+})
