@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack server",
-    "lint": "eslint"
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\""
   },
   "dependencies": {
     "@dnd-kit/core": "^5.0.1",
