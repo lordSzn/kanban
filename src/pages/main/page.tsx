@@ -1,9 +1,10 @@
 import React from 'react'
+import { BaseTemplate } from '../../shared/ui'
 
 export const Main = () => {
   return (
-    <div>
-      <div>hello</div>
-    </div>
+    <BaseTemplate>
+      <div>hello world</div>
+    </BaseTemplate>
   )
 }
