@@ -11,15 +11,13 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
-        - name: asdf_install
-          uses: asdf-vm/actions/install@v1
-        - name: install asdf node plugin
-          run: asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+        - name: nvm install
+          run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
         - name: install node
           env:
             NODE_VERSIONS: 14.7.0
-          run: asdf install nodejs $NODE_VERSIONS 
+          run: nvm install $NODE_VERSIONS 
         - name: install dependencies
-          run: yarn install --frozen-lockfile 
+          run: npm install
         - name: started lint
-          run: yarn lint 
+          run: npm run lint 
