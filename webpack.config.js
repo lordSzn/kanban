@@ -2,7 +2,6 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  context: __dirname,
   entry: path.resolve(__dirname, 'src/index.tsx'),
   mode: 'development',
   output: {
@@ -13,7 +12,6 @@ module.exports = {
   devServer: {
     hot: true,
     port: 3000,
-    open: true,
     historyApiFallback: true,
   },
   resolve: {
@@ -27,12 +25,6 @@ module.exports = {
       {
         test: /\.ts(x)?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
       },
     ],
   },
