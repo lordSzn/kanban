@@ -3,7 +3,7 @@ import { appStarted } from '../../shared/config'
 
 type Theme = 'light' | 'dark'
 
-const getSaveThemeFx = createEffect<void, string | null>({
+export const getSaveThemeFx = createEffect<void, string | null>({
   handler: async () => {
     const theme = window.localStorage.getItem('ui-theme')
 
@@ -11,7 +11,7 @@ const getSaveThemeFx = createEffect<void, string | null>({
   },
 })
 
-const getSystemThemeFx = createEffect<void, Theme>({
+export const getSystemThemeFx = createEffect<void, Theme>({
   handler: async () => {
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
