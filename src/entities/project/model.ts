@@ -6,7 +6,9 @@ export interface Project {
   isFinished: string
 }
 
-export const addProject = createEvent<Pick<Project, 'description' | 'isFinished'>>()
+type CreatedProject = Pick<Project, 'description' | 'isFinished'>
+
+export const addProject = createEvent<CreatedProject>()
 export const projectAdded = createEvent<Project>()
 
 export const $projects = createStore<Project[]>([])
