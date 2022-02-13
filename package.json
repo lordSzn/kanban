@@ -12,6 +12,7 @@
   "dependencies": {
     "@dnd-kit/core": "^5.0.1",
     "@dnd-kit/utilities": "^3.1.0",
+    "@geist-ui/core": "^2.3.2",
     "effector": "^22.2.0",
     "effector-react": "^22.0.6",
     "react": "^17.0.2",

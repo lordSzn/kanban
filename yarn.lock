@@ -1035,6 +1035,13 @@
     "@babel/helper-validator-option" "^7.16.7"
     "@babel/plugin-transform-typescript" "^7.16.7"
 
+"@babel/runtime@^7.16.7":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
+  integrity sha512-hzeyJyMA1YGdJTuWU0e/j4wKXrU4OMFvY2MSlaI9B7VQb0r5cxTE3EAIS2Q7Tn2RIcDkRvTA/v2JsAEhxe99uw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.8.4":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.7.tgz#03ff99f64106588c9c403c6ecb8c3bafbbdff1fa"
@@ -1216,6 +1223,13 @@
     lodash "^4.17.19"
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
+
+"@geist-ui/core@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@geist-ui/core/-/core-2.3.2.tgz#6246746f6ed3842c32e37dcf065f65a6ca244adb"
+  integrity sha512-AX5xuhS5l1LG/DSUEjCSe4y3LFu6PNitSYoqdjupeNKXSvicqZxdv2bqQOWWyKIHiDw4ABV73BhxOumras98cg==
+  dependencies:
+    "@babel/runtime" "^7.16.7"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
