@@ -3,7 +3,7 @@ import { useStore } from 'effector-react'
 import React, { useEffect } from 'react'
 import { $theme } from '../features/theme'
 import { Main } from '../pages'
-import { appStarted } from '../shared/config'
+import { appStarted } from '../shared/config/run-logic'
 
 export const Application = () => {
   const theme = useStore($theme)
