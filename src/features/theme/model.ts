@@ -38,5 +38,8 @@ export const $theme = createStore<Theme>('light')
   .on(getSystemThemeFx.doneData, (_, theme) => theme)
 
 $theme.watch((theme) => {
+  if (!theme) {
+    return window.localStorage.removeItem('ui-theme')
+  }
   window.localStorage.setItem('ui-theme', theme)
 })
