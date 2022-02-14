@@ -2,8 +2,10 @@ import { createEvent, createStore } from 'effector'
 
 export interface Project {
   projectID: string
+  title: string
   description: string
   isFinished: string
+  photoUrl: string
 }
 
 type CreatedProject = Pick<Project, 'description' | 'isFinished'>
