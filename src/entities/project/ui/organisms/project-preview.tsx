@@ -1,6 +1,6 @@
 import { Card, Text, Image, Link } from '@geist-ui/core'
 import React, { FC } from 'react'
-import { Project } from '../..'
+import type { Project } from '../..'
 
 export const ProjectPreview: FC<Partial<Project>> = () => {
   return (
