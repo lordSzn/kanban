@@ -1,5 +1,5 @@
 import { createEffect, createStore, sample, split } from 'effector'
-import { appStarted } from '../../shared/config'
+import { appStarted } from '../../shared/config/run-logic'
 
 type Theme = 'light' | 'dark'
 
