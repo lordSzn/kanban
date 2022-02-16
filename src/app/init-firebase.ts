@@ -14,9 +14,9 @@ const initFirebaseFx = createEffect({
   },
 })
 
-const $credentials = createStore({})
+const $credentials = createStore<FirebaseOptions>({})
 
-export const startedFirebase = attach({
+export const startFirebase = attach({
   source: $credentials,
   effect: initFirebaseFx,
 })

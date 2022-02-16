@@ -5,11 +5,11 @@ import React, { useEffect } from 'react'
 import { $theme } from '../features/theme'
 import { Main } from '../pages'
 import { appStarted } from '../shared/config/run-logic'
-import { startedFirebase } from './init-firebase'
+import { startFirebase } from './init-firebase'
 
 sample({
   source: appStarted,
-  target: startedFirebase,
+  target: startFirebase,
 })
 
 export const Application = () => {
