@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: path.resolve(__dirname, 'src/index.tsx'),
@@ -16,11 +17,12 @@ module.exports = {
     historyApiFallback: true,
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html', inject: 'body' }),
     new MiniCssExtractPlugin({ filename: 'styles.css' }),
+    new Dotenv(),
   ],
   module: {
     rules: [
