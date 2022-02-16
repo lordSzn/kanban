@@ -23,7 +23,8 @@
     "effector-react": "^22.0.6",
     "firebase": "^9.6.6",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "yenv": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
