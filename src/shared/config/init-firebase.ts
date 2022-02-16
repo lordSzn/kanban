@@ -1,10 +1,14 @@
 import { attach, createEffect, createStore, sample, Unit } from 'effector'
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
+import { appStarted } from './run-logic'
 
-export const initFirebase = <T extends FirebaseOptions, R>(
-  config: T,
+export const initFirebase = <T extends FirebaseOptions, R>({
+  config,
+  when,
+}: {
+  config: T
   when: Unit<R>
-) => {
+}) => {
   const $opened = createStore(false)
   const $credentials = createStore(config)
   const $firebaseApp = createStore<FirebaseApp | null>(null)
