@@ -1,7 +1,5 @@
 import { attach, createEffect, createStore, sample, Unit } from 'effector'
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
-// @fix
-import { appStarted } from './run-logic'
 
 export const initFirebase = <T extends FirebaseOptions, R>({
   config,
@@ -49,18 +47,3 @@ export const initFirebase = <T extends FirebaseOptions, R>({
     $opened,
   }
 }
-
-const config = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTHDOMAIN,
-  projectId: process.env.PROJECTID,
-  storageBucket: process.env.STORAGEBUCKET,
-  measurementId: process.env.MESSAGINGSENDERID,
-  appId: process.env.APPID,
-}
-
-export const $firebaseInstance = initFirebase({
-  // tempore solution
-  when: appStarted,
-  config,
-})
