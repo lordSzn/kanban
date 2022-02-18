@@ -5,6 +5,7 @@ import { $theme } from '../features/theme'
 import { Main } from '../pages'
 import { initFirebase } from '../shared/config/init-firebase'
 import { appStarted } from '../shared/config/run-logic'
+import { ToastProvider } from '../shared/lib/toast'
 import { config } from './firebase-config'
 
 initFirebase({
@@ -21,6 +22,7 @@ export const Application = () => {
   return (
     <>
       <GeistProvider themeType={theme}>
+        <ToastProvider />
         <CssBaseline />
         <Main />
       </GeistProvider>
