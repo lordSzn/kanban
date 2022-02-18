@@ -8,7 +8,6 @@ import { appStarted } from '../shared/config/run-logic'
 import { config } from './firebase-config'
 
 initFirebase({
-  when: appStarted,
   config,
 })
 

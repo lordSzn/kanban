@@ -1,16 +1,19 @@
-import { attach, createEffect, createStore, sample, Unit } from 'effector'
+import {
+  attach,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+} from 'effector'
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
 
-export const initFirebase = <T extends FirebaseOptions, R>({
+export const initFirebase = <T extends FirebaseOptions>({
   config,
-  when,
 }: {
   config: T
-  when: Unit<R>
 }) => {
-  const $opened = createStore(false)
   const $credentials = createStore(config)
-  const $firebaseApp = createStore<FirebaseApp | null>(null)
+  const run = createEvent()
 
   const initFirebaseFx = createEffect<FirebaseOptions, FirebaseApp, void>({
     handler: async (credentials) => {
@@ -33,17 +36,9 @@ export const initFirebase = <T extends FirebaseOptions, R>({
   })
 
   sample({
-    source: when,
+    source: run,
     target: startFirebaseApp,
   })
 
-  sample({
-    source: startFirebaseApp.doneData,
-    target: $firebaseApp,
-  })
-
-  return {
-    $firebaseApp,
-    $opened,
-  }
+  run()
 }
