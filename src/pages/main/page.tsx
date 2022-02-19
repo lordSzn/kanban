@@ -30,4 +30,5 @@ export const Main = () => {
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 `
