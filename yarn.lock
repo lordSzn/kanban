@@ -2820,6 +2820,20 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
+atomic-router-react@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/atomic-router-react/-/atomic-router-react-0.4.3.tgz#469f364ee8298c200f77813a693e81d04f1d55cf"
+  integrity sha512-LXM34xu97PX4408Av+JeaVlbCmJCXDhleAkWKhkin7w75Mk3jFdmB5Ma5dwNLnKYgAcB7uW6YnDpheYxjQiAdA==
+  dependencies:
+    clsx "^1.1.1"
+
+atomic-router@^0.5.0-dev.1:
+  version "0.5.0-dev.1"
+  resolved "https://registry.yarnpkg.com/atomic-router/-/atomic-router-0.5.0-dev.1.tgz#5d13537f59661e7b3e38067332f1e61b612db245"
+  integrity sha512-zjK5pYAKgA8kmRslf0Sh36/rtjam0CBIyFkRvMnNVKgkqa26tT4xPj6j/k6GtgYbtAS3P1ZldY8s/j69EUudnQ==
+  dependencies:
+    path-to-regexp "^6.2.0"
+
 babel-jest@^27.5.1:
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-27.5.1.tgz#a1bf8d61928edfefd21da27eb86a695bfd691444"
@@ -3193,6 +3207,11 @@ clone-deep@^4.0.1:
     is-plain-object "^2.0.4"
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co@^4.6.0:
   version "4.6.0"
@@ -6159,6 +6178,11 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+
+path-to-regexp@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
+  integrity sha512-f66KywYG6+43afgE/8j/GoiNyygk/bnoCbps++3ErRKsIYkGGupyv07R2Ok5m9i67Iqc+T2g1eAUGUPzWhYTyg==
 
 path-type@^3.0.0:
   version "3.0.0"
