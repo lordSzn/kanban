@@ -4,6 +4,7 @@ import { ProjectPreview } from '../../entities/project/ui'
 import { appStarted } from '../../shared/config/run-logic'
 import { showMessage } from '../../shared/lib/toast'
 import { BaseTemplate } from '../../shared/ui'
+import { Header } from '../../widgets/header'
 
 showMessage({
   when: appStarted,
@@ -16,7 +17,7 @@ showMessage({
 
 export const Main = () => {
   return (
-    <BaseTemplate>
+    <BaseTemplate header={<Header />}>
       <Container>
         {Array.from({ length: 4 }, (_, i) => (
           <ProjectPreview key={i} />
