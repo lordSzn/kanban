@@ -17,7 +17,8 @@ showMessage({
   }),
 })
 
-export const Main = () => {
+
+export const Workspace = () => {
   useEffect(() => {
     pageMounted()
   }, [])

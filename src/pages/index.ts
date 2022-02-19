@@ -1,1 +1,1 @@
-export { Main } from './main/page'
+export { Workspace } from './workspace/page'
