@@ -1,12 +1,13 @@
 import { CssBaseline, GeistProvider } from '@geist-ui/core'
+import { RouterProvider } from 'atomic-router-react'
 import { useStore } from 'effector-react'
 import React, { useEffect } from 'react'
 import { $theme } from '../features/theme'
-import { Workspace } from '../pages'
 import { initFirebase } from '../shared/config/init-firebase'
 import { appStarted } from '../shared/config/run-logic'
 import { ToastProvider } from '../shared/lib/toast'
 import { config } from './firebase-config'
+import { Pages, router } from './routing'
 
 initFirebase({
   config,
@@ -21,11 +22,13 @@ export const Application = () => {
 
   return (
     <>
-      <GeistProvider themeType={theme}>
-        <ToastProvider />
-        <CssBaseline />
-        <Workspace />
-      </GeistProvider>
+      <RouterProvider router={router}>
+        <GeistProvider themeType={theme}>
+          <ToastProvider />
+          <Pages />
+          <CssBaseline />
+        </GeistProvider>
+      </RouterProvider>
     </>
   )
 }

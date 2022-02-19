@@ -1,4 +1,5 @@
 import { styled } from '@linaria/react'
+import { createRoute } from 'atomic-router'
 import { createEvent } from 'effector'
 import React, { useEffect } from 'react'
 import { ProjectPreview } from '../../entities/project/ui'
@@ -17,6 +18,7 @@ showMessage({
   }),
 })
 
+export const workspaceRouter = createRoute()
 
 export const Workspace = () => {
   useEffect(() => {
