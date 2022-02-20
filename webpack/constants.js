@@ -9,7 +9,7 @@ exports.context = source
 exports.build = resolve(root, 'build')
 exports.entryMain = resolve(source, 'index.tsx')
 exports.indexHTML = resolve(source, 'index.html')
-exports.extensions = ['js', 'jsx', 'ts', 'tsx', 'json']
+exports.extensions = ['.js', '.jsx', '.tsx', '.ts', '.json']
 
 exports.outputDev = {
   js: 'bundle.js',
