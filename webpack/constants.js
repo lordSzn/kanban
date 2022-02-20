@@ -1,11 +1,14 @@
-const path = require('path')
+const { normalize, resolve } = require('path')
+const fs = require('fs')
 
-const source = path.resolve(__dirname, 'src')
+const root = normalize(fs.realpathSync(`${__dirname}/..`))
+
+const source = resolve(root, 'src')
 
 exports.context = source
-exports.build = path.resolve(__dirname, 'dist')
-exports.entryMain = path.resolve(source, 'index.tsx')
-exports.indexHTML = path.resolve(source, 'index.html')
+exports.build = resolve(root, 'build')
+exports.entryMain = resolve(source, 'index.tsx')
+exports.indexHTML = resolve(source, 'index.html')
 exports.extensions = ['js', 'jsx', 'ts', 'tsx', 'json']
 
 exports.outputDev = {
