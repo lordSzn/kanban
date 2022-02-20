@@ -6,6 +6,9 @@ module.exports = {
   entry: config.entryMain,
   resolve: {
     extensions: config.extensions,
+    alias: {
+      '~': config.src,
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
