@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
 const config = require('./constants')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -20,6 +21,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   module: {
     rules: [

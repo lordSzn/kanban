@@ -47,6 +47,7 @@
     "css-loader": "^6.6.0",
     "dotenv-webpack": "^7.1.0",
     "eslint": "7.10.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.1",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
     "mini-css-extract-plugin": "^2.5.3",
