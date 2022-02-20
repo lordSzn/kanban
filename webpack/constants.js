@@ -16,5 +16,5 @@ exports.outputDev = {
 }
 
 exports.outputProd = {
-  js: 'dist/[name].[contenthash].js',
+  js: '[name].[contenthash].js',
 }
