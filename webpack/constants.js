@@ -5,6 +5,7 @@ const root = normalize(fs.realpathSync(`${__dirname}/..`))
 
 const source = resolve(root, 'src')
 
+exports.src = source
 exports.context = root
 exports.build = resolve(root, 'build')
 exports.entryMain = resolve(source, 'index.tsx')
