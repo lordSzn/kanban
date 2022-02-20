@@ -29,12 +29,12 @@ const { loadSaveTheme, __: loadSystemTheme } = split(getSaveThemeFx, {
 })
 
 sample({
-  clock: loadSaveTheme,
+  clock: loadSystemTheme,
   target: getSystemThemeFx,
 })
 
 export const $theme = createStore<Theme>('light')
-  .on(loadSystemTheme, (_, theme) => theme)
+  .on(loadSaveTheme, (_, theme) => theme)
   .on(getSystemThemeFx.doneData, (_, theme) => theme)
 
 $theme.watch((theme) => {
