@@ -1,29 +1,10 @@
 import { styled } from '@linaria/react'
-import { createRoute } from 'atomic-router'
-import { createEvent } from 'effector'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ProjectPreview } from '../../entities/project/ui'
-import { showMessage } from '../../shared/lib/toast'
 import { BaseTemplate } from '../../shared/ui'
 import { Header } from '../../widgets/header'
 
-const pageMounted = createEvent()
-
-showMessage({
-  when: pageMounted,
-  toast: () => ({
-    type: 'success',
-    text: 'Welcome to projects page',
-    delay: 2000,
-  }),
-})
-
-export const workspaceRouter = createRoute()
-
 export const Workspace = () => {
-  useEffect(() => {
-    pageMounted()
-  }, [])
   return (
     <BaseTemplate header={<Header />}>
       <Container>
