@@ -9,7 +9,7 @@ interface Props {
 
 export const GridBoards: FC<Props> = ({ idle, take, resolve }) => {
   return (
-    <Grid.Container gap={2} justify="center" height="100px">
+    <Grid.Container gap={2} justify="space-between" width="100%">
       <Grid xs={6}>{idle}</Grid>
       <Grid xs={6}>{take}</Grid>
       <Grid xs={6}>{resolve}</Grid>
