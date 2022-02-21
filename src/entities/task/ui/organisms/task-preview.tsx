@@ -1,4 +1,4 @@
-import { Badge, Description } from '@geist-ui/core'
+import { Card, Text } from '@geist-ui/core'
 import { EditOne } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
@@ -10,20 +10,15 @@ interface Props {
 
 export const TaskPreview: FC<Props> = ({ title, description }) => {
   return (
-    <Container>
+    <Card shadow marginBottom={10}>
       <Header>
-        <Badge type="success">Success</Badge>
+        <Text h4>{title}</Text>
         <EditOne />
       </Header>
-      <Description title={title} content={description} />
-    </Container>
+      <Text>{description}</Text>
+    </Card>
   )
 }
-
-const Container = styled.div`
-  width: calc(100% - 0.5rem);
-  border-radius: 1rem;
-`
 
 const Header = styled.div`
   display: flex;
