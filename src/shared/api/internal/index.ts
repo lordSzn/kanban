@@ -14,7 +14,10 @@ export const loadProjectsFx = createEffect<Firestore, AnswerProjects[], void>({
     const projectsColumn = collection(db, 'projects')
     const projectsSnapshots = await getDocs(projectsColumn)
 
-    const projectsList = projectsSnapshots.docs.map((doc) => doc.data())
+    const projectsList = projectsSnapshots.docs.map((doc) => ({
+      projectID: doc.id,
+      ...doc.data(),
+    }))
 
     return projectsList as AnswerProjects[]
   },
