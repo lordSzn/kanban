@@ -1,10 +1,12 @@
-import { Card, Text, Image, Link } from '@geist-ui/core'
+import { Card, Text, Image } from '@geist-ui/core'
+import { Link } from 'atomic-router-react'
 import React, { FC } from 'react'
+import { paths } from '~/shared/lib/paths'
 import type { Project } from '../..'
 
 export const ProjectPreview: FC<Partial<Project>> = () => {
   return (
-    <Link href="/">
+    <Link to={paths.project('2')}>
       <Card width="400px">
         <Image
           draggable={false}
