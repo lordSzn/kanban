@@ -1,12 +1,12 @@
-import { Button } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import React from 'react'
+import { UserCard } from '~/entities/user/ui'
 
 export const Header = () => {
   return (
     <Container>
       <Title>Kanban</Title>
-      <Button type="secondary">Action</Button>
+      <UserCard fullname="robert kuzhin" />
     </Container>
   )
 }
