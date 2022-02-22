@@ -1,1 +1,1 @@
-export * from './organisms'
+export { ProjectList } from './organisms/project-list'
