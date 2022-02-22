@@ -1,12 +1,9 @@
-import { createEffect, createStore, sample } from 'effector'
-import { getFirestore } from 'firebase/firestore'
+import { sample } from 'effector'
 import { loadProjectsFx } from '~/shared/api/internal'
+import { getFirestoreFx } from '~/shared/lib/firebase/firestore'
 import { workspaceRouter } from '../route'
 
-export const getFirestoreFx = createEffect(getFirestore)
-export const $pending = createStore(false)
-  .on(getFirestoreFx, () => true)
-  .on(loadProjectsFx.finally, () => false)
+export const $pending = loadProjectsFx.pending
 
 sample({
   clock: workspaceRouter.opened,
