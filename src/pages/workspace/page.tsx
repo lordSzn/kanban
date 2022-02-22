@@ -2,7 +2,7 @@ import { Loading } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React from 'react'
-import { ProjectPreview } from '../../entities/project/ui'
+import { ProjectList } from '~/entities/project/ui'
 import { BaseTemplate } from '../../shared/ui'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
@@ -13,13 +13,10 @@ export const Workspace = () => {
   if (loading) {
     return <Loading>loading</Loading>
   }
-
   return (
     <BaseTemplate header={<Header />}>
       <Container>
-        {Array.from({ length: 4 }, (_, i) => (
-          <ProjectPreview key={i} />
-        ))}
+        <ProjectList />
       </Container>
     </BaseTemplate>
   )
