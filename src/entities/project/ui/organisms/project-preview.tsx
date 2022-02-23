@@ -12,7 +12,7 @@ export const ProjectPreview: FC<Project> = ({
 }) => {
   return (
     <Link to={paths.project(projectID)}>
-      <Card width="400px">
+      <Card width="400px" shadow>
         <Image src={photoUrl} />
         <Text h4 mb={0}>
           {title}
