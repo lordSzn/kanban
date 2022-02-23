@@ -1,13 +1,6 @@
 import { createEvent, createStore, sample } from 'effector'
 import { loadProjectsFx } from '~/shared/api/internal'
-
-export interface Project {
-  projectID: string
-  title: string
-  description: string
-  isFinished: boolean
-  photoUrl: string
-}
+import type { Project } from '~/shared/api/internal'
 
 type CreatedProject = Pick<Project, 'description' | 'isFinished'>
 

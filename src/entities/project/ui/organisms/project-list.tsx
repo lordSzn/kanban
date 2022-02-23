@@ -1,6 +1,6 @@
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
-import { Project } from '../..'
+import type { Project } from '~/shared/api/internal'
 import { ProjectPreview } from './project-preview'
 
 interface Props {

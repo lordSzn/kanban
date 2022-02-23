@@ -23,11 +23,7 @@ export const Workspace = () => {
           <Tabs.Item label="Finished" value="1">
             HTTP is stateless, but not session less.
           </Tabs.Item>
-          <Tabs.Item label="all" value="2">
-            Between the Web browser and the server, numerous computers and
-            machines relay the HTTP messages.
-          </Tabs.Item>
-          <Tabs.Item label="favorites" value="3">
+          <Tabs.Item label="important" value="3">
             Between the Web browser and the server, numerous computers and
             machines relay the HTTP messages.
           </Tabs.Item>

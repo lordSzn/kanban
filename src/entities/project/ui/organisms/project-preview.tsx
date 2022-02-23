@@ -1,8 +1,8 @@
 import { Card, Text, Image } from '@geist-ui/core'
 import { Link } from 'atomic-router-react'
 import React, { FC } from 'react'
+import type { Project } from '~/shared/api/internal'
 import { paths } from '~/shared/lib/paths'
-import type { Project } from '../..'
 
 export const ProjectPreview: FC<Project> = ({
   projectID,

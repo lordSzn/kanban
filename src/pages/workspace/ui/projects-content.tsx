@@ -1,7 +1,7 @@
 import { Loading } from '@geist-ui/core'
 import React, { FC } from 'react'
-import { Project } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
+import type { Project } from '~/shared/api/internal'
 
 interface Props {
   loading: boolean

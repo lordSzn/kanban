@@ -1,15 +1,15 @@
 import { createEffect } from 'effector'
 import { collection, Firestore, getDocs } from 'firebase/firestore'
 
-interface AnswerProjects {
+export interface Project {
   projectID: string
   title: string
   description: string
-  isFinished: false
+  isFinished: boolean
   photoUrl: string
 }
 
-export const loadProjectsFx = createEffect<Firestore, AnswerProjects[], void>({
+export const loadProjectsFx = createEffect<Firestore, Project[], void>({
   handler: async (db) => {
     const projectsColumn = collection(db, 'projects')
     const projectsSnapshots = await getDocs(projectsColumn)
@@ -19,23 +19,23 @@ export const loadProjectsFx = createEffect<Firestore, AnswerProjects[], void>({
       ...doc.data(),
     }))
 
-    return projectsList as AnswerProjects[]
+    return projectsList as Project[]
   },
 })
 
-interface AnswerTasks {
-  projectID: string
+export interface Task {
   taskID: string
+  projectID: string
 }
 
-export const loadTasksFx = createEffect<Firestore, AnswerTasks[], void>({
+export const loadTasksFx = createEffect<Firestore, Task[], void>({
   handler: async (db) => {
     const tasksColumn = collection(db, 'tasks')
     const tasksSnapshots = await getDocs(tasksColumn)
 
     const tasksList = tasksSnapshots.docs.map((doc) => doc.data())
 
-    return tasksList as AnswerTasks[]
+    return tasksList as Task[]
   },
 })
 

@@ -1,9 +1,5 @@
 import { createEvent, createStore } from 'effector'
-
-export interface Task {
-  taskID: string
-  projectID: string
-}
+import type { Task } from '~/shared/api/internal'
 
 export interface TaskInfo {
   [taskID: string]: {
