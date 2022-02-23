@@ -1,26 +1,28 @@
 import { styled } from '@linaria/react'
-import { useList } from 'effector-react'
-import React from 'react'
-import { $projects } from '../..'
+import React, { FC } from 'react'
+import { Project } from '../..'
 import { ProjectPreview } from './project-preview'
 
-export const ProjectList = () => {
-  const projectsList = useList($projects, {
-    getKey: (project) => project.projectID,
-    fn: ({ projectID, title, description, isFinished, photoUrl }) => (
-      <Container>
-        <ProjectPreview
-          title={title}
-          projectID={projectID}
-          isFinished={isFinished}
-          photoUrl={photoUrl}
-          description={description}
-        />
-      </Container>
-    ),
-  })
+interface Props {
+  projects: Project[]
+}
 
-  return projectsList
+export const ProjectList: FC<Props> = ({ projects }) => {
+  return (
+    <>
+      {projects.map((project) => (
+        <Container key={project.projectID}>
+          <ProjectPreview
+            title={project.title}
+            projectID={project.projectID}
+            description={project.description}
+            isFinished={project.isFinished}
+            photoUrl={project.photoUrl}
+          />
+        </Container>
+      ))}
+    </>
+  )
 }
 
 const Container = styled.div`
