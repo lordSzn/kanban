@@ -1,6 +1,7 @@
 import { sample } from 'effector'
 import { loadProjectsFx } from '~/shared/api/internal'
 import { getFirestoreFx } from '~/shared/lib/firebase/firestore'
+import { showMessage } from '~/shared/lib/toast'
 import { workspaceRouter } from '../route'
 
 export const $pending = loadProjectsFx.pending
@@ -15,4 +16,13 @@ sample({
   clock: getFirestoreFx.doneData,
   filter: Boolean,
   target: loadProjectsFx,
+})
+
+showMessage({
+  when: workspaceRouter.opened,
+  toast: () => ({
+    type: 'success',
+    text: 'Welcome to workspace page',
+    delay: 2000,
+  }),
 })
