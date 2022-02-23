@@ -79,3 +79,24 @@ export const loadTasksLifecycleFx = createEffect<
     return tasksLifecycleList as TaskLifecycle[]
   },
 })
+
+export interface ImportantProjects {
+  projectID: string
+}
+
+export const loadImportantProjectsFx = createEffect<
+  Firestore,
+  ImportantProjects[],
+  void
+>({
+  handler: async (db) => {
+    const importantProjectsColumn = collection(db, 'favorites-projects')
+    const importantProjectsSnapshots = await getDocs(importantProjectsColumn)
+
+    const importantProjectsList = importantProjectsSnapshots.docs.map((doc) =>
+      doc.data()
+    )
+
+    return importantProjectsList as ImportantProjects[]
+  },
+})

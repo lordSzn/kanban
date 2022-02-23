@@ -1,5 +1,5 @@
 import { sample } from 'effector'
-import { loadProjectsFx } from '~/shared/api/internal'
+import { loadImportantProjectsFx, loadProjectsFx } from '~/shared/api/internal'
 import { getFirestoreFx } from '~/shared/lib/firebase/firestore'
 import { showMessage } from '~/shared/lib/toast'
 import { workspaceRouter } from '../route'
@@ -15,7 +15,7 @@ sample({
 sample({
   clock: getFirestoreFx.doneData,
   filter: Boolean,
-  target: loadProjectsFx,
+  target: [loadProjectsFx, loadImportantProjectsFx],
 })
 
 showMessage({
