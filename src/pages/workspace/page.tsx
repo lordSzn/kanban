@@ -1,14 +1,12 @@
-import { Grid, Loading, Tabs, Text } from '@geist-ui/core'
-import { useStore } from 'effector-react'
+import { reflect } from '@effector/reflect'
+import { Grid, Tabs, Text } from '@geist-ui/core'
 import React from 'react'
 import { $activeProjects } from '~/entities/project'
-import { ProjectList } from '~/entities/project/ui'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
+import { ProjectsContent } from './ui/projects-content'
 
 export const Workspace = () => {
-  const loading = useStore($pending)
-  const activeProjects = useStore($activeProjects)
   return (
     <Grid.Container gap={2} justify="center">
       <Grid xs={24} height="80px">
@@ -18,11 +16,7 @@ export const Workspace = () => {
         <Text h3>Your works</Text>
       </Grid>
       <Grid xs={20}>
-        {loading ? (
-          <Loading>Loading</Loading>
-        ) : (
-          <ProjectList projects={activeProjects} />
-        )}
+        <ContentList />
       </Grid>
       <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
@@ -42,3 +36,11 @@ export const Workspace = () => {
     </Grid.Container>
   )
 }
+
+const ContentList = reflect({
+  view: ProjectsContent,
+  bind: {
+    loading: $pending,
+    projects: $activeProjects,
+  },
+})
