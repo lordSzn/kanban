@@ -1,7 +1,8 @@
 import { reflect } from '@effector/reflect'
 import { Grid, Tabs, Text } from '@geist-ui/core'
 import React from 'react'
-import { $activeProjects } from '~/entities/project'
+import { $activeProjects, $importantList } from '~/entities/project'
+import { ProjectList } from '~/entities/project/ui'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
 import { ProjectsContent } from './ui/projects-content'
@@ -24,8 +25,7 @@ export const Workspace = () => {
             HTTP is stateless, but not session less.
           </Tabs.Item>
           <Tabs.Item label="important" value="3">
-            Between the Web browser and the server, numerous computers and
-            machines relay the HTTP messages.
+            <FavoritesProjectsList />
           </Tabs.Item>
         </Tabs>
       </Grid>
@@ -38,5 +38,12 @@ const ContentList = reflect({
   bind: {
     loading: $pending,
     projects: $activeProjects,
+  },
+})
+
+const FavoritesProjectsList = reflect({
+  view: ProjectList,
+  bind: {
+    projects: $importantList,
   },
 })
