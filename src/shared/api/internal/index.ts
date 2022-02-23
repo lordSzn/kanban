@@ -39,33 +39,33 @@ export const loadTasksFx = createEffect<Firestore, Task[], void>({
   },
 })
 
-interface AnswerInfoTasks {
+export interface TaskInfo {
   projectID: string
   taskID: string
 }
 
-export const loadInfoTasksFx = createEffect<Firestore, AnswerInfoTasks[], void>(
-  {
-    handler: async (db) => {
-      const tasksInfoColumn = collection(db, 'task-info')
-      const tasksInfoSnapshots = await getDocs(tasksInfoColumn)
+export const loadInfoTasksFx = createEffect<Firestore, TaskInfo[], void>({
+  handler: async (db) => {
+    const tasksInfoColumn = collection(db, 'task-info')
+    const tasksInfoSnapshots = await getDocs(tasksInfoColumn)
 
-      const tasksInfoList = tasksInfoSnapshots.docs.map((doc) => doc.data())
+    const tasksInfoList = tasksInfoSnapshots.docs.map((doc) => doc.data())
 
-      return tasksInfoList as AnswerInfoTasks[]
-    },
-  }
-)
+    return tasksInfoList as TaskInfo[]
+  },
+})
 
-interface AnswerTaskLifecycle {
+export type Status = 'idle' | 'take' | 'resolve'
+
+export interface TaskLifecycle {
   projectID: string
   taskID: string
-  status: 'idle' | 'take' | 'resolve'
+  status: Status
 }
 
 export const loadTasksLifecycleFx = createEffect<
   Firestore,
-  AnswerTaskLifecycle[],
+  TaskLifecycle[],
   void
 >({
   handler: async (db) => {
@@ -76,6 +76,6 @@ export const loadTasksLifecycleFx = createEffect<
       doc.data()
     )
 
-    return tasksLifecycleList as AnswerTaskLifecycle[]
+    return tasksLifecycleList as TaskLifecycle[]
   },
 })

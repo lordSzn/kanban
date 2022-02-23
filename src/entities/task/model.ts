@@ -1,19 +1,10 @@
 import { createEvent, createStore } from 'effector'
-import type { Task } from '~/shared/api/internal'
+import type { Task, TaskInfo } from '~/shared/api/internal'
 
-export interface TaskInfo {
-  [taskID: string]: {
-    title: string
-    description: string
-  }
-}
-
-export type CreatedTask = Pick<TaskInfo, 'title' | 'description'>
-
-export const addTask = createEvent<CreatedTask>()
+export const addTask = createEvent<TaskInfo>()
 export const taskAdded = createEvent<TaskInfo>()
 
 export const updateTaskInfo = createEvent<{ taskID: string }>()
 
 export const $tasks = createStore<Task[]>([])
-export const $taskInfo = createStore<TaskInfo>({} as TaskInfo)
+export const $taskInfo = createStore<Record<string, TaskInfo>>({})
