@@ -1,5 +1,6 @@
 import { reflect } from '@effector/reflect'
 import { Grid, Tabs, Text } from '@geist-ui/core'
+import { styled } from '@linaria/react'
 import React from 'react'
 import { $activeProjects, $importantList } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
@@ -22,10 +23,12 @@ export const Workspace = () => {
       <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
           <Tabs.Item label="Finished" value="1">
-            HTTP is stateless, but not session less.
+            Empty
           </Tabs.Item>
           <Tabs.Item label="important" value="3">
-            <FavoritesProjectsList />
+            <ProjectsContainer>
+              <FavoritesProjectsList />
+            </ProjectsContainer>
           </Tabs.Item>
         </Tabs>
       </Grid>
@@ -47,3 +50,8 @@ const FavoritesProjectsList = reflect({
     projects: $importantList,
   },
 })
+
+const ProjectsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
