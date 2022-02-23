@@ -23,6 +23,6 @@ showMessage({
   toast: () => ({
     type: 'success',
     text: 'Welcome to workspace page',
-    delay: 2000,
+    delay: 3000,
   }),
 })
