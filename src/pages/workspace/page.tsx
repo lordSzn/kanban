@@ -18,7 +18,7 @@ export const Workspace = () => {
       <Grid xs={20}>
         {loading ? <Loading>Loading</Loading> : <ProjectList />}
       </Grid>
-      <Grid xs={20} height="63px">
+      <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
           <Tabs.Item label="Finished" value="1">
             HTTP is stateless, but not session less.
