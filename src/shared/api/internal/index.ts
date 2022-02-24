@@ -129,3 +129,21 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
     return createdProject
   },
 })
+
+export const saveFavoriteProjectFx = createEffect<
+  { favoriteID: string },
+  ImportantProjects,
+  void
+>({
+  handler: async ({ favoriteID }) => {
+    const favoriteColumn = collection(getFirestore(), 'favorites-projects')
+
+    await addDoc(favoriteColumn, {
+      projectID: favoriteID,
+    })
+
+    return {
+      projectID: favoriteID,
+    }
+  },
+})
