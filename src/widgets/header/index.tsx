@@ -1,10 +1,18 @@
 import { Button, Grid, Input, Keyboard, Text } from '@geist-ui/core'
 import { ApplicationMenu } from '@icon-park/react'
 import { styled } from '@linaria/react'
+import { useStore } from 'effector-react'
 import React from 'react'
+import {
+  $visibleDraftProject,
+  closeProject,
+  createProject,
+} from '~/entities/project'
+import { ProjectCreate } from '~/entities/project/ui'
 import { UserCard } from '~/entities/user/ui'
 
 export const Header = () => {
+  const visibleModel = useStore($visibleDraftProject)
   return (
     <HeaderContainer>
       <Grid.Container height="100%" justify="center" alignItems="center">
@@ -18,7 +26,13 @@ export const Header = () => {
           <Input scale={1} iconRight={<Keyboard ctrl />} placeholder="Search" />
         </Grid>
         <Grid xs={2}>
-          <Button type="secondary" ghost auto scale={0.6}>
+          <Button
+            auto
+            ghost
+            type="secondary"
+            onClick={() => createProject()}
+            scale={0.6}
+          >
             Create project
           </Button>
         </Grid>
@@ -26,6 +40,7 @@ export const Header = () => {
           <UserCard fullname="robert kuzhin" />
         </Grid>
       </Grid.Container>
+      <ProjectCreate visible={visibleModel} close={closeProject} />
     </HeaderContainer>
   )
 }

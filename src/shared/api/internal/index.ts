@@ -1,5 +1,11 @@
 import { createEffect } from 'effector'
-import { collection, Firestore, getDocs } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  Firestore,
+  getDocs,
+  getFirestore,
+} from 'firebase/firestore'
 
 export interface Project {
   projectID: string
@@ -98,5 +104,28 @@ export const loadImportantProjectsFx = createEffect<
     )
 
     return importantProjectsList as ImportantProjects[]
+  },
+})
+
+export type CreatedProject = Pick<Project, 'title' | 'description'>
+
+export const projectCreate = createEffect<CreatedProject, Project, void>({
+  handler: async ({ title, description }) => {
+    const docRef = await addDoc(collection(getFirestore(), 'projects'), {
+      title,
+      description,
+      photoUrl: '',
+      isFinished: false,
+    })
+
+    const createdProject = {
+      title,
+      description,
+      projectID: docRef.id,
+      photoUrl: '',
+      isFinished: false,
+    }
+
+    return createdProject
   },
 })
