@@ -4,6 +4,7 @@ import { styled } from '@linaria/react'
 import React from 'react'
 import { $activeProjects, $importantList } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
+import { EmptyBlock } from '~/shared/ui'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
 import { ProjectsContent } from './ui/projects-content'
@@ -23,7 +24,10 @@ export const Workspace = () => {
       <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
           <Tabs.Item label="Finished" value="1">
-            Empty
+            <EmptyBlock
+              title="Your don't have completed projects"
+              message="Your active projects are shown here"
+            />
           </Tabs.Item>
           <Tabs.Item label="important" value="3">
             <ProjectsContainer>
