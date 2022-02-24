@@ -1,9 +1,12 @@
 import { reflect } from '@effector/reflect'
 import { Grid, Tabs, Text } from '@geist-ui/core'
 import React from 'react'
-import { $activeProjects, $importantList } from '~/entities/project'
+import {
+  $activeProjects,
+  $finishedProjects,
+  $importantList,
+} from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
-import { EmptyBlock } from '~/shared/ui'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
 
@@ -22,10 +25,7 @@ export const Workspace = () => {
       <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
           <Tabs.Item label="Finished" value="1">
-            <EmptyBlock
-              title="Your don't have completed projects"
-              message="Your active projects are shown here"
-            />
+            <FinishedProjects />
           </Tabs.Item>
           <Tabs.Item label="important" value="3">
             <FavoritesProjectsList />
@@ -40,6 +40,14 @@ const FavoritesProjectsList = reflect({
   view: ProjectList,
   bind: {
     projects: $importantList,
+    loading: $pending,
+  },
+})
+
+const FinishedProjects = reflect({
+  view: ProjectList,
+  bind: {
+    projects: $finishedProjects,
     loading: $pending,
   },
 })

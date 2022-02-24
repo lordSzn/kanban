@@ -18,12 +18,20 @@ export const $importantProjectsID = createStore<ImportantProjects[]>([]).on(
 )
 export const $importantList = createStore<Project[]>([])
 export const $activeProjects = createStore<Project[]>([])
+export const $finishedProjects = createStore<Project[]>([])
 
 sample({
   source: $projects,
   filter: (projects) => projects.length > 0,
   fn: (projects) => projects.filter(({ isFinished }) => !isFinished),
   target: $activeProjects,
+})
+
+sample({
+  source: $projects,
+  filter: (projects) => projects.length > 0,
+  fn: (projects) => projects.filter(({ isFinished }) => isFinished),
+  target: $finishedProjects,
 })
 
 sample({
