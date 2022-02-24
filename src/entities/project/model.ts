@@ -1,16 +1,16 @@
-import { createEvent, createStore, sample } from 'effector'
-import { loadImportantProjectsFx, loadProjectsFx } from '~/shared/api/internal'
+import { combine, createEvent, createStore, sample } from 'effector'
+import {
+  loadImportantProjectsFx,
+  loadProjectsFx,
+  projectCreate,
+} from '~/shared/api/internal'
 import type { Project, ImportantProjects } from '~/shared/api/internal'
 
-type CreatedProject = Pick<Project, 'description' | 'isFinished'>
-
-export const addProject = createEvent<CreatedProject>()
-export const projectAdded = createEvent<Project>()
-
-export const $projects = createStore<Project[]>([]).on(
-  loadProjectsFx.doneData,
-  (_, projects) => projects
-)
+export const $projects = createStore<Project[]>([])
+  .on(loadProjectsFx.doneData, (_, projects) => projects)
+  .on(projectCreate.doneData, (projects, newProject) =>
+    projects.concat(newProject)
+  )
 
 export const $importantProjectsID = createStore<ImportantProjects[]>([]).on(
   loadImportantProjectsFx.doneData,
@@ -35,4 +35,52 @@ sample({
     return projects.filter(({ projectID }) => favoritesId.includes(projectID))
   },
   target: $importantList,
+})
+
+export const createProject = createEvent()
+export const closeProject = createEvent()
+
+export const projectAdd = createEvent()
+
+export const $visibleDraftProject = createStore(false)
+  .on(createProject, () => true)
+  .on(closeProject, () => false)
+  .reset(projectCreate.done)
+
+export const $saveProjectLoading = createStore(false)
+  .on(projectAdd, () => true)
+  .reset(projectCreate.done)
+
+export const titleChanged = createEvent<string>()
+export const descriptionChanged = createEvent<string>()
+
+export const $title = createStore('')
+  .on(titleChanged, (_, title) => title)
+  .reset(projectCreate.done)
+
+export const $description = createStore('')
+  .on(descriptionChanged, (_, description) => description)
+  .reset(projectCreate.done)
+
+export const $validCreatedProject = combine(
+  [$title, $description],
+  ([title, description]) => {
+    return (
+      title.trim().length > 5 &&
+      description.trim().length > 10 &&
+      description.trim().length < 25
+    )
+  }
+)
+
+export const $createdProject = combine({
+  title: $title,
+  description: $description,
+})
+
+sample({
+  clock: projectAdd,
+  source: $createdProject,
+  filter: $validCreatedProject,
+  target: projectCreate,
 })
