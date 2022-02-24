@@ -65,7 +65,11 @@ export const $description = createStore('')
 export const $validCreatedProject = combine(
   [$title, $description],
   ([title, description]) => {
-    return title.trim().length > 5 && description.trim().length > 10
+    return (
+      title.trim().length > 5 &&
+      description.trim().length > 10 &&
+      description.trim().length < 25
+    )
   }
 )
 
