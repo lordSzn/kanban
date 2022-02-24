@@ -55,9 +55,7 @@ export const $visibleDraftProject = createStore(false)
   .on(closeProject, () => false)
   .reset(projectCreate.done)
 
-export const $saveProjectLoading = createStore(false)
-  .on(projectAdd, () => true)
-  .reset(projectCreate.done)
+export const $saveProjectLoading = projectCreate.pending
 
 export const titleChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
