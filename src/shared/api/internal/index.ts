@@ -86,24 +86,24 @@ export const loadTasksLifecycleFx = createEffect<
   },
 })
 
-export interface ImportantProjects {
+export interface FavoritesProjects {
   projectID: string
 }
 
-export const loadImportantProjectsFx = createEffect<
+export const loadFavoritesProjectsFx = createEffect<
   Firestore,
-  ImportantProjects[],
+  FavoritesProjects[],
   void
 >({
   handler: async (db) => {
-    const importantProjectsColumn = collection(db, 'favorites-projects')
-    const importantProjectsSnapshots = await getDocs(importantProjectsColumn)
+    const FavoritesProjectsColumn = collection(db, 'favorites-projects')
+    const FavoritesProjectsSnapshots = await getDocs(FavoritesProjectsColumn)
 
-    const importantProjectsList = importantProjectsSnapshots.docs.map((doc) =>
+    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) =>
       doc.data()
     )
 
-    return importantProjectsList as ImportantProjects[]
+    return FavoritesProjectsList as FavoritesProjects[]
   },
 })
 
@@ -132,7 +132,7 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
 
 export const saveFavoriteProjectFx = createEffect<
   { favoriteID: string },
-  ImportantProjects,
+  FavoritesProjects,
   void
 >({
   handler: async ({ favoriteID }) => {

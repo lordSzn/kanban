@@ -1,11 +1,6 @@
 import { combine, createEvent, createStore, sample } from 'effector'
-import {
-  loadImportantProjectsFx,
-  loadProjectsFx,
-  projectCreateFx,
-  saveFavoriteProjectFx,
-} from '~/shared/api/internal'
-import type { Project, ImportantProjects } from '~/shared/api/internal'
+import { loadProjectsFx, projectCreateFx } from '~/shared/api/internal'
+import type { Project } from '~/shared/api/internal'
 
 export const $projects = createStore<Project[]>([])
   .on(loadProjectsFx.doneData, (_, projects) => projects)
@@ -13,54 +8,12 @@ export const $projects = createStore<Project[]>([])
     projects.concat(newProject)
   )
 
-export const $importantProjects = createStore<ImportantProjects[]>([])
-  .on(loadImportantProjectsFx.doneData, (_, projectsID) => projectsID)
-  .on(saveFavoriteProjectFx.doneData, (favorites, addedId) =>
-    favorites.concat(addedId)
-  )
-
-export const $importantList = createStore<Project[]>([])
-export const $activeProjects = createStore<Project[]>([])
-export const $finishedProjects = createStore<Project[]>([])
-
-sample({
-  source: $projects,
-  filter: (projects) => projects.length > 0,
-  fn: (projects) => projects.filter(({ isFinished }) => !isFinished),
-  target: $activeProjects,
-})
-
-sample({
-  source: $projects,
-  filter: (projects) => projects.length > 0,
-  fn: (projects) => projects.filter(({ isFinished }) => isFinished),
-  target: $finishedProjects,
-})
-
-export const favoriteAdd = createEvent<{ favoriteID: string }>()
-export const $favoriteIdx = $importantProjects.map((projects) =>
-  projects.map(({ projectID }) => projectID)
+export const $activeProjects = $projects.map((projects) =>
+  projects.filter(({ isFinished }) => !isFinished)
 )
-
-sample({
-  clock: $favoriteIdx,
-  source: $projects,
-  filter: (projects) => projects.length > 0,
-  fn: (projects, favoriteIdx) => {
-    return projects.filter(({ projectID }) => favoriteIdx.includes(projectID))
-  },
-  target: $importantList,
-})
-
-sample({
-  clock: favoriteAdd,
-  source: $favoriteIdx,
-  filter: (oldListFavorites, { favoriteID }) => {
-    return !oldListFavorites.includes(favoriteID)
-  },
-  fn: (_, favoriteID) => favoriteID,
-  target: saveFavoriteProjectFx,
-})
+export const $finishedProjects = $projects.map((projects) =>
+  projects.filter(({ isFinished }) => isFinished)
+)
 
 export const createProject = createEvent()
 export const closeProject = createEvent()
