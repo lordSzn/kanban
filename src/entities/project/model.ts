@@ -2,13 +2,13 @@ import { combine, createEvent, createStore, sample } from 'effector'
 import {
   loadImportantProjectsFx,
   loadProjectsFx,
-  projectCreate,
+  projectCreateFx,
 } from '~/shared/api/internal'
 import type { Project, ImportantProjects } from '~/shared/api/internal'
 
 export const $projects = createStore<Project[]>([])
   .on(loadProjectsFx.doneData, (_, projects) => projects)
-  .on(projectCreate.doneData, (projects, newProject) =>
+  .on(projectCreateFx.doneData, (projects, newProject) =>
     projects.concat(newProject)
   )
 
@@ -53,20 +53,20 @@ export const projectAdd = createEvent()
 export const $visibleDraftProject = createStore(false)
   .on(createProject, () => true)
   .on(closeProject, () => false)
-  .reset(projectCreate.done)
+  .reset(projectCreateFx.done)
 
-export const $saveProjectLoading = projectCreate.pending
+export const $saveProjectLoading = projectCreateFx.pending
 
 export const titleChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
 
 export const $title = createStore('')
   .on(titleChanged, (_, title) => title)
-  .reset(projectCreate.done)
+  .reset(projectCreateFx.done)
 
 export const $description = createStore('')
   .on(descriptionChanged, (_, description) => description)
-  .reset(projectCreate.done)
+  .reset(projectCreateFx.done)
 
 export const $validCreatedProject = combine(
   [$title, $description],
@@ -88,5 +88,5 @@ sample({
   clock: projectAdd,
   source: $createdProject,
   filter: $validCreatedProject,
-  target: projectCreate,
+  target: projectCreateFx,
 })

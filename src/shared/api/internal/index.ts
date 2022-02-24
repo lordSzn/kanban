@@ -109,7 +109,7 @@ export const loadImportantProjectsFx = createEffect<
 
 export type CreatedProject = Pick<Project, 'title' | 'description'>
 
-export const projectCreate = createEffect<CreatedProject, Project, void>({
+export const projectCreateFx = createEffect<CreatedProject, Project, void>({
   handler: async ({ title, description }) => {
     const docRef = await addDoc(collection(getFirestore(), 'projects'), {
       title,
