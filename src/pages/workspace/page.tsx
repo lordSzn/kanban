@@ -1,13 +1,11 @@
 import { reflect } from '@effector/reflect'
 import { Grid, Tabs, Text } from '@geist-ui/core'
-import { styled } from '@linaria/react'
 import React from 'react'
 import { $activeProjects, $importantList } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
 import { EmptyBlock } from '~/shared/ui'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
-import { ProjectsContent } from './ui/projects-content'
 
 export const Workspace = () => {
   return (
@@ -19,7 +17,7 @@ export const Workspace = () => {
         <Text h3>Your works</Text>
       </Grid>
       <Grid xs={20}>
-        <ContentList />
+        <ActiveProjectsList />
       </Grid>
       <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
@@ -30,9 +28,7 @@ export const Workspace = () => {
             />
           </Tabs.Item>
           <Tabs.Item label="important" value="3">
-            <ProjectsContainer>
-              <FavoritesProjectsList />
-            </ProjectsContainer>
+            <FavoritesProjectsList />
           </Tabs.Item>
         </Tabs>
       </Grid>
@@ -40,22 +36,18 @@ export const Workspace = () => {
   )
 }
 
-const ContentList = reflect({
-  view: ProjectsContent,
-  bind: {
-    loading: $pending,
-    projects: $activeProjects,
-  },
-})
-
 const FavoritesProjectsList = reflect({
   view: ProjectList,
   bind: {
     projects: $importantList,
+    loading: $pending,
   },
 })
 
-const ProjectsContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
+const ActiveProjectsList = reflect({
+  view: ProjectList,
+  bind: {
+    projects: $activeProjects,
+    loading: $pending,
+  },
+})
