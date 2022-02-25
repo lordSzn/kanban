@@ -2,6 +2,8 @@ import { createEffect } from 'effector'
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   Firestore,
   getDocs,
   getFirestore,
@@ -145,5 +147,15 @@ export const saveFavoriteProjectFx = createEffect<
     return {
       projectID: favoriteID,
     }
+  },
+})
+
+export const removeFavoriteProjectFx = createEffect<
+  { favoriteID: string },
+  void,
+  void
+>({
+  handler: async ({ favoriteID }) => {
+    await deleteDoc(doc(getFirestore(), 'favorites-projects', favoriteID))
   },
 })
