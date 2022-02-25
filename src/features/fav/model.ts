@@ -6,6 +6,7 @@ import {
   saveFavoriteProjectFx,
 } from '~/shared/api/internal'
 import type { FavoritesProjects } from '~/shared/api/internal'
+import { showMessage } from '~/shared/lib/toast'
 
 export const favoriteAdd = createEvent<{ favoriteID: string }>()
 export const favoriteRemove = createEvent<{ favoriteID: string }>()
@@ -30,6 +31,14 @@ export const $favoritesProjects = combine(
 sample({
   source: favoriteAdd,
   target: saveFavoriteProjectFx,
+})
+
+showMessage({
+  when: saveFavoriteProjectFx.doneData,
+  toast: () => ({
+    type: 'success',
+    text: 'project add to favorite',
+  }),
 })
 
 sample({
