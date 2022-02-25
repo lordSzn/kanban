@@ -1,12 +1,9 @@
 import { reflect } from '@effector/reflect'
 import { Grid, Tabs, Text } from '@geist-ui/core'
 import React from 'react'
-import {
-  $activeProjects,
-  $finishedProjects,
-  $importantList,
-} from '~/entities/project'
+import { $activeProjects, $finishedProjects } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
+import { $favoritesProjects } from '~/features/favorite-projects'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
 
@@ -39,7 +36,7 @@ export const Workspace = () => {
 const FavoritesProjectsList = reflect({
   view: ProjectList,
   bind: {
-    projects: $importantList,
+    projects: $favoritesProjects,
     loading: $pending,
   },
 })

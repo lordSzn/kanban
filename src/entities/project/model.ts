@@ -16,13 +16,13 @@ export const $finishedProjects = $projects.map((projects) =>
 )
 
 export const createProject = createEvent()
-export const closeProject = createEvent()
+export const closeCreateProject = createEvent()
 
 export const projectAdd = createEvent()
 
 export const $visibleDraftProject = createStore(false)
   .on(createProject, () => true)
-  .on(closeProject, () => false)
+  .on(closeCreateProject, () => false)
   .reset(projectCreateFx.done)
 
 export const $saveProjectLoading = projectCreateFx.pending
