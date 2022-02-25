@@ -14,6 +14,7 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
   if (loading) {
     return <Loading>loading</Loading>
   }
+
   if (projects.length === 0) {
     return (
       <EmptyBlock
@@ -22,17 +23,12 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
       />
     )
   }
+
   return (
     <Container>
       {projects.map((project) => (
         <Wrapper key={project.projectID}>
-          <ProjectPreview
-            title={project.title}
-            projectID={project.projectID}
-            description={project.description}
-            isFinished={project.isFinished}
-            photoUrl={project.photoUrl}
-          />
+          <ProjectPreview project={project} />
         </Wrapper>
       ))}
     </Container>

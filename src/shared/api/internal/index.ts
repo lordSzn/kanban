@@ -2,6 +2,8 @@ import { createEffect } from 'effector'
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   Firestore,
   getDocs,
   getFirestore,
@@ -86,24 +88,24 @@ export const loadTasksLifecycleFx = createEffect<
   },
 })
 
-export interface ImportantProjects {
+export interface FavoritesProjects {
   projectID: string
 }
 
-export const loadImportantProjectsFx = createEffect<
+export const loadFavoritesProjectsFx = createEffect<
   Firestore,
-  ImportantProjects[],
+  FavoritesProjects[],
   void
 >({
   handler: async (db) => {
-    const importantProjectsColumn = collection(db, 'favorites-projects')
-    const importantProjectsSnapshots = await getDocs(importantProjectsColumn)
+    const FavoritesProjectsColumn = collection(db, 'favorites-projects')
+    const FavoritesProjectsSnapshots = await getDocs(FavoritesProjectsColumn)
 
-    const importantProjectsList = importantProjectsSnapshots.docs.map((doc) =>
+    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) =>
       doc.data()
     )
 
-    return importantProjectsList as ImportantProjects[]
+    return FavoritesProjectsList as FavoritesProjects[]
   },
 })
 
@@ -127,5 +129,33 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
     }
 
     return createdProject
+  },
+})
+
+export const saveFavoriteProjectFx = createEffect<
+  { favoriteID: string },
+  FavoritesProjects,
+  void
+>({
+  handler: async ({ favoriteID }) => {
+    const favoriteColumn = collection(getFirestore(), 'favorites-projects')
+
+    await addDoc(favoriteColumn, {
+      projectID: favoriteID,
+    })
+
+    return {
+      projectID: favoriteID,
+    }
+  },
+})
+
+export const removeFavoriteProjectFx = createEffect<
+  { favoriteID: string },
+  void,
+  void
+>({
+  handler: async ({ favoriteID }) => {
+    await deleteDoc(doc(getFirestore(), 'favorites-projects', favoriteID))
   },
 })

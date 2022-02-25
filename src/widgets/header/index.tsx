@@ -5,7 +5,7 @@ import { useStore } from 'effector-react'
 import React from 'react'
 import {
   $visibleDraftProject,
-  closeProject,
+  closeCreateProject,
   createProject,
 } from '~/entities/project'
 import { ProjectCreate } from '~/entities/project/ui'
@@ -40,7 +40,7 @@ export const Header = () => {
           <UserCard fullname="robert kuzhin" />
         </Grid>
       </Grid.Container>
-      <ProjectCreate visible={visibleModel} close={closeProject} />
+      <ProjectCreate visible={visibleModel} close={closeCreateProject} />
     </HeaderContainer>
   )
 }

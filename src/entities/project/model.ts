@@ -1,10 +1,6 @@
 import { combine, createEvent, createStore, sample } from 'effector'
-import {
-  loadImportantProjectsFx,
-  loadProjectsFx,
-  projectCreateFx,
-} from '~/shared/api/internal'
-import type { Project, ImportantProjects } from '~/shared/api/internal'
+import { loadProjectsFx, projectCreateFx } from '~/shared/api/internal'
+import type { Project } from '~/shared/api/internal'
 
 export const $projects = createStore<Project[]>([])
   .on(loadProjectsFx.doneData, (_, projects) => projects)
@@ -12,47 +8,21 @@ export const $projects = createStore<Project[]>([])
     projects.concat(newProject)
   )
 
-export const $importantProjectsID = createStore<ImportantProjects[]>([]).on(
-  loadImportantProjectsFx.doneData,
-  (_, projects) => projects
+export const $activeProjects = $projects.map((projects) =>
+  projects.filter(({ isFinished }) => !isFinished)
 )
-export const $importantList = createStore<Project[]>([])
-export const $activeProjects = createStore<Project[]>([])
-export const $finishedProjects = createStore<Project[]>([])
-
-sample({
-  source: $projects,
-  filter: (projects) => projects.length > 0,
-  fn: (projects) => projects.filter(({ isFinished }) => !isFinished),
-  target: $activeProjects,
-})
-
-sample({
-  source: $projects,
-  filter: (projects) => projects.length > 0,
-  fn: (projects) => projects.filter(({ isFinished }) => isFinished),
-  target: $finishedProjects,
-})
-
-sample({
-  clock: $importantProjectsID,
-  source: $projects,
-  filter: (projects) => projects.length > 0,
-  fn: (projects, favorites) => {
-    const favoritesId = favorites.map(({ projectID }) => projectID)
-    return projects.filter(({ projectID }) => favoritesId.includes(projectID))
-  },
-  target: $importantList,
-})
+export const $finishedProjects = $projects.map((projects) =>
+  projects.filter(({ isFinished }) => isFinished)
+)
 
 export const createProject = createEvent()
-export const closeProject = createEvent()
+export const closeCreateProject = createEvent()
 
 export const projectAdd = createEvent()
 
 export const $visibleDraftProject = createStore(false)
   .on(createProject, () => true)
-  .on(closeProject, () => false)
+  .on(closeCreateProject, () => false)
   .reset(projectCreateFx.done)
 
 export const $saveProjectLoading = projectCreateFx.pending
