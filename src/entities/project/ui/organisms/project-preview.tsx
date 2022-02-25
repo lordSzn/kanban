@@ -4,21 +4,21 @@ import React, { FC } from 'react'
 import type { Project } from '~/shared/api/internal'
 import { paths } from '~/shared/lib/paths'
 
-export const ProjectPreview: FC<Project> = ({
-  projectID,
-  title,
-  description,
-  photoUrl,
-}) => {
+interface Props {
+  project: Project
+  className?: string
+}
+
+export const ProjectPreview: FC<Props> = ({ project, className }) => {
   return (
-    <Link to={paths.project(projectID)}>
+    <Link className={className} to={paths.project(project.projectID)}>
       <Card width="300px" shadow>
-        <Image height="200px" width="300px" src={photoUrl} />
+        <Image height="200px" width="300px" src={project.photoUrl} />
         <Text h4 mb={0}>
-          {title}
+          {project.title}
         </Text>
         <Text type="secondary" small>
-          {description}
+          {project.description}
         </Text>
       </Card>
     </Link>
