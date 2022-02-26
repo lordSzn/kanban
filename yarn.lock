@@ -5609,6 +5609,11 @@ jszip@^3.6.0:
     readable-stream "~2.3.6"
     set-immediate-shim "~1.0.1"
 
+keen-slider@^6.6.3:
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/keen-slider/-/keen-slider-6.6.3.tgz#b99eb61aa2c4f3cae5274a3424e2a010b26b7081"
+  integrity sha512-IDJh3CNeiCY/0N/ht+4/TUUD0plS064ijO8AcQ2sJXS07PhJOnv7kNUVsQdNh+t8Vmmy3sJ+sHNubSGdrEcMlQ==
+
 kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
