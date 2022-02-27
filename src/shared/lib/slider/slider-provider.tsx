@@ -4,7 +4,7 @@ import {
   useKeenSlider,
 } from 'keen-slider/react'
 import React, { FC, useLayoutEffect } from 'react'
-import { addRef, slideChanged, sliderOpened } from '.'
+import { addRef, slideChanged, sliderOpened } from './slider-effects'
 
 type KeenParams = Parameters<typeof useKeenSlider>[0]
 interface Props {
