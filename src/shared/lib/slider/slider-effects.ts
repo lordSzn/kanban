@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from 'effector'
 import { KeenSliderHooks, KeenSliderInstance } from 'keen-slider/react'
-import { MutableRefObject } from 'react'
+import { MutableRefObject, SyntheticEvent } from 'react'
 
 type KeenOptions = KeenSliderInstance<unknown, unknown, KeenSliderHooks>
 
@@ -42,3 +42,7 @@ export const prevSlide = createEffect<SliderInstance, void, void>(
     instance.current?.prev()
   }
 )
+
+export const preventDefault = createEffect<SyntheticEvent, void>((event) => {
+  event.preventDefault()
+})
