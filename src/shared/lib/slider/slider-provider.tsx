@@ -32,7 +32,7 @@ export const SliderProvider: FC<Props & KeenParams> = ({
   }, [])
 
   return (
-    <div className={className} ref={sliderRef}>
+    <div className={`keen-slider ${className}`} ref={sliderRef}>
       {children}
     </div>
   )
