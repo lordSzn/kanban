@@ -30,7 +30,11 @@ export const SliderProvider: FC<Props & KeenParams> = ({
   }, [])
 
   return (
-    <div className={`keen-slider ${className}`} ref={sliderRef}>
+    <div
+      className={`keen-slider ${className}`}
+      style={{ cursor: 'move' }}
+      ref={sliderRef}
+    >
       {children}
     </div>
   )
