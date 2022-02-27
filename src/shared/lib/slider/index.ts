@@ -1,12 +1,35 @@
-import { createEffect, createEvent, createStore } from 'effector'
-import { useKeenSlider } from 'keen-slider/react'
+import { createEffect, createEvent, createStore, sample } from 'effector'
+import { KeenSliderHooks, KeenSliderInstance } from 'keen-slider/react'
+import { MutableRefObject } from 'react'
 
-type SliderInstance = ReturnType<typeof useKeenSlider>[1]
+type KeenOptions = KeenSliderInstance<unknown, unknown, KeenSliderHooks>
 
-export const $sliderRef = createStore<SliderInstance>({ current: null })
+type SliderInstance = MutableRefObject<KeenSliderInstance<
+  unknown,
+  unknown,
+  KeenSliderHooks
+> | null>
 
 export const addRef = createEvent<SliderInstance>()
 export const removeRef = createEvent()
+
+export const $sliderRef = createStore<SliderInstance>({ current: null })
+  .on(addRef, (_, ref) => ref)
+  .reset(removeRef)
+
+export const sliderOpened = createEvent()
+export const sliderDestroyed = createEvent()
+
+export const $opened = createStore(false)
+  .on(sliderOpened, () => true)
+  .on(sliderDestroyed, () => false)
+
+export const slideChanged = createEvent<KeenOptions>()
+
+sample({
+  clock: sliderDestroyed,
+  target: removeRef,
+})
 
 export const nextSlide = createEffect<SliderInstance, void, void>(
   (instance) => {

@@ -1,20 +1,39 @@
-import { useKeenSlider } from 'keen-slider/react'
-import { FC, memo, useLayoutEffect } from 'react'
-import { addRef } from '.'
+import {
+  KeenSliderHooks,
+  KeenSliderPlugin,
+  useKeenSlider,
+} from 'keen-slider/react'
+import React, { FC, useLayoutEffect } from 'react'
+import { addRef, slideChanged, sliderOpened } from '.'
 
-type SliderParams = Parameters<typeof useKeenSlider>
-
+type KeenParams = Parameters<typeof useKeenSlider>[0]
 interface Props {
-  options: SliderParams[0]
-  plugins: SliderParams[1]
+  className?: string
+  plugins: KeenSliderPlugin<unknown, unknown, KeenSliderHooks>[] | undefined
 }
 
-export const SliderProvider: FC<Props> = memo(({ options, plugins }) => {
-  const [sliderRef, sliderInstance] = useKeenSlider(options, plugins)
+export const SliderProvider: FC<Props & KeenParams> = ({
+  children,
+  className,
+  plugins,
+  ...options
+}) => {
+  const [sliderRef, sliderInstance] = useKeenSlider(
+    {
+      created: () => sliderOpened(),
+      slideChanged,
+      ...options,
+    },
+    plugins
+  )
 
   useLayoutEffect(() => {
     addRef(sliderInstance)
   }, [])
 
-  return null
-})
+  return (
+    <div className={className} ref={sliderRef}>
+      {children}
+    </div>
+  )
+}
