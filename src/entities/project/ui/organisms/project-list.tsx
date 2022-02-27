@@ -2,6 +2,7 @@ import { Loading } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 import type { Project } from '~/shared/api/internal'
+import { PaperSlide, SliderProvider } from '~/shared/lib/slider'
 import { EmptyBlock } from '~/shared/ui'
 import { ProjectPreview } from './project-preview'
 
@@ -25,21 +26,19 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
   }
 
   return (
-    <Container>
+    // @temp
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    <SliderProvider slides={{ perView: 4 }}>
       {projects.map((project) => (
-        <Wrapper key={project.projectID}>
+        <PaperSlideStyled key={project.projectID}>
           <ProjectPreview project={project} />
-        </Wrapper>
+        </PaperSlideStyled>
       ))}
-    </Container>
+    </SliderProvider>
   )
 }
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Wrapper = styled.div`
-  margin-right: 1.5rem;
+const PaperSlideStyled = styled(PaperSlide)`
+  padding: 1.5rem;
 `
