@@ -25,6 +25,10 @@ export const $opened = createStore(false)
   .on(sliderDestroyed, () => false)
 
 export const slideChanged = createEvent<KeenOptions>()
+export const $currentSlide = createStore(0).on(
+  slideChanged,
+  (_, slide) => slide.track.details.rel
+)
 
 sample({
   clock: sliderDestroyed,
