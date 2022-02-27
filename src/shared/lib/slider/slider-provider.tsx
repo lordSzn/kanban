@@ -3,21 +3,22 @@ import {
   KeenSliderPlugin,
   useKeenSlider,
 } from 'keen-slider/react'
-import React, { FC, useLayoutEffect } from 'react'
+import React, { FC, ReactNode, useLayoutEffect } from 'react'
 import { addRef, slideChanged, sliderOpened } from './slider-effects'
 
 type KeenParams = Parameters<typeof useKeenSlider>[0]
 interface Props {
+  children: ReactNode | ReactNode[]
   className?: string
-  plugins: KeenSliderPlugin<unknown, unknown, KeenSliderHooks>[] | undefined
+  plugins?: KeenSliderPlugin<unknown, unknown, KeenSliderHooks>[] | undefined
 }
 
-export const SliderProvider: FC<Props & KeenParams> = ({
+export const SliderProvide = ({
   children,
   className,
   plugins,
   ...options
-}) => {
+}: Props & KeenParams) => {
   const [sliderRef, sliderInstance] = useKeenSlider(
     {
       created: () => sliderOpened(),
