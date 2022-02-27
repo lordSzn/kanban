@@ -17,7 +17,7 @@ export const Workspace = () => {
         <Text h3>Your works</Text>
       </Grid>
       <Grid xs={20}>
-        <ActiveProjectsList />
+        <ActiveProjects />
       </Grid>
       <Grid xs={20}>
         <Tabs initialValue="1" width="100%">
@@ -33,6 +33,14 @@ export const Workspace = () => {
   )
 }
 
+const ActiveProjects = reflect({
+  view: ProjectList,
+  bind: {
+    projects: $activeProjects,
+    loading: $pending,
+  },
+})
+
 const FavoritesProjectsList = reflect({
   view: ProjectList,
   bind: {
@@ -45,14 +53,6 @@ const FinishedProjects = reflect({
   view: ProjectList,
   bind: {
     projects: $finishedProjects,
-    loading: $pending,
-  },
-})
-
-const ActiveProjectsList = reflect({
-  view: ProjectList,
-  bind: {
-    projects: $activeProjects,
     loading: $pending,
   },
 })
