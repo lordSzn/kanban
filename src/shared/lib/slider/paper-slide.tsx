@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const PaperSlide = forwardRef<HTMLDivElement, Props>(
-  ({ children, className }, ref) => {
+  ({ children, className = '' }, ref) => {
     return (
       <div ref={ref} className={`keen-slider__slide ${className}`}>
         {children}
