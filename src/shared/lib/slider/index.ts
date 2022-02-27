@@ -1,3 +1,3 @@
 export { PaperSlide } from './paper-slide'
 export { SliderProvider } from './slider-provider'
-export * from './slider-effects'
+export * as slider from './slider-effects'
