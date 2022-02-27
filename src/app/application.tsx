@@ -1,6 +1,7 @@
 import { CssBaseline, GeistProvider } from '@geist-ui/core'
 import { RouterProvider } from 'atomic-router-react'
 import { useStore } from 'effector-react'
+import 'keen-slider/keen-slider.min.css'
 import React, { useEffect } from 'react'
 import { $theme } from '~/features/theme'
 import { initFirebase } from '~/shared/config/init-firebase'
