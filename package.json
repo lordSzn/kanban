@@ -23,6 +23,7 @@
     "atomic-router-react": "^0.4.3",
     "effector": "^22.2.0",
     "effector-react": "^22.0.6",
+    "effector-storage": "^5.0.0",
     "firebase": "^9.6.6",
     "history": "^5.2.0",
     "keen-slider": "^6.6.3",
