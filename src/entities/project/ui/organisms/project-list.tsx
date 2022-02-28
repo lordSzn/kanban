@@ -26,7 +26,7 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
   }
 
   return (
-    // @temp
+    // @fix
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     <SliderProvider slides={{ perView: 4 }}>
