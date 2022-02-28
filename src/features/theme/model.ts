@@ -1,45 +1,21 @@
-import { createEffect, createStore, sample, split } from 'effector'
-import { appStarted } from '../../shared/config/run-logic'
+import { createEvent, createStore, sample } from 'effector'
+import { persist } from 'effector-storage/local'
 
 type Theme = 'light' | 'dark'
 
-export const getSaveThemeFx = createEffect<void, string | null>({
-  handler: async () => {
-    const theme = window.localStorage.getItem('ui-theme')
-
-    return theme
-  },
-})
-
-export const getSystemThemeFx = createEffect<void, Theme>({
-  handler: async () => {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-
-    return isDark ? 'dark' : 'light'
-  },
-})
-
-sample({
-  clock: appStarted,
-  target: getSaveThemeFx,
-})
-
-const { loadSaveTheme, __: loadSystemTheme } = split(getSaveThemeFx, {
-  loadSaveTheme: (theme) => Boolean(theme),
-})
-
-sample({
-  clock: loadSystemTheme,
-  target: getSystemThemeFx,
-})
-
+export const themeToggled = createEvent()
 export const $theme = createStore<Theme>('light')
-  .on(loadSaveTheme, (_, theme) => theme)
-  .on(getSystemThemeFx.doneData, (_, theme) => theme)
 
-$theme.watch((theme) => {
-  if (!theme) {
-    return window.localStorage.removeItem('ui-theme')
-  }
-  window.localStorage.setItem('ui-theme', theme)
+export const $isDark = $theme.map((theme) => theme === 'dark')
+
+persist({
+  store: $theme,
+  key: 'ui-theme',
+})
+
+sample({
+  clock: themeToggled,
+  source: $theme,
+  fn: (theme) => (theme === 'light' ? 'dark' : 'light'),
+  target: $theme,
 })
