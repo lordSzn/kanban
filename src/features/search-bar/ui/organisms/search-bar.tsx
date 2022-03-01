@@ -1,5 +1,4 @@
-import { KeyCode, KeyMod, useKeyboard } from '@geist-ui/core'
-import Input from '@geist-ui/core/esm/input/input'
+import { KeyCode, KeyMod, useKeyboard, Input } from '@geist-ui/core'
 import React, { useLayoutEffect, useRef } from 'react'
 import { addFieldRef, focusSearchField } from '../..'
 
