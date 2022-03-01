@@ -10,6 +10,7 @@ import {
 } from '~/entities/project'
 import { ProjectCreate } from '~/entities/project/ui'
 import { UserCard } from '~/entities/user/ui'
+import { SearchBar } from '~/features/search-bar/ui'
 
 export const Header = () => {
   const visibleModel = useStore($visibleDraftProject)
@@ -22,8 +23,8 @@ export const Header = () => {
           </ButtonMenu>
           <Text h2>Mirio</Text>
         </Grid>
-        <Grid xs={3}>
-          <Input scale={1} iconRight={<Keyboard ctrl />} placeholder="Search" />
+        <Grid xs={4}>
+          <SearchBar />
         </Grid>
         <Grid xs={2}>
           <Button
