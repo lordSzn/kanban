@@ -9,7 +9,7 @@ import { UserCard } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
 
 export const Header = () => {
-  const visibleModel = useStore($visibleDraftProject)
+  const visibleModal = useStore($visibleDraftProject)
   return (
     <HeaderContainer>
       <Grid.Container height="100%" justify="center" alignItems="center">
@@ -27,7 +27,7 @@ export const Header = () => {
           <UserCard fullname="robert kuzhin" />
         </Grid>
       </Grid.Container>
-      <ProjectCreationForm visible={visibleModel} close={hideCreationForm} />
+      <ProjectCreationForm visible={visibleModal} close={hideCreationForm} />
     </HeaderContainer>
   )
 }
