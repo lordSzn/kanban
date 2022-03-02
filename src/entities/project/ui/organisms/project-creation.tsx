@@ -39,9 +39,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
           value={title}
           placeholder="title"
           onChange={(e) => titleChanged(e.target.value)}
-        >
-          <Text>Title</Text>
-        </Input>
+        />
         <Spacer h={1.2} />
         <Textarea
           width="100%"
