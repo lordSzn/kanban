@@ -1,6 +1,7 @@
-import { Input, Modal, Spacer, Text } from '@geist-ui/core'
+import { Input, Modal, Spacer, Text, Textarea } from '@geist-ui/core'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
+import { ChoiceTag } from '..'
 import {
   $description,
   $saveProjectLoading,
@@ -20,7 +21,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
   const description = useStore($description)
   const loading = useStore($saveProjectLoading)
   return (
-    <Modal visible={visible} onClose={close}>
+    <Modal height="870px" width="800px" visible={visible} onClose={close}>
       <Modal.Title>Create project</Modal.Title>
       <Modal.Content>
         <Input
@@ -32,14 +33,13 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
           <Text>Title</Text>
         </Input>
         <Spacer h={1.2} />
-        <Input
+        <Textarea
           width="100%"
           value={description}
-          placeholder="description"
           onChange={(e) => descriptionChanged(e.target.value)}
-        >
-          <Text>Description</Text>
-        </Input>
+        />
+        <Spacer h={1.2} />
+        <ChoiceTag />
       </Modal.Content>
       <Modal.Action passive onClick={close}>
         Cancel
