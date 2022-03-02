@@ -1,4 +1,5 @@
 import { combine, createEvent, createStore, sample } from 'effector'
+import { MouseEvent } from 'react'
 import { loadProjectsFx, projectCreateFx } from '~/shared/api/internal'
 import type { Project } from '~/shared/api/internal'
 
@@ -15,15 +16,14 @@ export const $finishedProjects = $projects.map((projects) =>
   projects.filter(({ isFinished }) => isFinished)
 )
 
-// todo refactor name
-export const createProject = createEvent<any>()
-export const closeCreateProject = createEvent()
+export const showCreationForm = createEvent<MouseEvent>()
+export const hideCreationForm = createEvent()
 
 export const formSubmitted = createEvent()
 
 export const $visibleDraftProject = createStore(false)
-  .on(createProject, () => true)
-  .on(closeCreateProject, () => false)
+  .on(showCreationForm, () => true)
+  .on(hideCreationForm, () => false)
   .reset(projectCreateFx.done)
 
 export const $saveProjectLoading = projectCreateFx.pending
