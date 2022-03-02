@@ -78,7 +78,7 @@ const ModalActions = styled.div`
 `
 
 const ButtonGroup = styled.div`
-  margin-top: 1.4rem;
+  margin-top: 2rem;
   display: flex;
   justify-content: flex-end;
 `
