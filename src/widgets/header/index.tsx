@@ -3,8 +3,8 @@ import { ApplicationMenu } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React from 'react'
-import { $visibleDraftProject, closeCreateProject } from '~/entities/project'
-import { ProjectCreate, SubmittedProject } from '~/entities/project/ui'
+import { $visibleDraftProject, hideCreationForm } from '~/entities/project'
+import { ProjectCreationForm, SubmittedProject } from '~/entities/project/ui'
 import { UserCard } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
 
@@ -27,7 +27,7 @@ export const Header = () => {
           <UserCard fullname="robert kuzhin" />
         </Grid>
       </Grid.Container>
-      <ProjectCreate visible={visibleModel} close={closeCreateProject} />
+      <ProjectCreationForm visible={visibleModel} close={hideCreationForm} />
     </HeaderContainer>
   )
 }

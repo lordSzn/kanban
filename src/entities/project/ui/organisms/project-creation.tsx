@@ -15,7 +15,7 @@ interface Props {
   close(): void
 }
 
-export const ProjectCreate: FC<Props> = ({ visible, close }) => {
+export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
   const title = useStore($title)
   const description = useStore($description)
   const loading = useStore($saveProjectLoading)
