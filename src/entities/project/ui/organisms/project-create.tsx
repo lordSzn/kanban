@@ -6,7 +6,7 @@ import {
   $saveProjectLoading,
   $title,
   descriptionChanged,
-  projectAdd,
+  formSubmitted,
   titleChanged,
 } from '../..'
 
@@ -44,7 +44,7 @@ export const ProjectCreate: FC<Props> = ({ visible, close }) => {
       <Modal.Action passive onClick={close}>
         Cancel
       </Modal.Action>
-      <Modal.Action loading={loading} onClick={() => projectAdd()}>
+      <Modal.Action loading={loading} onClick={() => formSubmitted()}>
         Submit
       </Modal.Action>
     </Modal>

@@ -15,10 +15,11 @@ export const $finishedProjects = $projects.map((projects) =>
   projects.filter(({ isFinished }) => isFinished)
 )
 
-export const createProject = createEvent()
+// todo refactor name
+export const createProject = createEvent<any>()
 export const closeCreateProject = createEvent()
 
-export const projectAdd = createEvent()
+export const formSubmitted = createEvent()
 
 export const $visibleDraftProject = createStore(false)
   .on(createProject, () => true)
@@ -55,7 +56,7 @@ export const $createdProject = combine({
 })
 
 sample({
-  clock: projectAdd,
+  clock: formSubmitted,
   source: $createdProject,
   filter: $validCreatedProject,
   target: projectCreateFx,
