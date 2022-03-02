@@ -1,6 +1,16 @@
-import { Input, Modal, Spacer, Text, Textarea } from '@geist-ui/core'
+import {
+  Button,
+  Divider,
+  Input,
+  Modal,
+  Spacer,
+  Text,
+  Textarea,
+} from '@geist-ui/core'
+import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
+import { DragUpload } from '~/shared/ui/molecules/drag-upload'
 import { ChoiceTag } from '..'
 import {
   $description,
@@ -22,7 +32,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
   const loading = useStore($saveProjectLoading)
   return (
     <Modal height="870px" width="800px" visible={visible} onClose={close}>
-      <Modal.Title>Create project</Modal.Title>
+      <Modal.Title>Mirio</Modal.Title>
       <Modal.Content>
         <Input
           width="100%"
@@ -40,13 +50,32 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
         />
         <Spacer h={1.2} />
         <ChoiceTag />
+        <Spacer h={1.2} />
+        <DragUpload maxFiles={1} accept=".jpg, .jpeg, .png" />
       </Modal.Content>
-      <Modal.Action passive onClick={close}>
-        Cancel
-      </Modal.Action>
-      <Modal.Action loading={loading} onClick={() => formSubmitted()}>
-        Submit
-      </Modal.Action>
+      <ModalActions>
+        <Divider />
+        <ButtonGroup>
+          <Button width="70px" mr={0.4} onClick={() => close()}>
+            cancel
+          </Button>
+          <Button type="success" width="70px" onClick={() => formSubmitted}>
+            submit
+          </Button>
+        </ButtonGroup>
+      </ModalActions>
     </Modal>
   )
 }
+
+const ModalActions = styled.div`
+  overflow: hidden;
+  width: 100%;
+  padding-top: 12rem;
+`
+
+const ButtonGroup = styled.div`
+  margin-top: 1.4rem;
+  display: flex;
+  justify-content: flex-end;
+`
