@@ -8,10 +8,7 @@ interface Props {
 
 export const FavoriteAction: FC<Props> = memo(({ projectID }) => {
   const isFavorite = useIsFavorite(projectID)
+  const title = isFavorite ? 'Remove from important' : 'Add to important'
 
-  if (isFavorite) {
-    return <Button>Mark as important</Button>
-  }
-
-  return <Button>Remove from important</Button>
+  return <Button>{title}</Button>
 })
