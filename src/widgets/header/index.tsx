@@ -1,14 +1,10 @@
-import { Button, Grid, Input, Keyboard, Text } from '@geist-ui/core'
+import { Grid, Text } from '@geist-ui/core'
 import { ApplicationMenu } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React from 'react'
-import {
-  $visibleDraftProject,
-  closeCreateProject,
-  createProject,
-} from '~/entities/project'
-import { ProjectCreate } from '~/entities/project/ui'
+import { $visibleDraftProject, closeCreateProject } from '~/entities/project'
+import { ProjectCreate, SubmittedProject } from '~/entities/project/ui'
 import { UserCard } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
 
@@ -17,27 +13,17 @@ export const Header = () => {
   return (
     <HeaderContainer>
       <Grid.Container height="100%" justify="center" alignItems="center">
-        <Grid xs={12} margin="0" height="100%">
-          <ButtonMenu onClick={console.log}>
+        <Grid xs={13} height="100%" margin="0">
+          <ButtonMenu>
             <ApplicationMenu />
           </ButtonMenu>
           <Text h2>Mirio</Text>
         </Grid>
-        <Grid xs={4}>
+        <Grid xs={6} justify="space-between">
           <SearchBar />
+          <SubmittedProject />
         </Grid>
-        <Grid xs={2}>
-          <Button
-            auto
-            ghost
-            type="secondary"
-            onClick={() => createProject()}
-            scale={0.6}
-          >
-            Create project
-          </Button>
-        </Grid>
-        <Grid xs={3}>
+        <Grid xs={3} pl={3.45}>
           <UserCard fullname="robert kuzhin" />
         </Grid>
       </Grid.Container>

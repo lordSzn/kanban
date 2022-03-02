@@ -2,7 +2,7 @@ import { KeyCode, KeyMod, useKeyboard, Input } from '@geist-ui/core'
 import React, { useLayoutEffect, useRef } from 'react'
 import { addFieldRef, focusSearchField } from '../..'
 
-export const SearchBar = () => {
+export const SearchBar = ({ className }: { className?: string }) => {
   const ref = useRef<HTMLInputElement>(null)
 
   useLayoutEffect(() => {
@@ -15,9 +15,10 @@ export const SearchBar = () => {
 
   return (
     <Input
-      width="300px"
+      width="330px"
       ref={ref}
       clearable
+      className={className}
       labelRight="Ctrl K"
       placeholder="Search..."
     />
