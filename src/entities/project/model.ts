@@ -2,6 +2,7 @@ import { combine, createEvent, createStore, sample } from 'effector'
 import { MouseEvent } from 'react'
 import { loadProjectsFx, projectCreateFx } from '~/shared/api/internal'
 import type { Project } from '~/shared/api/internal'
+import { showMessage } from '~/shared/lib/toast'
 
 export const $projects = createStore<Project[]>([])
   .on(loadProjectsFx.doneData, (_, projects) => projects)
@@ -60,4 +61,12 @@ sample({
   source: $createdProject,
   filter: $validCreatedProject,
   target: projectCreateFx,
+})
+
+showMessage({
+  when: projectCreateFx.done,
+  toast: () => ({
+    type: 'success',
+    text: 'The project is successfully established',
+  }),
 })
