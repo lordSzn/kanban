@@ -1,11 +1,18 @@
-import { Button, Divider, Modal, Spacer, Text } from '@geist-ui/core'
+import { Button, Divider, Image, Modal, Spacer, Text } from '@geist-ui/core'
 import { Dropbox } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
 import { DragUpload } from '~/shared/ui/molecules/drag-upload'
 import { ChoiceTag, DescriptionField, TitleField } from '..'
-import { $description, $saveProjectLoading, $title, formSubmitted } from '../..'
+import {
+  $description,
+  $photoUrl,
+  $saveProjectLoading,
+  $title,
+  formSubmitted,
+  photoUploaded,
+} from '../..'
 
 interface Props {
   visible: boolean
@@ -16,6 +23,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
   const title = useStore($title)
   const description = useStore($description)
   const loading = useStore($saveProjectLoading)
+  const photoUrl = useStore($photoUrl)
   return (
     <Modal height="870px" width="800px" visible={visible} onClose={close}>
       <Modal.Title>Mirio</Modal.Title>
@@ -26,10 +34,16 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
         <Spacer h={1.2} />
         <ChoiceTag />
         <Spacer h={1.2} />
-        <DragUpload maxFiles={1}>
+        <DragUpload maxFiles={1} onDrop={(file) => photoUploaded(file)}>
           <DragGroup>
-            <Dropbox size={140} />
-            <Text>Drop your photo, here to start uploading</Text>
+            {photoUrl ? (
+              <Image src={photoUrl} margin="0" width="200px" height="200px" />
+            ) : (
+              <>
+                <Dropbox size={140} />
+                <Text>Drop your photo, here to start uploading</Text>
+              </>
+            )}
           </DragGroup>
         </DragUpload>
       </Modal.Content>
