@@ -29,7 +29,7 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
     return (
       <Container>
         {projects.map((project) => (
-          <ProjectPreview key={project.projectID} project={project} />
+          <ProjectPreviewStyled key={project.projectID} project={project} />
         ))}
       </Container>
     )
@@ -60,4 +60,10 @@ const PaperSlideStyled = styled(PaperSlide)`
 
 const Container = styled.section`
   display: flex;
+`
+
+const ProjectPreviewStyled = styled(ProjectPreview)`
+  &:not(:last-child) {
+    margin-right: 2rem;
+  }
 `
