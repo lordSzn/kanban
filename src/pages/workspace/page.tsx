@@ -16,7 +16,8 @@ export const Workspace = () => {
       <Grid xs={20} height="63px">
         <Text h3>Your works</Text>
       </Grid>
-      <Grid xs={20}>
+      {/* @fix style for navigation's */}
+      <Grid xs={20} style={{ position: 'relative' }}>
         <ActiveProjects />
       </Grid>
       <Grid xs={20}>
