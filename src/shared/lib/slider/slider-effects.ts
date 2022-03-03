@@ -35,18 +35,29 @@ sample({
   target: removeRef,
 })
 
-export const nextSlide = createEffect<SliderInstance, void, void>(
-  (instance) => {
-    instance.current?.next()
-  }
-)
+export const next = createEvent()
+export const prev = createEvent()
 
-export const prevSlide = createEffect<SliderInstance, void, void>(
-  (instance) => {
-    instance.current?.prev()
-  }
-)
+const nextSlide = createEffect<SliderInstance, void, void>((instance) => {
+  instance.current?.next()
+})
+
+const prevSlide = createEffect<SliderInstance, void, void>((instance) => {
+  instance.current?.prev()
+})
 
 export const preventDefault = createEffect<SyntheticEvent, void>((event) => {
   event.preventDefault()
+})
+
+sample({
+  source: $sliderRef,
+  clock: next,
+  target: nextSlide,
+})
+
+sample({
+  source: $sliderRef,
+  clock: prev,
+  target: prevSlide,
 })
