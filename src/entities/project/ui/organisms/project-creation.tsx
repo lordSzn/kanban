@@ -1,26 +1,11 @@
-import {
-  Button,
-  Divider,
-  Input,
-  Modal,
-  Spacer,
-  Text,
-  Textarea,
-} from '@geist-ui/core'
+import { Button, Divider, Modal, Spacer, Text } from '@geist-ui/core'
 import { Dropbox } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
 import { DragUpload } from '~/shared/ui/molecules/drag-upload'
-import { ChoiceTag } from '..'
-import {
-  $description,
-  $saveProjectLoading,
-  $title,
-  descriptionChanged,
-  formSubmitted,
-  titleChanged,
-} from '../..'
+import { ChoiceTag, DescriptionField, TitleField } from '..'
+import { $description, $saveProjectLoading, $title, formSubmitted } from '../..'
 
 interface Props {
   visible: boolean
@@ -35,18 +20,9 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
     <Modal height="870px" width="800px" visible={visible} onClose={close}>
       <Modal.Title>Mirio</Modal.Title>
       <Modal.Content>
-        <Input
-          width="100%"
-          value={title}
-          placeholder="title"
-          onChange={(e) => titleChanged(e.target.value)}
-        />
+        <TitleField title={title} />
         <Spacer h={1.2} />
-        <Textarea
-          width="100%"
-          value={description}
-          onChange={(e) => descriptionChanged(e.target.value)}
-        />
+        <DescriptionField description={description} />
         <Spacer h={1.2} />
         <ChoiceTag />
         <Spacer h={1.2} />
