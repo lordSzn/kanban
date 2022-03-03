@@ -51,6 +51,10 @@ const arrowNavigation = css`
   transform: translateY(-50%);
   cursor: pointer;
 
+  &:disabled {
+    opacity: 0.3;
+  }
+
   & > svg {
     fill: #fff;
   }
