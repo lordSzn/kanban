@@ -3,6 +3,7 @@ import { MouseEvent } from 'react'
 import { loadProjectsFx, projectCreateFx } from '~/shared/api/internal'
 import type { Project } from '~/shared/api/internal'
 import { showMessage } from '~/shared/lib/toast'
+import { getFileUrl } from './library'
 
 export const $projects = createStore<Project[]>([])
   .on(loadProjectsFx.doneData, (_, projects) => projects)
@@ -31,6 +32,7 @@ export const $saveProjectLoading = projectCreateFx.pending
 
 export const titleChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
+export const photoUploaded = createEvent<File[]>()
 
 export const $title = createStore('')
   .on(titleChanged, (_, title) => title)
@@ -39,6 +41,19 @@ export const $title = createStore('')
 export const $description = createStore('')
   .on(descriptionChanged, (_, description) => description)
   .reset(projectCreateFx.done)
+
+export const $photo = createStore<File | null>(null)
+  .on(photoUploaded, (_, file) => file[0])
+  .reset(projectCreateFx.done)
+
+export const $photoUrl = createStore('').reset(projectCreateFx.done)
+
+sample({
+  source: $photo,
+  filter: Boolean,
+  fn: getFileUrl,
+  target: $photoUrl,
+})
 
 export const $validCreatedProject = combine(
   [$title, $description],
