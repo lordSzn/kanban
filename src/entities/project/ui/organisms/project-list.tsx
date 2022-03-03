@@ -26,9 +26,6 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
   }
 
   return (
-    // @fix
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     <SliderProvider slides={{ perView: 4 }}>
       {projects.map((project) => (
         <PaperSlideStyled key={project.projectID}>

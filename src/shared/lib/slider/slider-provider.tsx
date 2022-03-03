@@ -1,4 +1,8 @@
-import { useKeenSlider } from 'keen-slider/react'
+import {
+  useKeenSlider,
+  KeenSliderOptions,
+  KeenSliderHooks,
+} from 'keen-slider/react'
 import React, { FC, useLayoutEffect } from 'react'
 import {
   addRef,
@@ -7,7 +11,9 @@ import {
   sliderOpened,
 } from './slider-effects'
 
-type KeenParams = Parameters<typeof useKeenSlider>[0]
+type KeenParams =
+  | KeenSliderOptions<unknown, unknown, KeenSliderHooks>
+  | undefined
 
 interface Props {
   className?: string
