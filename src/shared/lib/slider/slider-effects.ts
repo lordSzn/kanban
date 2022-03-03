@@ -4,16 +4,16 @@ import { MutableRefObject, SyntheticEvent } from 'react'
 
 type KeenOptions = KeenSliderInstance<unknown, unknown, KeenSliderHooks>
 
-type SliderInstance = MutableRefObject<KeenSliderInstance<
+type SliderRef = MutableRefObject<KeenSliderInstance<
   unknown,
   unknown,
   KeenSliderHooks
 > | null>
 
-export const addRef = createEvent<SliderInstance>()
+export const addRef = createEvent<SliderRef>()
 export const removeRef = createEvent()
 
-export const $sliderRef = createStore<SliderInstance>({ current: null })
+export const $sliderRef = createStore<SliderRef>({ current: null })
   .on(addRef, (_, ref) => ref)
   .reset(removeRef)
 
@@ -38,11 +38,11 @@ sample({
 export const next = createEvent()
 export const prev = createEvent()
 
-const nextSlide = createEffect<SliderInstance, void, void>((instance) => {
+const nextSlide = createEffect<SliderRef, void, void>((instance) => {
   instance.current?.next()
 })
 
-const prevSlide = createEffect<SliderInstance, void, void>((instance) => {
+const prevSlide = createEffect<SliderRef, void, void>((instance) => {
   instance.current?.prev()
 })
 
