@@ -1,4 +1,5 @@
-import { Card, Text, Image } from '@geist-ui/core'
+import { Card, Text, Image, useTheme } from '@geist-ui/core'
+import { styled } from '@linaria/react'
 import { Link } from 'atomic-router-react'
 import React, { FC } from 'react'
 import type { Project } from '~/shared/api/internal'
@@ -10,9 +11,11 @@ interface Props {
 }
 
 export const ProjectPreview: FC<Props> = ({ project, className }) => {
+  const { type } = useTheme()
+
   return (
     <Link className={className} to={paths.project(project.projectID)}>
-      <Card width="300px" shadow>
+      <CardStyled data-theme={type} width="300px" shadow>
         <Image height="200px" width="300px" src={project.photoUrl} />
         <Text h4 mb={0}>
           {project.title}
@@ -20,7 +23,15 @@ export const ProjectPreview: FC<Props> = ({ project, className }) => {
         <Text type="secondary" small>
           {project.description}
         </Text>
-      </Card>
+      </CardStyled>
     </Link>
   )
 }
+
+const CardStyled = styled(Card)`
+  &[data-theme='dark'] {
+    &:hover {
+      box-shadow: 0 0 0 1px #fff !important;
+    }
+  }
+`
