@@ -23,9 +23,9 @@ export const Header = () => {
           <Text h2>Mirio</Text>
         </Grid>
         <Grid xs={6} justify="space-between">
-          <SwitchTheme />
-          <SearchBar />
           <SubmittedProject />
+          <SearchBar />
+          <SwitchTheme />
         </Grid>
         <Grid xs={3} pl={3.45}>
           <UserCard fullname="robert kuzhin" />
