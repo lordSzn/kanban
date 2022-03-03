@@ -20,7 +20,7 @@ export const SliderNavigation = ({
   return (
     <>
       <button
-        onClick={onNext}
+        onClick={onPrev}
         data-arrow="left"
         className={`${arrowNavigation} ${navigationClassName}`}
         disabled={leftDisable}
@@ -28,7 +28,7 @@ export const SliderNavigation = ({
         <Left size={40} />
       </button>
       <button
-        onClick={onPrev}
+        onClick={onNext}
         data-arrow="right"
         className={`${arrowNavigation} ${navigationClassName}`}
         disabled={rightDisable}
