@@ -1,4 +1,5 @@
 import { KeyCode, KeyMod, useKeyboard, Input } from '@geist-ui/core'
+import { Search } from '@icon-park/react'
 import React, { useLayoutEffect, useRef } from 'react'
 import { addFieldRef, focusSearchField } from '../..'
 
@@ -14,13 +15,15 @@ export const SearchBar = ({ className }: { className?: string }) => {
   }, [KeyMod.CtrlCmd, KeyCode.KEY_K])
 
   return (
-    <Input
-      width="330px"
-      ref={ref}
-      clearable
-      className={className}
-      labelRight="Ctrl K"
-      placeholder="Search..."
-    />
+    <div>
+      <Input
+        width="300px"
+        ref={ref}
+        clearable
+        className={className}
+        icon={<Search />}
+        placeholder="Search..."
+      />
+    </div>
   )
 }
