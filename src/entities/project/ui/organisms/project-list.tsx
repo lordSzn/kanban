@@ -25,8 +25,18 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
     )
   }
 
+  if (projects.length < 5) {
+    return (
+      <Container>
+        {projects.map((project) => (
+          <ProjectPreview key={project.projectID} project={project} />
+        ))}
+      </Container>
+    )
+  }
+
   return (
-    <SliderProvider slides={{ perView: 4 }}>
+    <SliderProvider navigation slides={{ perView: 4 }}>
       {projects.map((project) => (
         <PaperSlideStyled key={project.projectID}>
           <ProjectPreview project={project} />
@@ -37,5 +47,12 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
 }
 
 const PaperSlideStyled = styled(PaperSlide)`
-  padding: 1.5rem;
+  padding: 1.5rem 0 1.5rem 0;
+
+  display: flex;
+  justify-content: center;
+`
+
+const Container = styled.section`
+  display: flex;
 `
