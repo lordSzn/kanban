@@ -50,7 +50,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
         <Spacer h={1.2} />
         <ChoiceTag />
         <Spacer h={1.2} />
-        <DragUpload maxFiles={1} accept=".jpg, .jpeg, .png">
+        <DragUpload maxFiles={1}>
           <DragGroup>
             <Dropbox size={140} />
             <Text>Drop your photo, here to start uploading</Text>
