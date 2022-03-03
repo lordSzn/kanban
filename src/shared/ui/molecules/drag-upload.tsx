@@ -12,6 +12,7 @@ interface Props {
   multiple?: DropzoneOptions['multiple']
   onDrop?: DropzoneOptions['onDrop']
   validator?: DropzoneOptions['validator']
+  centred?: boolean
 }
 
 const DragUploadBase: FC<Props> = ({
@@ -24,6 +25,7 @@ const DragUploadBase: FC<Props> = ({
   multiple,
   validator,
   children,
+  centred = true,
 }) => {
   const theme = useTheme()
 
@@ -48,6 +50,7 @@ const DragUploadBase: FC<Props> = ({
     <div className={className} {...getRootProps()}>
       <DropArea
         style={styles}
+        data-centred={centred}
         data-focus={isFocused}
         data-accept={isDragAccept}
       >
@@ -77,5 +80,11 @@ const DropArea = styled.div`
 
   &[data-focus='true'] {
     border-color: #666 !important;
+  }
+
+  &[data-centred='true'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `
