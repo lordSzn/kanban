@@ -7,6 +7,7 @@ import {
   Text,
   Textarea,
 } from '@geist-ui/core'
+import { Dropbox } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
@@ -49,7 +50,12 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
         <Spacer h={1.2} />
         <ChoiceTag />
         <Spacer h={1.2} />
-        <DragUpload maxFiles={1} accept=".jpg, .jpeg, .png" />
+        <DragUpload maxFiles={1} accept=".jpg, .jpeg, .png">
+          <DragGroup>
+            <Dropbox size={140} />
+            <Text>Drop your photo, here to start uploading</Text>
+          </DragGroup>
+        </DragUpload>
       </Modal.Content>
       <ModalActions>
         <Divider />
@@ -81,4 +87,8 @@ const ButtonGroup = styled.div`
   margin-top: 2rem;
   display: flex;
   justify-content: flex-end;
+`
+
+const DragGroup = styled.div`
+  text-align: center;
 `
