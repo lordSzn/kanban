@@ -14,10 +14,10 @@ export const Header = () => {
   return (
     <HeaderContainer data-theme={theme}>
       <Grid.Container justify="center" alignItems="center">
-        <Grid md={10}>
+        <Grid md={10} sm={8}>
           <Text h2>Mirio</Text>
         </Grid>
-        <Grid md={10} alignItems="center" justify="flex-end">
+        <Grid md={10} sm={12} alignItems="center" justify="flex-end">
           <SubmittedProject />
           <SearchBar />
           <UserCard fullname="robert kuzhin" />
