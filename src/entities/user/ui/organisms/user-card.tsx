@@ -14,6 +14,7 @@ export const UserCard: FC<UserType & Props> = ({
   const fallback = fullname.charAt(0).toUpperCase()
   return (
     <Avatar
+      isSquare
       text={fallback}
       width={1.38}
       height={1.38}
