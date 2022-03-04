@@ -2,7 +2,7 @@ import { Loading } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 import type { Project } from '~/shared/api/internal'
-import { PaperSlide, slider, SliderProvider } from '~/shared/lib/slider'
+import { PaperSlide, SliderProvider } from '~/shared/lib/slider'
 import { EmptyBlock } from '~/shared/ui'
 import { ProjectPreview } from './project-preview'
 
@@ -10,7 +10,7 @@ interface Props {
   projects: Project[]
   loading: boolean
 }
-
+// @refactor
 export const ProjectList: FC<Props> = ({ projects, loading }) => {
   if (loading) {
     return <Loading>loading</Loading>
@@ -37,10 +37,10 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
 
   return (
     <SliderProvider
-      onNext={() => slider.next()}
-      onPrev={() => slider.prev()}
       slides={{ perView: 4 }}
       navigation
+      onNext={(slider) => slider.next()}
+      onPrev={(slider) => slider.prev()}
       breakpoints={{
         '(max-width: 1580px)': {
           slides: { perView: 3 },

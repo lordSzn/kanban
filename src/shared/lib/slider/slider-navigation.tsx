@@ -1,37 +1,45 @@
 import { Left, Right } from '@icon-park/react'
 import { css } from '@linaria/core'
-import React, { MouseEventHandler } from 'react'
+import { KeenSliderHooks } from 'keen-slider'
+import { KeenSliderInstance } from 'keen-slider/react'
+import React from 'react'
+
+type SliderInstance = KeenSliderInstance<unknown, unknown, KeenSliderHooks>
 
 export interface NavigationSliderProps {
   navigationClassName?: string
-  onNext?: MouseEventHandler<HTMLButtonElement>
-  onPrev?: MouseEventHandler<HTMLButtonElement>
-  leftDisable?: boolean
-  rightDisable?: boolean
+  onNext?: (slider: SliderInstance) => void
+  onPrev?: (slider: SliderInstance) => void
+  currentSlide: number
+  instance: SliderInstance
 }
 
 export const SliderNavigation = ({
   navigationClassName = '',
-  leftDisable = false,
-  rightDisable = false,
   onNext,
   onPrev,
+  instance,
+  currentSlide,
 }: NavigationSliderProps) => {
+  const leftDisabled = currentSlide === 0
+  // @fix
+  const rightDisabled = currentSlide === 2
+
   return (
     <>
       <button
-        onClick={onPrev}
         data-arrow="left"
+        onClick={() => onPrev?.(instance)}
         className={`${arrowNavigation} ${navigationClassName}`}
-        disabled={leftDisable}
+        disabled={leftDisabled}
       >
         <Left size={40} />
       </button>
       <button
-        onClick={onNext}
+        onClick={() => onNext?.(instance)}
         data-arrow="right"
         className={`${arrowNavigation} ${navigationClassName}`}
-        disabled={rightDisable}
+        disabled={rightDisabled}
       >
         <Right size={40} />
       </button>

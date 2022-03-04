@@ -1,54 +1,45 @@
-import { styled } from '@linaria/react'
-import { useStore } from 'effector-react'
 import {
   useKeenSlider,
   KeenSliderOptions,
   KeenSliderHooks,
 } from 'keen-slider/react'
-import React, { FC, useLayoutEffect } from 'react'
-import {
-  addRef,
-  $opened,
-  slideChanged,
-  sliderDestroyed,
-  sliderOpened,
-} from './slider-effects'
+import React, { FC, useState } from 'react'
 import { SliderNavigation, NavigationSliderProps } from './slider-navigation'
 
 type KeenParams =
   | KeenSliderOptions<unknown, unknown, KeenSliderHooks>
   | undefined
 
-interface Props extends NavigationSliderProps {
+type NavigationProps = Pick<
+  NavigationSliderProps,
+  'onNext' | 'onPrev' | 'navigationClassName'
+>
+
+interface Props {
   className?: string
   navigation?: boolean
 }
-
-export const SliderProvider: FC<Props & KeenParams> = ({
+// @fix in the future we should memoization component
+export const SliderProvider: FC<Props & KeenParams & NavigationProps> = ({
   children,
   className = '',
   navigation = false,
   navigationClassName = '',
   onPrev,
   onNext,
-  leftDisable,
-  rightDisable,
   ...options
 }) => {
-  const [sliderRef, sliderInstance] = useKeenSlider<HTMLDivElement>({
-    created: () => sliderOpened(),
-    destroyed: () => sliderDestroyed(),
-    slideChanged,
+  const [mounted, started] = useState(false)
+  const [currentSlide, setCurrentSlider] = useState(0)
+
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    created: () => started(true),
+    destroyed: () => started(false),
+    slideChanged: (slider) => setCurrentSlider(slider.track.details.rel),
     ...options,
   })
 
-  useLayoutEffect(() => {
-    addRef(sliderInstance)
-  }, [])
-
-  const isOpened = useStore($opened)
-  const isShowNavigation = navigation && isOpened
-
+  const isShowNavigation = mounted && navigation
   return (
     <>
       <div
@@ -58,13 +49,13 @@ export const SliderProvider: FC<Props & KeenParams> = ({
       >
         {children}
       </div>
-      {isShowNavigation && (
+      {isShowNavigation && instanceRef.current && (
         <SliderNavigation
+          currentSlide={currentSlide}
           onPrev={onPrev}
           onNext={onNext}
           navigationClassName={navigationClassName}
-          rightDisable={rightDisable}
-          leftDisable={leftDisable}
+          instance={instanceRef.current}
         />
       )}
     </>
