@@ -1,4 +1,5 @@
-import { User } from '@geist-ui/core'
+import { useMediaQuery, User } from '@geist-ui/core'
+import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 import type { User as UserType } from '../..'
 
@@ -12,9 +13,25 @@ export const UserCard: FC<UserType & Props> = ({
   description,
   className,
 }) => {
+  const fallback = fullname.charAt(0).toUpperCase()
+  const isMobile = useMediaQuery('md', { match: 'down' })
   return (
-    <User className={className} src={photoUrl} name={fullname}>
+    <UserStyled
+      className={className}
+      data-screen={isMobile}
+      text={fallback}
+      src={photoUrl}
+      name={fullname}
+    >
       {description}
-    </User>
+    </UserStyled>
   )
 }
+
+const UserStyled = styled(User)`
+  &[data-screen='true'] {
+    & .name {
+      display: none;
+    }
+  }
+`
