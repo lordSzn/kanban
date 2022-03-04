@@ -15,15 +15,15 @@ export const SearchBar = ({ className }: { className?: string }) => {
   }, [KeyMod.CtrlCmd, KeyCode.KEY_K])
 
   return (
-    <div>
+    <>
       <Input
-        width="300px"
         ref={ref}
+        width="300px"
         clearable
         className={className}
         icon={<Search />}
         placeholder="Search..."
       />
-    </div>
+    </>
   )
 }
