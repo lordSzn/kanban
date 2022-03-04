@@ -1,4 +1,4 @@
-import { User } from '@geist-ui/core'
+import { Avatar } from '@geist-ui/core'
 import React, { FC } from 'react'
 import type { User as UserType } from '../..'
 
@@ -9,12 +9,17 @@ interface Props {
 export const UserCard: FC<UserType & Props> = ({
   fullname,
   photoUrl,
-  description,
   className,
 }) => {
+  const fallback = fullname.charAt(0).toUpperCase()
   return (
-    <User className={className} src={photoUrl} name={fullname}>
-      {description}
-    </User>
+    <Avatar
+      isSquare
+      text={fallback}
+      width={1.38}
+      height={1.38}
+      className={className}
+      src={photoUrl}
+    />
   )
 }

@@ -41,6 +41,17 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
       onPrev={() => slider.prev()}
       slides={{ perView: 4 }}
       navigation
+      breakpoints={{
+        '(max-width: 1580px)': {
+          slides: { perView: 3 },
+        },
+        '(max-width: 1230px)': {
+          slides: { perView: 2 },
+        },
+        '(max-width: 830px)': {
+          slides: { perView: 1 },
+        },
+      }}
     >
       {projects.map((project) => (
         <PaperSlideStyled key={project.projectID}>
