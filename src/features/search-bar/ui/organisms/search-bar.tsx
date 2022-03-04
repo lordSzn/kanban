@@ -17,9 +17,9 @@ export const SearchBar = ({ className }: { className?: string }) => {
   return (
     <>
       <Input
+        scale={1.2}
         ref={ref}
         mr={1.2}
-        width="300px"
         clearable
         className={className}
         icon={<Search />}
