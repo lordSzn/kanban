@@ -1,4 +1,5 @@
 import { Avatar } from '@geist-ui/core'
+import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 import type { User as UserType } from '../..'
 
@@ -13,7 +14,7 @@ export const UserCard: FC<UserType & Props> = ({
 }) => {
   const fallback = fullname.charAt(0).toUpperCase()
   return (
-    <Avatar
+    <AvatarStyled
       isSquare
       text={fallback}
       width={1.38}
@@ -23,3 +24,7 @@ export const UserCard: FC<UserType & Props> = ({
     />
   )
 }
+
+const AvatarStyled = styled(Avatar)`
+  cursor: pointer;
+`
