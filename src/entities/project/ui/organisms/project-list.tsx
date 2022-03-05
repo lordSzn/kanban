@@ -26,18 +26,8 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
     )
   }
 
-  if (projects.length < 5) {
-    return (
-      <Container>
-        {projects.map((project) => (
-          <ProjectPreviewStyled key={project.projectID} project={project} />
-        ))}
-      </Container>
-    )
-  }
-
   return (
-    <ProjectsCarousel>
+    <ProjectsCarousel navigation={projects.length > 4}>
       {projects.map((project) => (
         <PaperSlideStyled key={project.projectID}>
           <ProjectPreview project={project} />
@@ -52,14 +42,4 @@ const PaperSlideStyled = styled(PaperSlide)`
 
   display: flex;
   justify-content: center;
-`
-
-const Container = styled.section`
-  display: flex;
-`
-
-const ProjectPreviewStyled = styled(ProjectPreview)`
-  &:not(:last-child) {
-    margin-right: 2rem;
-  }
 `

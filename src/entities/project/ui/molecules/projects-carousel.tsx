@@ -2,13 +2,21 @@ import { useMediaQuery } from '@geist-ui/core'
 import React, { FC } from 'react'
 import { SliderProvider } from '~/shared/lib/slider'
 
-export const ProjectsCarousel: FC = ({ children }) => {
+interface Props {
+  navigation?: boolean
+}
+
+export const ProjectsCarousel: FC<Props> = ({
+  children,
+  navigation = true,
+}) => {
   const upMd = useMediaQuery('md', { match: 'up' })
+  const isShowNavigation = navigation && upMd
 
   return (
     <SliderProvider
       slides={{ perView: 4 }}
-      navigation={upMd}
+      navigation={isShowNavigation}
       onNext={(slider) => slider.next()}
       onPrev={(slider) => slider.prev()}
       breakpoints={{
