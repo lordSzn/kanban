@@ -1,4 +1,5 @@
-import { Text, useTheme, Link } from '@geist-ui/core'
+import { Text, useTheme, Link, Button, Spacer, Divider } from '@geist-ui/core'
+import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
 import { ThemeChoice } from '~/features/theme/ui'
@@ -17,6 +18,32 @@ export const Login = () => {
           </div>
         </Container>
       </Header>
+      <Content>
+        <LoginForm>
+          <Text h1>Log in to Mirio</Text>
+          <Button icon={<Globe />} shadow width="100%" mb={0.89}>
+            Continue with google
+          </Button>
+          <Button
+            icon={<Twitter />}
+            mb={0.89}
+            shadow
+            type="success"
+            width="100%"
+          >
+            Twitter
+          </Button>
+          <Button icon={<Github />} shadow type="secondary" width="100%">
+            Continue with github
+          </Button>
+          <Spacer h={1.6} />
+          <Divider />
+          <Spacer h={1.2} />
+          <Link color underline>
+            Continue with email
+          </Link>
+        </LoginForm>
+      </Content>
     </>
   )
 }
@@ -42,4 +69,19 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`
+
+const Content = styled.section`
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+
+  margin-top: 10rem;
+`
+
+const LoginForm = styled.form`
+  max-width: 60rem;
+
+  text-align: center;
 `
