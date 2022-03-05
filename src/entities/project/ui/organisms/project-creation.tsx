@@ -3,7 +3,7 @@ import { Dropbox } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
-import { DragUpload } from '~/shared/ui/molecules/drag-upload'
+import { DragUpload } from '~/shared/ui'
 import { ChoiceTag, DescriptionField, TitleField } from '..'
 import {
   $description,
