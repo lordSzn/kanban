@@ -1,12 +1,15 @@
-import { Grid, Text } from '@geist-ui/core'
+import { Grid, Popover, Text } from '@geist-ui/core'
+import { Settings, LogOut } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React from 'react'
 import { $visibleDraftProject, hideCreationForm } from '~/entities/project'
 import { ProjectCreationForm, SubmittedProject } from '~/entities/project/ui'
-import { UserCard } from '~/entities/user/ui'
+import { UserCard, UserSettings } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
-import { $theme } from '~/features/theme'
+import { $theme, themeToggled } from '~/features/theme'
+import { SwitchTheme } from '~/features/theme/ui'
+import { PopoverAction } from '~/shared/ui'
 
 export const Header = () => {
   const visibleModal = useStore($visibleDraftProject)
@@ -20,7 +23,23 @@ export const Header = () => {
         <Grid md={10} sm={12} alignItems="center" justify="flex-end">
           <SubmittedProject />
           <SearchBar />
-          <UserCard fullname="robert kuzhin" />
+          <Popover
+            content={
+              <UserSettings
+                theme={<SwitchTheme toggleTheme={themeToggled} />}
+                signOut={
+                  <PopoverAction text="Sign Out" icon={<LogOut size={15} />} />
+                }
+                setup={
+                  <PopoverAction text="  Account setup" icon={<Settings />} />
+                }
+              />
+            }
+            disableItemsAutoClose
+            hideArrow
+          >
+            <UserCard fullname="robert kuzhin" />
+          </Popover>
         </Grid>
       </Grid.Container>
       <ProjectCreationForm visible={visibleModal} close={hideCreationForm} />
