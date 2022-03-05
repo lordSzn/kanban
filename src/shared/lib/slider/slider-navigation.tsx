@@ -54,17 +54,11 @@ const arrowNavigation = css`
 
   position: absolute;
   top: 50%;
-  width: 30px;
-  height: 30px;
   transform: translateY(-50%);
   cursor: pointer;
 
   &:disabled {
     opacity: 0.3;
-  }
-
-  & > svg {
-    fill: #fff;
   }
 
   &[data-arrow='left'] {
