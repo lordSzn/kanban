@@ -7,4 +7,4 @@ export interface User {
   description?: string
 }
 
-export const $user = createStore(null)
+export const $user = createStore<User | null>(null)
