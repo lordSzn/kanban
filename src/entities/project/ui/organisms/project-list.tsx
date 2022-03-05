@@ -2,15 +2,16 @@ import { Loading } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 import type { Project } from '~/shared/api/internal'
-import { PaperSlide, SliderProvider } from '~/shared/lib/slider'
+import { PaperSlide } from '~/shared/lib/slider'
 import { EmptyBlock } from '~/shared/ui'
+import { ProjectsCarousel } from '../molecules'
 import { ProjectPreview } from './project-preview'
 
 interface Props {
   projects: Project[]
   loading: boolean
 }
-// @refactor
+
 export const ProjectList: FC<Props> = ({ projects, loading }) => {
   if (loading) {
     return <Loading>loading</Loading>
@@ -36,29 +37,13 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
   }
 
   return (
-    <SliderProvider
-      slides={{ perView: 4 }}
-      navigation
-      onNext={(slider) => slider.next()}
-      onPrev={(slider) => slider.prev()}
-      breakpoints={{
-        '(max-width: 1580px)': {
-          slides: { perView: 3, spacing: 15 },
-        },
-        '(max-width: 1230px)': {
-          slides: { perView: 2 },
-        },
-        '(max-width: 830px)': {
-          slides: { perView: 'auto', spacing: 10 },
-        },
-      }}
-    >
+    <ProjectsCarousel>
       {projects.map((project) => (
         <PaperSlideStyled key={project.projectID}>
           <ProjectPreview project={project} />
         </PaperSlideStyled>
       ))}
-    </SliderProvider>
+    </ProjectsCarousel>
   )
 }
 
