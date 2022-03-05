@@ -31,7 +31,7 @@ export const Header = () => {
                   <PopoverAction text="Sign Out" icon={<LogOut size={15} />} />
                 }
                 setup={
-                  <PopoverAction text="  Account setup" icon={<Settings />} />
+                  <PopoverAction text="Account setup" icon={<Settings />} />
                 }
               />
             }
