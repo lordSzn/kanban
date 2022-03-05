@@ -43,13 +43,13 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
       onPrev={(slider) => slider.prev()}
       breakpoints={{
         '(max-width: 1580px)': {
-          slides: { perView: 3 },
+          slides: { perView: 3, spacing: 15 },
         },
         '(max-width: 1230px)': {
           slides: { perView: 2 },
         },
         '(max-width: 830px)': {
-          slides: { perView: 1 },
+          slides: { perView: 'auto', spacing: 10 },
         },
       }}
     >
