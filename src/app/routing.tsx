@@ -3,7 +3,7 @@ import { Route } from 'atomic-router-react'
 import { createBrowserHistory } from 'history'
 import React from 'react'
 import { paths } from '~/shared/lib/paths'
-import { ProjectPage, WorkspacePage } from '../pages'
+import { ProjectPage, WorkspacePage, LoginPage } from '../pages'
 
 export const routes = [
   {
@@ -15,6 +15,11 @@ export const routes = [
     path: paths.project(':id'),
     route: ProjectPage.projectRouter,
     view: ProjectPage.Project,
+  },
+  {
+    path: paths.login(),
+    route: LoginPage.loginRouter,
+    view: LoginPage.Login,
   },
 ]
 
