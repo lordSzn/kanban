@@ -105,11 +105,13 @@ export const checkAuthenticated = <T>({
   fail,
 }: {
   when: Unit<T>
-  done: Unit<void>
+  done?: Unit<void>
   fail?: Unit<void>
 }) => {
   const currentUserGetFx = attach({ effect: sessionGetFx })
+
   const failLogic = fail ?? createEvent()
+  const doneLogic = done ?? createEvent()
 
   const $readiness = createStore(false)
   const $failure = createStore<Error | null>(null)
@@ -123,7 +125,7 @@ export const checkAuthenticated = <T>({
   sample({
     clock: when,
     filter: $isAuthenticated.map((is) => is),
-    target: done,
+    target: doneLogic,
   })
 
   $readiness.on(currentUserGetFx.done, () => true)
@@ -132,7 +134,7 @@ export const checkAuthenticated = <T>({
   sample({
     clock: currentUserGetFx.done,
     fn: () => ({}),
-    target: done,
+    target: doneLogic,
   })
 
   sample({
