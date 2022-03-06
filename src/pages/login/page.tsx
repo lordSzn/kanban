@@ -2,6 +2,7 @@ import { Text, useTheme, Link, Button, Spacer, Divider } from '@geist-ui/core'
 import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
+import { SubmittedProvider } from '~/features/session/ui'
 import { ThemeChoice } from '~/features/theme/ui'
 import {
   githubAuthClicked,
@@ -33,34 +34,23 @@ export const Login = () => {
       <Content>
         <LoginForm>
           <Text h1>Log in to Mirio</Text>
-          <Button
+          <SubmittedProvider
+            label="Continue with google"
             icon={<Globe />}
-            shadow
-            width="100%"
-            mb={0.89}
             onClick={() => googleAuthClicked()}
-          >
-            Continue with google
-          </Button>
-          <Button
-            icon={<Twitter />}
-            mb={0.89}
-            shadow
+          />
+          <SubmittedProvider
             type="success"
-            width="100%"
+            label="Twitter"
+            icon={<Twitter />}
             onClick={() => twitterAuthClicked()}
-          >
-            Twitter
-          </Button>
-          <Button
-            icon={<Github />}
-            shadow
+          />
+          <SubmittedProvider
             type="secondary"
-            width="100%"
+            label="Continue with github"
+            icon={<Github />}
             onClick={() => githubAuthClicked()}
-          >
-            Continue with github
-          </Button>
+          />
           <Spacer h={1.6} />
           <Divider />
           <Spacer h={1.2} />
