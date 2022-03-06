@@ -3,6 +3,11 @@ import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
 import { ThemeChoice } from '~/features/theme/ui'
+import {
+  githubAuthClicked,
+  googleAuthClicked,
+  twitterAuthClicked,
+} from './model'
 
 export const Login = () => {
   const theme = useTheme()
@@ -12,7 +17,14 @@ export const Login = () => {
         <Container>
           <Text h2>Mirio</Text>
           <div>
-            <Link mr={1.2}>Contact</Link>
+            <Link
+              mr={1.2}
+              rel="noopener"
+              target="_blank"
+              href="https://github.com/lordSzn"
+            >
+              Contact
+            </Link>
             <Link mr={1.2}>Sign Up</Link>
             <ThemeChoice />
           </div>
@@ -21,7 +33,13 @@ export const Login = () => {
       <Content>
         <LoginForm>
           <Text h1>Log in to Mirio</Text>
-          <Button icon={<Globe />} shadow width="100%" mb={0.89}>
+          <Button
+            icon={<Globe />}
+            shadow
+            width="100%"
+            mb={0.89}
+            onClick={() => googleAuthClicked()}
+          >
             Continue with google
           </Button>
           <Button
@@ -30,10 +48,17 @@ export const Login = () => {
             shadow
             type="success"
             width="100%"
+            onClick={() => twitterAuthClicked()}
           >
             Twitter
           </Button>
-          <Button icon={<Github />} shadow type="secondary" width="100%">
+          <Button
+            icon={<Github />}
+            shadow
+            type="secondary"
+            width="100%"
+            onClick={() => githubAuthClicked()}
+          >
             Continue with github
           </Button>
           <Spacer h={1.6} />
