@@ -1,4 +1,11 @@
-import { attach, createEffect, createStore } from 'effector'
+import {
+  attach,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+  Unit,
+} from 'effector'
 import {
   AuthProvider,
   getAuth,
@@ -33,7 +40,7 @@ export const sessionDeleteFx = createEffect({
   },
 })
 
-export const sessionGetFx = createEffect<never, User>({
+export const sessionGetFx = createEffect<void, User>({
   handler: async () => {
     const user = await getAuth().currentUser
 
@@ -80,11 +87,62 @@ export const authWithTwitter = attach({
   }),
 })
 
-$user.on(
-  [
-    authWithGoogleFx.doneData,
-    authWithGithub.doneData,
-    authWithTwitter.doneData,
-  ],
-  (_, user) => user
-)
+$user
+  .on(
+    [
+      authWithGoogleFx.doneData,
+      authWithGithub.doneData,
+      authWithTwitter.doneData,
+      sessionGetFx.doneData,
+    ],
+    (_, user) => user
+  )
+  .on(sessionDeleteFx, () => null)
+
+export const checkAuthenticated = <T>({
+  when,
+  done,
+  fail,
+}: {
+  when: Unit<T>
+  done: Unit<void>
+  fail?: Unit<void>
+}) => {
+  const currentUserGetFx = attach({ effect: sessionGetFx })
+  const failLogic = fail ?? createEvent()
+
+  const $readiness = createStore(false)
+  const $failure = createStore<Error | null>(null)
+
+  sample({
+    clock: when,
+    filter: $isAuthenticated.map((is) => !is),
+    target: currentUserGetFx,
+  })
+
+  sample({
+    clock: when,
+    filter: $isAuthenticated.map((is) => is),
+    target: done,
+  })
+
+  $readiness.on(currentUserGetFx.done, () => true)
+  $failure.on(currentUserGetFx.failData, (_, error) => error)
+
+  sample({
+    clock: currentUserGetFx.done,
+    fn: () => ({}),
+    target: done,
+  })
+
+  sample({
+    clock: currentUserGetFx.fail,
+    fn: () => ({}),
+    target: failLogic,
+  })
+
+  return {
+    $readiness,
+    $failure,
+  }
+}

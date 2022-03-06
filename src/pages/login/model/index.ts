@@ -1,9 +1,9 @@
 import { createEvent, sample } from 'effector'
 import {
-  $isAuthenticated,
   authWithGithub,
   authWithGoogleFx,
   authWithTwitter,
+  checkAuthenticated,
 } from '~/features/session'
 import { WorkspacePage } from '~/pages/workspace'
 import { loginRouter } from '../route'
@@ -27,22 +27,9 @@ sample({
   target: authWithTwitter,
 })
 
-sample({
-  clock: loginRouter.opened,
-  filter: $isAuthenticated.map(Boolean),
-  target: WorkspacePage.workspaceRouter.navigate.prepend(() => ({
-    params: {},
-    query: {},
-  })),
-})
-
-sample({
-  clock: [
-    authWithTwitter.doneData,
-    authWithGithub.doneData,
-    authWithGoogleFx.doneData,
-  ],
-  target: WorkspacePage.workspaceRouter.navigate.prepend(() => ({
+export const pageReady = checkAuthenticated({
+  when: loginRouter.opened,
+  done: WorkspacePage.workspaceRouter.navigate.prepend(() => ({
     params: {},
     query: {},
   })),
