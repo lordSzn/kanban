@@ -1,5 +1,5 @@
 import { Grid, Popover, Text } from '@geist-ui/core'
-import { Settings, LogOut } from '@geist-ui/icons'
+import { Settings } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React from 'react'
@@ -7,6 +7,7 @@ import { $visibleDraftProject, hideCreationForm } from '~/entities/project'
 import { ProjectCreationForm, SubmittedProject } from '~/entities/project/ui'
 import { UserCard, UserSettings } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
+import { Logout } from '~/features/session/ui'
 import { $theme, themeToggled } from '~/features/theme'
 import { SwitchTheme } from '~/features/theme/ui'
 import { PopoverAction } from '~/shared/ui'
@@ -27,9 +28,7 @@ export const Header = () => {
             content={
               <UserSettings
                 theme={<SwitchTheme toggleTheme={themeToggled} />}
-                signOut={
-                  <PopoverAction text="Sign Out" icon={<LogOut size={15} />} />
-                }
+                signOut={<Logout />}
                 setup={
                   <PopoverAction text="Account setup" icon={<Settings />} />
                 }
