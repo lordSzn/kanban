@@ -34,3 +34,11 @@ export const pageReady = checkAuthenticated({
     query: {},
   })),
 })
+
+sample({
+  clock: [authWithGoogleFx.done, authWithGithub.done, authWithTwitter.done],
+  target: WorkspacePage.workspaceRouter.navigate.prepend(() => ({
+    params: {},
+    query: {},
+  })),
+})
