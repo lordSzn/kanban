@@ -1,3 +1,4 @@
+import { reflect } from '@effector/reflect'
 import { Text, Link, Spacer, Divider } from '@geist-ui/core'
 import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
@@ -17,23 +18,9 @@ export const Login = () => {
       <ContentCentred>
         <Form>
           <Text h1>Log in to Mirio</Text>
-          <SubmittedProvider
-            label="Continue with google"
-            icon={<Globe />}
-            onClick={() => googleAuthClicked()}
-          />
-          <SubmittedProvider
-            type="success"
-            label="Twitter"
-            icon={<Twitter />}
-            onClick={() => twitterAuthClicked()}
-          />
-          <SubmittedProvider
-            type="secondary"
-            label="Continue with github"
-            icon={<Github />}
-            onClick={() => githubAuthClicked()}
-          />
+          <GoogleSubmit />
+          <TwitterSubmit />
+          <GithubSubmit />
           <Spacer h={1.6} />
           <Divider />
           <Spacer h={1.2} />
@@ -51,3 +38,32 @@ const Form = styled.form`
 
   text-align: center;
 `
+
+const GoogleSubmit = reflect({
+  view: SubmittedProvider,
+  bind: {
+    label: 'Continue with google',
+    icon: <Globe />,
+    onClick: () => googleAuthClicked(),
+  },
+})
+
+const TwitterSubmit = reflect({
+  view: SubmittedProvider,
+  bind: {
+    type: 'success',
+    label: 'Twitter',
+    icon: <Twitter />,
+    onClick: () => twitterAuthClicked(),
+  },
+})
+
+const GithubSubmit = reflect({
+  view: SubmittedProvider,
+  bind: {
+    type: 'secondary',
+    label: 'Continue with github',
+    icon: <Github />,
+    onClick: () => githubAuthClicked(),
+  },
+})
