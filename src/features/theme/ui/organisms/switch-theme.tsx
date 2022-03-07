@@ -2,18 +2,15 @@ import { Toggle, useTheme, Text } from '@geist-ui/core'
 import { Moon, Sun } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
+import { themeToggled } from '../../model'
 
-interface Props {
-  toggleTheme(): void
-}
-// @fix semantic use label with htmlFor
-export const SwitchTheme = ({ toggleTheme }: Props) => {
+export const SwitchTheme = () => {
   const theme = useTheme()
   const isDark = theme.type === 'dark'
   const icon = isDark ? <Moon /> : <Sun />
 
   return (
-    <Button onClick={() => toggleTheme()}>
+    <Button onClick={() => themeToggled()}>
       <span data-element="icon">{icon}</span>
       <Container>
         <Text span>Dark Side</Text>

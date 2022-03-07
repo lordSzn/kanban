@@ -1,22 +1,21 @@
-import { Grid, Popover, Text } from '@geist-ui/core'
-import { Settings } from '@geist-ui/icons'
+import { Grid, Popover, Text, useTheme } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
-import React from 'react'
+import React, { FC, ReactNode } from 'react'
 import { $visibleDraftProject, hideCreationForm } from '~/entities/project'
 import { ProjectCreationForm, SubmittedProject } from '~/entities/project/ui'
-import { UserCard, UserSettings } from '~/entities/user/ui'
+import { UserCard } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
-import { Logout } from '~/features/session/ui'
-import { $theme, themeToggled } from '~/features/theme'
-import { SwitchTheme } from '~/features/theme/ui'
-import { PopoverAction } from '~/shared/ui'
 
-export const Header = () => {
+interface Props {
+  settings: ReactNode
+}
+
+export const Header: FC<Props> = ({ settings }) => {
   const visibleModal = useStore($visibleDraftProject)
-  const theme = useStore($theme)
+  const theme = useTheme()
   return (
-    <HeaderContainer data-theme={theme}>
+    <HeaderContainer data-theme={theme.type}>
       <Grid.Container justify="center" alignItems="center">
         <Grid md={10} sm={8}>
           <Text h2>Mirio</Text>
@@ -24,19 +23,7 @@ export const Header = () => {
         <Grid md={10} sm={12} alignItems="center" justify="flex-end">
           <SubmittedProject />
           <SearchBar />
-          <Popover
-            content={
-              <UserSettings
-                theme={<SwitchTheme toggleTheme={themeToggled} />}
-                signOut={<Logout />}
-                setup={
-                  <PopoverAction text="Account setup" icon={<Settings />} />
-                }
-              />
-            }
-            disableItemsAutoClose
-            hideArrow
-          >
+          <Popover content={settings} disableItemsAutoClose hideArrow>
             <UserCard fullname="robert kuzhin" />
           </Popover>
         </Grid>
