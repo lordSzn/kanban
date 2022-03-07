@@ -1,8 +1,8 @@
 import { createHistoryRouter } from 'atomic-router'
 import { Route } from 'atomic-router-react'
-import { createBrowserHistory } from 'history'
 import React from 'react'
 import { paths } from '~/shared/lib/paths'
+import { history } from '~/shared/lib/routing-history'
 import { ProjectPage, WorkspacePage, LoginPage } from '../pages'
 
 export const routes = [
@@ -22,8 +22,6 @@ export const routes = [
     view: LoginPage.Login,
   },
 ]
-
-export const history = createBrowserHistory()
 
 export const router = createHistoryRouter({
   routes,
