@@ -6,7 +6,7 @@ on:
       - 'package.json'
       - 'yarn.lock'
       - 'src/**'
-      - 'babel.config.json' 
+      - 'babel.config.js' 
 
 jobs: 
   pull_request:
