@@ -17,9 +17,9 @@ export interface Project {
   photoUrl: string
 }
 
-export const loadProjectsFx = createEffect<Firestore, Project[], void>({
-  handler: async (db) => {
-    const projectsColumn = collection(db, 'projects')
+export const loadProjectsFx = createEffect<void, Project[], void>({
+  handler: async () => {
+    const projectsColumn = collection(getFirestore(), 'projects')
     const projectsSnapshots = await getDocs(projectsColumn)
 
     const projectsList = projectsSnapshots.docs.map((doc) => ({
@@ -36,9 +36,9 @@ export interface Task {
   projectID: string
 }
 
-export const loadTasksFx = createEffect<Firestore, Task[], void>({
-  handler: async (db) => {
-    const tasksColumn = collection(db, 'tasks')
+export const loadTasksFx = createEffect<void, Task[], void>({
+  handler: async () => {
+    const tasksColumn = collection(getFirestore(), 'tasks')
     const tasksSnapshots = await getDocs(tasksColumn)
 
     const tasksList = tasksSnapshots.docs.map((doc) => doc.data())
@@ -52,9 +52,9 @@ export interface TaskInfo {
   taskID: string
 }
 
-export const loadInfoTasksFx = createEffect<Firestore, TaskInfo[], void>({
-  handler: async (db) => {
-    const tasksInfoColumn = collection(db, 'task-info')
+export const loadInfoTasksFx = createEffect<void, TaskInfo[], void>({
+  handler: async () => {
+    const tasksInfoColumn = collection(getFirestore(), 'task-info')
     const tasksInfoSnapshots = await getDocs(tasksInfoColumn)
 
     const tasksInfoList = tasksInfoSnapshots.docs.map((doc) => doc.data())
@@ -76,8 +76,8 @@ export const loadTasksLifecycleFx = createEffect<
   TaskLifecycle[],
   void
 >({
-  handler: async (db) => {
-    const tasksLifecycleColumn = collection(db, 'tasksLifecycle')
+  handler: async () => {
+    const tasksLifecycleColumn = collection(getFirestore(), 'tasksLifecycle')
     const tasksLifecycleSnapshots = await getDocs(tasksLifecycleColumn)
 
     const tasksLifecycleList = tasksLifecycleSnapshots.docs.map((doc) =>
@@ -93,12 +93,15 @@ export interface FavoritesProjects {
 }
 
 export const loadFavoritesProjectsFx = createEffect<
-  Firestore,
+  void,
   FavoritesProjects[],
   void
 >({
-  handler: async (db) => {
-    const FavoritesProjectsColumn = collection(db, 'favorites-projects')
+  handler: async () => {
+    const FavoritesProjectsColumn = collection(
+      getFirestore(),
+      'favorites-projects'
+    )
     const FavoritesProjectsSnapshots = await getDocs(FavoritesProjectsColumn)
 
     const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) =>
