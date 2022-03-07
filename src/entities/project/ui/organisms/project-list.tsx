@@ -1,7 +1,7 @@
 import { Loading } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
-import type { Project } from '~/shared/api/internal'
+import type { Project } from '~/shared/api/requests'
 import { PaperSlide } from '~/shared/lib/slider'
 import { EmptyBlock } from '~/shared/ui'
 import { ProjectsCarousel } from '../molecules'

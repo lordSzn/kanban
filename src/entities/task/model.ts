@@ -1,5 +1,5 @@
 import { createEvent, createStore } from 'effector'
-import type { Task, TaskInfo } from '~/shared/api/internal'
+import type { Task, TaskInfo } from '~/shared/api/requests'
 
 export const addTask = createEvent<TaskInfo>()
 export const taskAdded = createEvent<TaskInfo>()

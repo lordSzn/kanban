@@ -1,7 +1,7 @@
 import { combine, createEvent, createStore, sample } from 'effector'
 import { MouseEvent } from 'react'
-import { loadProjectsFx, projectCreateFx } from '~/shared/api/internal'
-import type { Project } from '~/shared/api/internal'
+import { loadProjectsFx, projectCreateFx } from '~/shared/api/requests'
+import type { Project } from '~/shared/api/requests'
 import { showMessage } from '~/shared/lib/toast'
 import { getFileUrl } from './library'
 

@@ -4,8 +4,8 @@ import {
   loadFavoritesProjectsFx,
   removeFavoriteProjectFx,
   saveFavoriteProjectFx,
-} from '~/shared/api/internal'
-import type { FavoritesProjects } from '~/shared/api/internal'
+} from '~/shared/api/requests'
+import type { FavoritesProjects } from '~/shared/api/requests'
 import { showMessage } from '~/shared/lib/toast'
 
 export const favoriteAdd = createEvent<{ favoriteID: string }>()

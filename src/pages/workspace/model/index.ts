@@ -1,5 +1,5 @@
 import { sample } from 'effector'
-import { loadFavoritesProjectsFx, loadProjectsFx } from '~/shared/api/internal'
+import { loadFavoritesProjectsFx, loadProjectsFx } from '~/shared/api/requests'
 import { showMessage } from '~/shared/lib/toast'
 import { workspaceRouter } from '../route'
 

@@ -1,5 +1,5 @@
 import { createEvent, createStore } from 'effector'
-import type { TaskLifecycle } from '~/shared/api/internal'
+import type { TaskLifecycle } from '~/shared/api/requests'
 
 export const takeTask = createEvent<{ taskID: string }>()
 export const resolveTask = createEvent<{ taskID: string }>()
