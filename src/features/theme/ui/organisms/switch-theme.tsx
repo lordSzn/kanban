@@ -1,19 +1,16 @@
-import { Text, GeistUIThemes } from '@geist-ui/core'
+import { Text, GeistUIThemes, useTheme } from '@geist-ui/core'
 import { Moon, Sun } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
 import { themeToggled } from '../../model'
 
-interface Props {
-  className?: string
-  theme: GeistUIThemes
-}
-
-export const SwitchTheme = ({ className, theme }: Props) => {
+export const SwitchTheme = () => {
+  const theme = useTheme()
   const isDark = theme.type === 'dark'
   const icon = isDark ? <Moon /> : <Sun />
+
   return (
-    <SwitchContainer className={className} theme={theme}>
+    <SwitchContainer theme={theme}>
       <label data-element="label" htmlFor="toggler-theme">
         <span data-element="icon">{icon}</span>
         <Text data-element="text">Dark mode</Text>
@@ -32,7 +29,7 @@ export const SwitchTheme = ({ className, theme }: Props) => {
   )
 }
 
-const SwitchContainer = styled.div<Props>`
+const SwitchContainer = styled.div<{ theme: GeistUIThemes }>`
   width: 100%;
 
   transition-delay: 0.12s;
