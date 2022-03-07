@@ -7,6 +7,8 @@ describe('theme', () => {
       values: new Map().set($theme, 'dark'),
     })
 
+    expect(scope.getState($theme)).toBe('dark')
+
     await allSettled(themeToggled, {
       scope,
     })
