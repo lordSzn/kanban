@@ -19,6 +19,8 @@ const PopoverActionBase: FC<Props> = ({ className, icon, text, onClick }) => {
 }
 
 export const PopoverAction = styled(PopoverActionBase)`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
 
