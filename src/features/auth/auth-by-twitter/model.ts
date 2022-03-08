@@ -1,5 +1,6 @@
 import { attach, createEvent, createStore, sample } from 'effector'
 import { TwitterAuthProvider } from 'firebase/auth'
+import { $currentUser } from '~/entities/session'
 import { baseAuthenticateFx } from '~/shared/api/requests'
 
 export const twitterAuthClicked = createEvent()
@@ -16,3 +17,5 @@ sample({
   clock: twitterAuthClicked,
   target: authenticationWithTwitterFx,
 })
+
+$currentUser.on(authenticationWithTwitterFx.doneData, (_, user) => user)
