@@ -13,6 +13,6 @@ export const authenticationWithGoogleFx = attach({
 })
 
 sample({
-  clock: googleProvider,
+  clock: googleAuthClicked,
   target: authenticationWithGoogleFx,
 })
