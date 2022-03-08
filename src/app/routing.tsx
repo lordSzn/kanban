@@ -20,7 +20,7 @@ export const routes = [
   },
   {
     path: paths.login(),
-    route: LoginPage.loginRouter,
+    route: LoginPage.loginRoute,
     view: LoginPage.Login,
   },
   {

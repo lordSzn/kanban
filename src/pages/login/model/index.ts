@@ -1,9 +1,9 @@
 import { checkAuthenticated } from '~/entities/session'
 import { WorkspacePage } from '~/pages/workspace'
-import { loginRouter } from '../route'
+import { loginRoute } from '../route'
 
 checkAuthenticated({
-  when: loginRouter.opened,
+  when: loginRoute.opened,
   done: WorkspacePage.workspaceRouter.navigate.prepend(() => ({
     params: {},
     query: {},

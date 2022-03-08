@@ -1,7 +1,7 @@
 import { Login } from './page'
-import { loginRouter } from './route'
+import { loginRoute } from './route'
 
 export const LoginPage = {
-  loginRouter,
+  loginRoute,
   Login,
 }
