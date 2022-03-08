@@ -50,14 +50,7 @@ export const checkAuthenticated = <T>(config: {
   const elseLogic = config.else ?? createEvent()
 
   const checkIsAuthenticated = config.if === 'authorized'
-
-  if (checkIsAuthenticated) {
-    sample({
-      clock: config.when,
-      filter: $isAuthenticated,
-      target: config.then,
-    })
-  }
+  const checkIsAnonymous = !checkIsAuthenticated
 
   sample({
     clock: config.when,
@@ -65,15 +58,43 @@ export const checkAuthenticated = <T>(config: {
     target: currentUserGetFx,
   })
 
-  sample({
-    clock: currentUserGetFx.doneData,
-    filter: (user) => user !== null,
-    target: config.then,
-  })
+  if (checkIsAuthenticated) {
+    sample({
+      clock: config.when,
+      filter: $isAuthenticated,
+      target: config.then,
+    })
 
-  sample({
-    clock: currentUserGetFx.doneData,
-    filter: (user) => user === null,
-    target: elseLogic,
-  })
+    sample({
+      clock: currentUserGetFx.doneData,
+      filter: (user) => user === null,
+      target: elseLogic,
+    })
+
+    sample({
+      clock: currentUserGetFx.doneData,
+      filter: (user) => user !== null,
+      target: config.then,
+    })
+  }
+
+  if (checkIsAnonymous) {
+    sample({
+      clock: config.when,
+      filter: $isAuthenticated,
+      target: elseLogic,
+    })
+
+    sample({
+      clock: currentUserGetFx.doneData,
+      filter: (user) => user === null,
+      target: config.then,
+    })
+
+    sample({
+      clock: currentUserGetFx.doneData,
+      filter: (user) => user !== null,
+      target: elseLogic,
+    })
+  }
 }
