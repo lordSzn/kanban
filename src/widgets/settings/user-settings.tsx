@@ -1,7 +1,9 @@
 import { Popover, User } from '@geist-ui/core'
+import { Settings } from '@geist-ui/icons'
 import React from 'react'
 import { Logout } from '~/features/session/ui'
 import { SwitchTheme } from '~/features/theme/ui'
+import { PopoverAction } from '~/shared/ui'
 
 export const UserSettings = () => {
   return (
@@ -11,6 +13,9 @@ export const UserSettings = () => {
       </Popover.Item>
       <Popover.Item>
         <SwitchTheme />
+      </Popover.Item>
+      <Popover.Item>
+        <PopoverAction text="Settings" icon={<Settings />} />
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
