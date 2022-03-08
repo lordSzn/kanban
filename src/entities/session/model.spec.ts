@@ -69,4 +69,32 @@ describe('check authenticated', () => {
     expect(redirectToHomeMock).toBeCalledTimes(1)
     expect(pageLoadedMock).toBeCalledTimes(0)
   })
+
+  it('redirect to the logic page if not anonymous', async () => {
+    const scope = fork({
+      values: new Map().set($currentUser, null),
+      handlers: new Map().set(sessionGetFx, () => null),
+    })
+
+    expect(scope.getState($isAuthenticated)).toBeFalsy()
+
+    const pageLoad = createEvent()
+    const loginRouteOpen = createEvent()
+
+    const redirectMock = jest.fn()
+
+    loginRouteOpen.watch(redirectMock)
+
+    checkAuthenticated({
+      when: pageLoad,
+      if: 'anonymous',
+      then: loginRouteOpen,
+    })
+
+    await allSettled(pageLoad, {
+      scope,
+    })
+
+    expect(redirectMock).toBeCalledTimes(1)
+  })
 })
