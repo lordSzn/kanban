@@ -3,7 +3,10 @@ import {
   createEffect,
   createEvent,
   createStore,
+  Effect,
+  Event,
   sample,
+  Store,
   Unit,
 } from 'effector'
 import { persist } from 'effector-storage/local'
@@ -42,8 +45,8 @@ sample({
 export const checkAuthenticated = <T>(config: {
   when: Unit<T>
   if: 'authorized' | 'anonymous'
-  then: Unit<void>
-  else?: Unit<void>
+  then: Unit<T | void>
+  else?: Unit<T | void>
 }) => {
   const currentUserGetFx = attach({ effect: sessionGetFx })
 
@@ -68,12 +71,14 @@ export const checkAuthenticated = <T>(config: {
     sample({
       clock: currentUserGetFx.doneData,
       filter: (user) => user === null,
+      fn: () => undefined,
       target: elseLogic,
     })
 
     sample({
       clock: currentUserGetFx.doneData,
       filter: (user) => user !== null,
+      fn: () => undefined,
       target: config.then,
     })
   }
@@ -88,12 +93,14 @@ export const checkAuthenticated = <T>(config: {
     sample({
       clock: currentUserGetFx.doneData,
       filter: (user) => user === null,
+      fn: () => undefined,
       target: config.then,
     })
 
     sample({
       clock: currentUserGetFx.doneData,
       filter: (user) => user !== null,
+      fn: () => undefined,
       target: elseLogic,
     })
   }
