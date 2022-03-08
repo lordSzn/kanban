@@ -4,7 +4,7 @@ import {
   authWithGoogleFx,
   authWithTwitter,
   checkAuthenticated,
-} from '~/features/session'
+} from '~/entities/session'
 import { WorkspacePage } from '~/pages/workspace'
 import { loginRouter } from '../route'
 

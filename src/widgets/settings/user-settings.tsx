@@ -1,7 +1,7 @@
 import { Popover, User } from '@geist-ui/core'
 import { Settings } from '@geist-ui/icons'
 import React from 'react'
-import { Logout } from '~/features/session/ui'
+import { Logout } from '~/entities/session/ui'
 import { SwitchTheme } from '~/features/theme/ui'
 import { PopoverAction } from '~/shared/ui'
 

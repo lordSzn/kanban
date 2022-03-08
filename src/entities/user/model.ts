@@ -1,5 +1,4 @@
 import { createStore } from 'effector'
-import { persist } from 'effector-storage/local'
 
 export interface User {
   fullname: string
@@ -9,8 +8,3 @@ export interface User {
 }
 
 export const $user = createStore<User | null>(null)
-
-persist({
-  store: $user,
-  key: 'current-user',
-})

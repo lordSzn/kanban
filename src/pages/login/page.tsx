@@ -3,7 +3,6 @@ import { Text, Link, Spacer, Divider } from '@geist-ui/core'
 import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
-import { SubmittedProvider } from '~/features/session/ui'
 import {
   githubAuthClicked,
   googleAuthClicked,
