@@ -39,39 +39,41 @@ sample({
   target: sessionDeleteFx,
 })
 
-export const checkAuthenticated = <T>({
-  when,
-  done,
-  fail,
-}: {
+export const checkAuthenticated = <T>(config: {
   when: Unit<T>
-  done?: Unit<void>
-  fail?: Unit<void>
+  if: 'authorized' | 'anonymous'
+  then: Unit<void>
+  else?: Unit<void>
 }) => {
   const currentUserGetFx = attach({ effect: sessionGetFx })
 
-  const failLogic = fail ?? createEvent()
-  const doneLogic = done ?? createEvent()
+  const elseLogic = config.else ?? createEvent()
+
+  const checkIsAuthenticated = config.if === 'authorized'
+
+  if (checkIsAuthenticated) {
+    sample({
+      clock: config.when,
+      filter: $isAuthenticated,
+      target: config.then,
+    })
+  }
 
   sample({
-    clock: when,
+    clock: config.when,
     filter: $isAuthenticated.map((is) => !is),
     target: currentUserGetFx,
   })
 
   sample({
-    clock: when,
-    filter: $isAuthenticated.map((is) => is),
-    target: doneLogic,
+    clock: currentUserGetFx.doneData,
+    filter: (user) => user !== null,
+    target: config.then,
   })
 
   sample({
-    clock: currentUserGetFx.done,
-    target: doneLogic,
-  })
-
-  sample({
-    clock: currentUserGetFx.fail,
-    target: failLogic,
+    clock: currentUserGetFx.doneData,
+    filter: (user) => user === null,
+    target: elseLogic,
   })
 }
