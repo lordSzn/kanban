@@ -1,16 +1,9 @@
-import { createStore } from 'effector'
-import { persist } from 'effector-storage/local'
+import { createEvent, createStore } from 'effector'
+import { User } from '~/shared/api/requests'
 
-export interface User {
-  fullname: string
-  email?: string | null
-  photoUrl?: string
-  description?: string
-}
+export const updateUser = createEvent<User>()
 
-export const $user = createStore<User | null>(null)
-
-persist({
-  store: $user,
-  key: 'current-user',
-})
+export const $user = createStore<User | null>(null).on(
+  updateUser,
+  (_, user) => user
+)

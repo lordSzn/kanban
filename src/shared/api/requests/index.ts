@@ -1,5 +1,11 @@
 import { createEffect } from 'effector'
 import {
+  AuthProvider,
+  getAuth,
+  signInWithPopup,
+  UserCredential,
+} from 'firebase/auth'
+import {
   addDoc,
   collection,
   deleteDoc,
@@ -160,5 +166,29 @@ export const removeFavoriteProjectFx = createEffect<
 >({
   handler: async ({ favoriteID }) => {
     await deleteDoc(doc(getFirestore(), 'favorites-projects', favoriteID))
+  },
+})
+
+export interface User {
+  fullname: string
+  email?: string | null
+  photoUrl?: string
+  description?: string
+}
+
+export const baseAuthenticateFx = createEffect<
+  { provider: AuthProvider },
+  User
+>({
+  handler: async ({ provider }) => {
+    const auth = getAuth()
+    const answer: UserCredential = await signInWithPopup(auth, provider)
+    const user = answer.user
+
+    return {
+      fullname: user.displayName || 'unknown',
+      email: user.email,
+      photoUrl: user.photoURL || '',
+    }
   },
 })

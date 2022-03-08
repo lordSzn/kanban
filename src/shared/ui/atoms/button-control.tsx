@@ -7,7 +7,7 @@ interface Props {
   label: string
 }
 
-export const SubmittedProvider = ({
+export const ButtonControl = ({
   icon,
   onClick,
   label,
