@@ -3,7 +3,7 @@ import { $currentUser } from '~/entities/session'
 import { checkAuthenticated, sessionGetFx, $isAuthenticated } from './model'
 
 describe('check authenticated', () => {
-  it('to redirect on page started if not authorized', async () => {
+  it('stop logic if not authorized', async () => {
     const scope = fork({
       handlers: new Map().set(sessionGetFx, () => null),
     })
