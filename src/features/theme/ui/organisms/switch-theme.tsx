@@ -30,6 +30,7 @@ export const SwitchTheme = () => {
 }
 
 const SwitchContainer = styled.div<{ theme: GeistUIThemes }>`
+  padding: 1px 4px;
   width: 100%;
 
   transition-delay: 0.12s;
@@ -38,7 +39,6 @@ const SwitchContainer = styled.div<{ theme: GeistUIThemes }>`
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 
   border: 1px solid transparent;
-  padding: 0;
 
   & > [data-element='label'] {
     width: 100%;
