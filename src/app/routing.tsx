@@ -10,7 +10,7 @@ import { ProjectPage, WorkspacePage, LoginPage } from '../pages'
 export const routes = [
   {
     path: paths.workspace(),
-    route: WorkspacePage.workspaceRouter,
+    route: WorkspacePage.workspaceRoute,
     view: WorkspacePage.Workspace,
   },
   {

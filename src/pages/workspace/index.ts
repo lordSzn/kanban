@@ -1,7 +1,7 @@
 import { Workspace } from './page'
-import { workspaceRouter } from './route'
+import { workspaceRoute } from './route'
 
 export const WorkspacePage = {
-  workspaceRouter,
+  workspaceRoute,
   Workspace,
 }

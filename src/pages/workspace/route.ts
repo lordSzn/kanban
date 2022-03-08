@@ -1,3 +1,3 @@
 import { createRoute } from 'atomic-router'
 
-export const workspaceRouter = createRoute()
+export const workspaceRoute = createRoute()
