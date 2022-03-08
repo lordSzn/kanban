@@ -5,5 +5,17 @@ module.exports = {
     '@babel/preset-react',
     '@linaria',
   ],
-  plugins: ['effector/babel-plugin', '@babel/transform-runtime'],
+  plugins: [
+    'effector/babel-plugin',
+    '@babel/plugin-transform-runtime',
+    '@babel/plugin-transform-modules-commonjs',
+    [
+      'module-resolver',
+      {
+        alias: {
+          '~': './src',
+        },
+      },
+    ],
+  ],
 }
