@@ -24,7 +24,7 @@ export const Header: FC<Props> = ({ settings }) => {
           <SubmittedProject />
           <SearchBar />
           <Popover content={settings} disableItemsAutoClose hideArrow>
-            <UserCard fullname="robert kuzhin" />
+            <UserCard />
           </Popover>
         </Grid>
       </Grid.Container>
