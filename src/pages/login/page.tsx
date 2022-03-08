@@ -3,11 +3,10 @@ import { Text, Link, Spacer, Divider } from '@geist-ui/core'
 import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
-import {
-  githubAuthClicked,
-  googleAuthClicked,
-  twitterAuthClicked,
-} from './model'
+import { githubAuthClicked } from '~/features/auth/auth-by-github'
+import { googleAuthClicked } from '~/features/auth/auth-by-google'
+import { twitterAuthClicked } from '~/features/auth/auth-by-twitter'
+import { ButtonControl } from '~/shared/ui'
 import { ContentCentred, Header } from './ui'
 
 export const Login = () => {
@@ -39,7 +38,7 @@ const Form = styled.form`
 `
 
 const GoogleSubmit = reflect({
-  view: SubmittedProvider,
+  view: ButtonControl,
   bind: {
     label: 'Continue with google',
     icon: <Globe />,
@@ -48,7 +47,7 @@ const GoogleSubmit = reflect({
 })
 
 const TwitterSubmit = reflect({
-  view: SubmittedProvider,
+  view: ButtonControl,
   bind: {
     type: 'success',
     label: 'Twitter',
@@ -58,7 +57,7 @@ const TwitterSubmit = reflect({
 })
 
 const GithubSubmit = reflect({
-  view: SubmittedProvider,
+  view: ButtonControl,
   bind: {
     type: 'secondary',
     label: 'Continue with github',
