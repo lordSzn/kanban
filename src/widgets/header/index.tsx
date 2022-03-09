@@ -4,6 +4,7 @@ import { useStore } from 'effector-react'
 import React, { FC, ReactNode } from 'react'
 import { $visibleDraftProject, hideCreationForm } from '~/entities/project'
 import { ProjectCreationForm, SubmittedProject } from '~/entities/project/ui'
+import { $currentUser } from '~/entities/session'
 import { UserCard } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
 
@@ -14,6 +15,7 @@ interface Props {
 export const Header: FC<Props> = ({ settings }) => {
   const visibleModal = useStore($visibleDraftProject)
   const theme = useTheme()
+  const user = useStore($currentUser)
   return (
     <HeaderContainer data-theme={theme.type}>
       <Grid.Container justify="center" alignItems="center">
@@ -24,7 +26,7 @@ export const Header: FC<Props> = ({ settings }) => {
           <SubmittedProject />
           <SearchBar />
           <Popover content={settings} disableItemsAutoClose hideArrow>
-            <UserCard />
+            <UserCard user={user} />
           </Popover>
         </Grid>
       </Grid.Container>
