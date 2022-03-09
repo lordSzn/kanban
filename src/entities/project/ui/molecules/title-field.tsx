@@ -12,7 +12,7 @@ export const TitleField = ({ title }: Props) => {
       <Input
         width="100%"
         value={title}
-        placeholder="title"
+        placeholder="Project title"
         onChange={(e) => titleChanged(e.target.value)}
       />
     </>

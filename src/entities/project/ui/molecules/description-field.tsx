@@ -11,6 +11,7 @@ export const DescriptionField = ({ description }: Props) => {
     <>
       <Textarea
         width="100%"
+        placeholder="Project description"
         value={description}
         onChange={(e) => descriptionChanged(e.target.value)}
       />
