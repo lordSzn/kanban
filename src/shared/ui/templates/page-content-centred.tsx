@@ -17,9 +17,14 @@ export const PageContentCentred: FC<Props> = ({ header, children, footer }) => {
 }
 
 const Section = styled.section`
+  max-width: 100vw;
   min-height: 100vh;
+  box-sizing: border-box;
   position: relative;
+  width: calc(100% - 100pt);
   height: auto;
+  padding: 0 calc(1.34 * 16px) 0 calc(1.34 * 16px);
+  margin: 0 auto 0 auto;
 `
 
 const Header = styled.header`
@@ -27,8 +32,9 @@ const Header = styled.header`
 `
 
 const Main = styled.main`
-  padding: 0 calc(1.34 * 16px) 0 calc(1.34 * 16px);
+  padding: 0 24px 0 24px;
   width: 100%;
+  margin: 0 auto 0 auto;
 `
 
 const Footer = styled.footer`
