@@ -74,6 +74,6 @@ const SettingItem = styled.div`
   transition: background 0.2s cubic-bezier(0.33, 0.96, 0.49, 1.01);
 
   &:hover {
-    background-color: rgb(240, 243, 249);
+    background-color: rgba(234, 234, 234, 0.5);
   }
 `
