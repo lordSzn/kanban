@@ -1,5 +1,5 @@
-import { GeistUIThemes, Grid, Link, Text, useTheme } from '@geist-ui/core'
-import { User } from '@geist-ui/icons'
+import { GeistUIThemes, Grid, Link, Spacer, Text, useTheme } from '@geist-ui/core'
+import { User, Monitor } from '@geist-ui/icons'
 import { CornerUpLeft } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import React from 'react'
@@ -28,6 +28,17 @@ export const Settings = () => {
             </SettingItem>
             <SettingItem>
               <Link>Notifications</Link>
+            </SettingItem>
+            <Spacer h={1.2} />
+            <SettingsLabel>
+              <Monitor size={23} />
+              <Text ml={0.35}>Workspace</Text>
+            </SettingsLabel>
+            <SettingItem>
+              <Link>Labels</Link>
+            </SettingItem>
+            <SettingItem>
+              <Link>Topic</Link>
             </SettingItem>
           </CollapseBar>
         </LeftMenu>
