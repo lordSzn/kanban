@@ -6,29 +6,35 @@ import { ThemeChoice } from '~/features/theme/ui'
 export const Header = () => {
   const theme = useTheme()
   return (
-    <HeaderContainer data-theme={theme.type}>
-      <Container>
+    <HeaderWrapper data-theme={theme.type}>
+      <HeaderContainer>
         <Text h2>Mirio</Text>
-        <div>
-          <Link
-            mr={1.2}
-            rel="noopener"
-            target="_blank"
-            href="https://github.com/lordSzn"
-          >
-            Contact
-          </Link>
-          <Link mr={1.2}>Sign Up</Link>
-          <ThemeChoice />
-        </div>
-      </Container>
-    </HeaderContainer>
+        <Container>
+          <div>
+            <Link
+              mr={1.2}
+              rel="noopener"
+              target="_blank"
+              href="https://github.com/lordSzn"
+            >
+              Contact
+            </Link>
+            <Link mr={1.2}>Sign Up</Link>
+            <ThemeChoice />
+          </div>
+        </Container>
+      </HeaderContainer>
+    </HeaderWrapper>
   )
 }
 
-const HeaderContainer = styled.header`
-  width: 100%;
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   height: 4rem;
+  width: 100%;
 
   &[data-theme='light'] {
     box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
@@ -39,11 +45,17 @@ const HeaderContainer = styled.header`
   }
 `
 
-const Container = styled.div`
-  max-width: 1048px;
-  margin: 0 auto;
-  width: 100%;
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  max-width: 1048px;
+  width: 100%;
+  margin: 0 auto;
+`
+
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

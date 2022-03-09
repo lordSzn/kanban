@@ -7,10 +7,10 @@ import { checkAuthenticated } from '~/entities/session'
 import { githubAuthClicked } from '~/features/auth/auth-by-github'
 import { googleAuthClicked } from '~/features/auth/auth-by-google'
 import { twitterAuthClicked } from '~/features/auth/auth-by-twitter'
-import { ButtonControl } from '~/shared/ui'
+import { ButtonControl, PageContentCentred } from '~/shared/ui'
 import { WorkspacePage } from '../workspace'
 import { loginRoute } from './route'
-import { ContentCentred, Header } from './ui'
+import { Header } from './ui'
 
 checkAuthenticated({
   when: loginRoute.opened,
@@ -20,30 +20,28 @@ checkAuthenticated({
 
 export const Login = () => {
   return (
-    <>
-      <Header />
-      <ContentCentred>
-        <Form>
-          <Text h1>Log in to Mirio</Text>
-          <GoogleSubmit />
-          <TwitterSubmit />
-          <GithubSubmit />
-          <Spacer h={1.6} />
-          <Divider />
-          <Spacer h={1.2} />
-          <Link color underline>
-            Continue with email
-          </Link>
-        </Form>
-      </ContentCentred>
-    </>
+    <PageContentCentred header={<Header />}>
+      <FormSubmitted>
+        <Text h2>Log in to Mirio</Text>
+        <GoogleSubmit />
+        <TwitterSubmit />
+        <GithubSubmit />
+        <Spacer h={1.6} />
+        <Divider />
+        <Spacer h={1.2} />
+        <Link color underline>
+          Continue with email
+        </Link>
+      </FormSubmitted>
+    </PageContentCentred>
   )
 }
 
-const Form = styled.form`
-  max-width: 60rem;
-
+const FormSubmitted = styled.form`
+  max-width: 28rem;
+  margin: 0 auto;
   text-align: center;
+  margin-top: 10rem;
 `
 
 const GoogleSubmit = reflect({
