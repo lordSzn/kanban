@@ -1,3 +1,3 @@
 import { createRoute } from 'atomic-router'
 
-export const projectRouter = createRoute()
+export const projectRoute = createRoute()

@@ -15,7 +15,7 @@ export const routes = [
   },
   {
     path: paths.project(':id'),
-    route: ProjectPage.projectRouter,
+    route: ProjectPage.projectRoute,
     view: ProjectPage.Project,
   },
   {

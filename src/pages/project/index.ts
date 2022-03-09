@@ -1,7 +1,7 @@
 import { Project } from './page'
-import { projectRouter } from './route'
+import { projectRoute } from './route'
 
 export const ProjectPage = {
-  projectRouter,
+  projectRoute,
   Project,
 }
