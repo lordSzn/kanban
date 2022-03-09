@@ -1,10 +1,10 @@
-import { GeistUIThemes, Grid, Link, Spacer, Text, useTheme } from '@geist-ui/core'
-import { User, Monitor } from '@geist-ui/icons'
+import { GeistUIThemes, Grid, useTheme } from '@geist-ui/core'
 import { CornerUpLeft } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import React from 'react'
 import { paths } from '~/shared/lib/paths'
 import { CustomLink } from '~/shared/ui'
+import { SettingsMenu } from './ui/settings-menu'
 
 export const Settings = () => {
   const theme = useTheme()
@@ -16,30 +16,7 @@ export const Settings = () => {
             Settings
           </GoBackLink>
           <CollapseBar>
-            <SettingsLabel>
-              <User size={23} />
-              <Text ml={0.35}>Account</Text>
-            </SettingsLabel>
-            <SettingItem>
-              <Link>Profile</Link>
-            </SettingItem>
-            <SettingItem>
-              <Link>Preferences</Link>
-            </SettingItem>
-            <SettingItem>
-              <Link>Notifications</Link>
-            </SettingItem>
-            <Spacer h={1.2} />
-            <SettingsLabel>
-              <Monitor size={23} />
-              <Text ml={0.35}>Workspace</Text>
-            </SettingsLabel>
-            <SettingItem>
-              <Link>Labels</Link>
-            </SettingItem>
-            <SettingItem>
-              <Link>Topic</Link>
-            </SettingItem>
+            <SettingsMenu />
           </CollapseBar>
         </LeftMenu>
       </Grid>
@@ -67,24 +44,4 @@ const Main = styled.section`
 
 const CollapseBar = styled.nav`
   margin-top: 3rem;
-`
-
-const SettingsLabel = styled.div`
-  display: flex;
-  align-items: center;
-
-  height: 2rem;
-`
-
-const SettingItem = styled.div`
-  margin: 1px;
-  padding: 0.5rem 0 0.5rem 1.8rem;
-  border-radius: 7px;
-
-  cursor: pointer;
-  transition: background 0.2s cubic-bezier(0.33, 0.96, 0.49, 1.01);
-
-  &:hover {
-    background-color: rgba(234, 234, 234, 0.5);
-  }
 `
