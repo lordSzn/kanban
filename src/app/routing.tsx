@@ -24,7 +24,7 @@ export const routes = [
     view: LoginPage.Login,
   },
   {
-    path: paths.NotFound(),
+    path: paths.notFound(),
     route: NotFoundPage.NotFoundRoute,
     view: NotFoundPage.NotFound,
   },
