@@ -25,7 +25,7 @@ export const routes = [
   },
   {
     path: paths.notFound(),
-    route: NotFoundPage.NotFoundRoute,
+    route: NotFoundPage.notFoundRoute,
     view: NotFoundPage.NotFound,
   },
 ]
@@ -39,7 +39,7 @@ router.setHistory(history)
 sample({
   clock: router.routeNotFound,
   fn: () => ({}),
-  target: NotFoundPage.NotFoundRoute.open,
+  target: NotFoundPage.notFoundRoute.open,
 })
 
 export const Pages = () => {

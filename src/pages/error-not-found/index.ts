@@ -1,7 +1,7 @@
 import { NotFound } from './page'
-import { NotFoundRoute } from './route'
+import { notFoundRoute } from './route'
 
 export const NotFoundPage = {
   NotFound,
-  NotFoundRoute,
+  notFoundRoute,
 }
