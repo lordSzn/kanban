@@ -1,9 +1,12 @@
-import { sample } from 'effector'
+import { combine, sample } from 'effector'
 import { loadFavoritesProjectsFx, loadProjectsFx } from '~/shared/api/requests'
 import { showMessage } from '~/shared/lib/toast'
 import { workspaceRoute } from '../route'
 
-export const $pending = loadProjectsFx.pending
+export const $pending = combine(
+  [loadProjectsFx.pending, loadFavoritesProjectsFx.pending],
+  ([loadProjects, loadFavorites]) => loadProjects && loadFavorites
+)
 
 sample({
   clock: workspaceRoute.opened,
