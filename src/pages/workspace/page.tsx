@@ -4,7 +4,7 @@ import React from 'react'
 import { $activeProjects, $finishedProjects } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
 import { $favoritesProjects } from '~/features/favorite'
-import { UserSettings } from '~/widgets/settings/user-settings'
+import { UserSettings } from '~/widgets/settings/menu-settings'
 import { Header } from '../../widgets/header'
 import { $pending } from './model'
 
