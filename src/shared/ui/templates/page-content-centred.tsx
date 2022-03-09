@@ -21,9 +21,7 @@ const Section = styled.section`
   min-height: 100vh;
   box-sizing: border-box;
   position: relative;
-  width: calc(100% - 100pt);
   height: auto;
-  padding: 0 calc(1.34 * 16px) 0 calc(1.34 * 16px);
   margin: 0 auto 0 auto;
 `
 
