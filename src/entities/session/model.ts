@@ -3,10 +3,7 @@ import {
   createEffect,
   createEvent,
   createStore,
-  Effect,
-  Event,
   sample,
-  Store,
   Unit,
 } from 'effector'
 import { persist } from 'effector-storage/local'
