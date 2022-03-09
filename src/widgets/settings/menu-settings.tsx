@@ -12,7 +12,11 @@ export const UserSettings = () => {
   return (
     <>
       <Popover.Item title width="260px">
-        <User src={user?.photoUrl} name={user?.fullname}>
+        <User
+          style={{ cursor: 'pointer' }}
+          src={user?.photoUrl}
+          name={user?.fullname}
+        >
           {user?.description || 'JavaScript engineer'}
         </User>
       </Popover.Item>
