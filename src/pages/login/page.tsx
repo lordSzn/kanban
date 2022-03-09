@@ -2,11 +2,21 @@ import { reflect } from '@effector/reflect'
 import { Text, Link, Spacer, Divider } from '@geist-ui/core'
 import { Github, Globe, Twitter } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
+import { sample } from 'effector'
 import React from 'react'
 import { checkAuthenticated } from '~/entities/session'
-import { githubAuthClicked } from '~/features/auth/auth-by-github'
-import { googleAuthClicked } from '~/features/auth/auth-by-google'
-import { twitterAuthClicked } from '~/features/auth/auth-by-twitter'
+import {
+  authenticationWithGithubFx,
+  githubAuthClicked,
+} from '~/features/auth/auth-by-github'
+import {
+  authenticationWithGoogleFx,
+  googleAuthClicked,
+} from '~/features/auth/auth-by-google'
+import {
+  authenticationWithTwitterFx,
+  twitterAuthClicked,
+} from '~/features/auth/auth-by-twitter'
 import { ButtonControl, PageContentCentred } from '~/shared/ui'
 import { WorkspacePage } from '../workspace'
 import { loginRoute } from './route'
@@ -16,6 +26,15 @@ checkAuthenticated({
   when: loginRoute.opened,
   if: 'authorized',
   then: WorkspacePage.workspaceRoute.open,
+})
+
+sample({
+  clock: [
+    authenticationWithGithubFx.done,
+    authenticationWithTwitterFx.done,
+    authenticationWithGoogleFx.done,
+  ],
+  target: WorkspacePage.workspaceRoute.open,
 })
 
 export const Login = () => {
