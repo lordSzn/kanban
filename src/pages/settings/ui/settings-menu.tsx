@@ -14,7 +14,7 @@ export const SettingsMenu = () =>
         {menu.items.map((item, idx) => (
           // eslint-disable-next-line react/no-array-index-key
           <SettingItem key={idx}>
-            <Link>Profile</Link>
+            <Link>{item}</Link>
           </SettingItem>
         ))}
       </>
