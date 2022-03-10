@@ -18,6 +18,6 @@ export const menuSettings = [
         <Monitor size={23} />
       </>
     ),
-    items: ['Labels', 'Topic', 'Keyboard bind'],
+    items: ['Labels', 'Topic', 'Keyboard bind', 'Features'],
   },
 ]
