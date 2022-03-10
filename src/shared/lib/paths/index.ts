@@ -3,4 +3,5 @@ export const paths = {
   workspace: () => `/workspace`,
   login: () => '/login',
   notFound: () => '/not-found',
+  settings: () => '/user/settings',
 }
