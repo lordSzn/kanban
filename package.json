@@ -7,7 +7,7 @@
     "lint": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
     "format": "prettier --write \"./src/**/**.{ts,tsx,js,jsx,json}\"",
     "commit": "git-cz",
-    "test": "jest --watch",
+    "test": "jest",
     "jest-clear": "jest --clearCache"
   },
   "dependencies": {
