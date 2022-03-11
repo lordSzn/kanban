@@ -143,7 +143,7 @@ export const removeFavoriteProjectFx = createEffect<{ favoriteID: string }, void
 
 export interface User {
   fullname: string
-  email?: string | null
+  email?: string
   photoUrl?: string
   description?: string
 }
@@ -156,7 +156,7 @@ export const baseAuthenticateFx = createEffect<{ provider: AuthProvider }, User>
 
     return {
       fullname: user.displayName || 'unknown',
-      email: user.email,
+      email: user.email || '',
       photoUrl: user.photoURL || '',
     }
   },
