@@ -2,6 +2,7 @@ import { GeistUIThemes, Grid, useTheme } from '@geist-ui/core'
 import { CornerUpLeft } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import React from 'react'
+import { UserEditForm } from '~/features/user/edit/ui/organisms'
 import { paths } from '~/shared/lib/paths'
 import { CustomLink } from '~/shared/ui'
 import { SettingsMenu } from './ui/settings-menu'
@@ -21,7 +22,9 @@ export const Settings = () => {
         </LeftMenu>
       </Grid>
       <Grid xs={20} justify="center">
-        <Main>Example geist and effector app!!!</Main>
+        <Main>
+          <UserEditForm />
+        </Main>
       </Grid>
     </Grid.Container>
   )
@@ -40,6 +43,9 @@ const LeftMenu = styled.aside<{ theme: GeistUIThemes }>`
 
 const Main = styled.section`
   padding-top: 4rem;
+
+  max-width: 37rem;
+  width: 100%;
 `
 
 const CollapseBar = styled.nav`

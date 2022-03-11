@@ -1,11 +1,4 @@
-import {
-  attach,
-  createEffect,
-  createEvent,
-  createStore,
-  sample,
-  Unit,
-} from 'effector'
+import { attach, createEffect, createEvent, createStore, sample, Unit } from 'effector'
 import { persist } from 'effector-storage/local'
 import { getAuth } from 'firebase/auth'
 import type { User } from '~/shared/api/requests'

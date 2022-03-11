@@ -1,10 +1,5 @@
 import { createEffect } from 'effector'
-import {
-  AuthProvider,
-  getAuth,
-  signInWithPopup,
-  UserCredential,
-} from 'firebase/auth'
+import { AuthProvider, getAuth, signInWithPopup, UserCredential } from 'firebase/auth'
 import {
   addDoc,
   collection,
@@ -77,18 +72,12 @@ export interface TaskLifecycle {
   status: Status
 }
 
-export const loadTasksLifecycleFx = createEffect<
-  Firestore,
-  TaskLifecycle[],
-  void
->({
+export const loadTasksLifecycleFx = createEffect<Firestore, TaskLifecycle[], void>({
   handler: async () => {
     const tasksLifecycleColumn = collection(getFirestore(), 'tasksLifecycle')
     const tasksLifecycleSnapshots = await getDocs(tasksLifecycleColumn)
 
-    const tasksLifecycleList = tasksLifecycleSnapshots.docs.map((doc) =>
-      doc.data()
-    )
+    const tasksLifecycleList = tasksLifecycleSnapshots.docs.map((doc) => doc.data())
 
     return tasksLifecycleList as TaskLifecycle[]
   },
@@ -98,21 +87,12 @@ export interface FavoritesProjects {
   projectID: string
 }
 
-export const loadFavoritesProjectsFx = createEffect<
-  void,
-  FavoritesProjects[],
-  void
->({
+export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], void>({
   handler: async () => {
-    const FavoritesProjectsColumn = collection(
-      getFirestore(),
-      'favorites-projects'
-    )
+    const FavoritesProjectsColumn = collection(getFirestore(), 'favorites-projects')
     const FavoritesProjectsSnapshots = await getDocs(FavoritesProjectsColumn)
 
-    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) =>
-      doc.data()
-    )
+    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) => doc.data())
 
     return FavoritesProjectsList as FavoritesProjects[]
   },
@@ -141,11 +121,7 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
   },
 })
 
-export const saveFavoriteProjectFx = createEffect<
-  { favoriteID: string },
-  FavoritesProjects,
-  void
->({
+export const saveFavoriteProjectFx = createEffect<{ favoriteID: string }, FavoritesProjects, void>({
   handler: async ({ favoriteID }) => {
     const favoriteColumn = collection(getFirestore(), 'favorites-projects')
 
@@ -159,11 +135,7 @@ export const saveFavoriteProjectFx = createEffect<
   },
 })
 
-export const removeFavoriteProjectFx = createEffect<
-  { favoriteID: string },
-  void,
-  void
->({
+export const removeFavoriteProjectFx = createEffect<{ favoriteID: string }, void, void>({
   handler: async ({ favoriteID }) => {
     await deleteDoc(doc(getFirestore(), 'favorites-projects', favoriteID))
   },
@@ -171,15 +143,12 @@ export const removeFavoriteProjectFx = createEffect<
 
 export interface User {
   fullname: string
-  email?: string | null
+  email?: string
   photoUrl?: string
   description?: string
 }
 
-export const baseAuthenticateFx = createEffect<
-  { provider: AuthProvider },
-  User
->({
+export const baseAuthenticateFx = createEffect<{ provider: AuthProvider }, User>({
   handler: async ({ provider }) => {
     const auth = getAuth()
     const answer: UserCredential = await signInWithPopup(auth, provider)
@@ -187,7 +156,7 @@ export const baseAuthenticateFx = createEffect<
 
     return {
       fullname: user.displayName || 'unknown',
-      email: user.email,
+      email: user.email || '',
       photoUrl: user.photoURL || '',
     }
   },
