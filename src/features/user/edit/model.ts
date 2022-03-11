@@ -1,6 +1,6 @@
 import { createRoute } from 'atomic-router'
 import { createEvent, createStore, sample } from 'effector'
-import { debug, spread } from 'patronum'
+import { spread } from 'patronum'
 import { $currentUser } from '~/entities/session'
 
 export const userEditRoute = createRoute()
@@ -33,5 +33,3 @@ sample({
     },
   }),
 })
-
-debug($currentUser, $fullname, $userName)
