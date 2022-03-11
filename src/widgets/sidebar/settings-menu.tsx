@@ -1,8 +1,11 @@
 import { Link, Text } from '@geist-ui/core'
 import { styled } from '@linaria/react'
+import { createStore } from 'effector'
 import { useList } from 'effector-react'
 import React from 'react'
-import { $menuList } from '../model'
+import { menuSettings } from './menu-lists'
+
+export const $menuList = createStore(menuSettings)
 
 export const SettingsMenu = () =>
   useList($menuList, (menu, idx) => {
