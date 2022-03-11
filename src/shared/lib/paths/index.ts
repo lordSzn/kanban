@@ -3,6 +3,6 @@ export const paths = {
   workspace: () => `/workspace`,
   login: () => '/login',
   notFound: () => '/not-found',
-  settings: () => '/user/settings',
-  userEdit: () => '/user/settings/profile-edit',
+  settings: () => '/u/settings',
+  userEdit: () => '/u/settings/profile-edit',
 }
