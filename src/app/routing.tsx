@@ -2,8 +2,9 @@ import { createHistoryRouter } from 'atomic-router'
 import { Route } from 'atomic-router-react'
 import { sample } from 'effector'
 import React from 'react'
+import { userEditRoute } from '~/features/user/edit'
 import { NotFoundPage } from '~/pages/error-not-found'
-import { SettingsPage } from '~/pages/settings'
+import { SettingsPage } from '~/pages/settings/profile'
 import { paths } from '~/shared/lib/paths'
 import { history } from '~/shared/lib/routing-history'
 import { ProjectPage, WorkspacePage, LoginPage } from '../pages'
@@ -13,7 +14,7 @@ export const routes = [
   { path: paths.project(':id'), route: ProjectPage.projectRoute, view: ProjectPage.Project },
   { path: paths.login(), route: LoginPage.loginRoute, view: LoginPage.Login },
   { path: paths.notFound(), route: NotFoundPage.notFoundRoute, view: NotFoundPage.NotFound },
-  { path: paths.settings(), route: SettingsPage.settingsRoute, view: SettingsPage.Settings },
+  { path: paths.userEdit(), route: userEditRoute, view: SettingsPage.Settings },
 ]
 
 export const router = createHistoryRouter({
