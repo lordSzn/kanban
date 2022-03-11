@@ -1,16 +1,23 @@
 import { Input } from '@geist-ui/core'
-import React, { EventHandler, SyntheticEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 
 interface Props {
   label: string
   placeholder?: string
-  onChange: EventHandler<SyntheticEvent>
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
   value?: string
+  htmlType: string
 }
 
-export const ControlField = ({ label, placeholder, value, onChange }: Props) => {
+export const ControlField = ({ label, placeholder, value, onChange, htmlType }: Props) => {
   return (
-    <Input width="100%" onChange={onChange} value={value} placeholder={placeholder}>
+    <Input
+      htmlType={htmlType}
+      width="100%"
+      onChange={onChange}
+      value={value}
+      placeholder={placeholder}
+    >
       {label}
     </Input>
   )
