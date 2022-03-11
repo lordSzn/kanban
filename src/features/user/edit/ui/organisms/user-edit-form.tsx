@@ -1,6 +1,6 @@
 import { Button, Divider, Spacer, Text } from '@geist-ui/core'
 import { useStore } from 'effector-react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   $email,
   $fullname,
@@ -8,7 +8,6 @@ import {
   $userName,
   emailChanged,
   fullnameChanged,
-  pageMounted,
   userNameChanged,
 } from '../../model'
 import { ControlField } from '../atoms'
@@ -19,11 +18,6 @@ export const UserEditForm = () => {
   const userName = useStore($userName)
   const photo = useStore($photo)
   const email = useStore($email)
-
-  useEffect(() => {
-    pageMounted()
-  }, [])
-
   return (
     <form>
       <Text h2 mb={0.7}>

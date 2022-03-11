@@ -5,8 +5,6 @@ import { $currentUser } from '~/entities/session'
 
 export const userEditRoute = createRoute()
 
-export const pageMounted = createEvent()
-
 export const fullnameChanged = createEvent<string>()
 export const userNameChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
@@ -21,7 +19,7 @@ export const $email = createStore('')
 export const formSubmitted = createEvent()
 
 sample({
-  clock: pageMounted,
+  clock: userEditRoute.opened,
   source: $currentUser,
   filter: Boolean,
   target: spread({
