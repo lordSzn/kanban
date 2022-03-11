@@ -2,10 +2,7 @@ import { GeistUIThemes, Grid, useTheme } from '@geist-ui/core'
 import { CornerUpLeft } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import React from 'react'
-import { UserEditForm } from '~/features/user/edit/ui/organisms'
-import { paths } from '~/shared/lib/paths'
-import { CustomLink } from '~/shared/ui'
-import { SettingsMenu } from './ui/settings-menu'
+import { UserEditForm } from '~/features/user/edit/ui'
 
 export const Settings = () => {
   const theme = useTheme()
