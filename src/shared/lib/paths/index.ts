@@ -4,4 +4,5 @@ export const paths = {
   login: () => '/login',
   notFound: () => '/not-found',
   settings: () => '/user/settings',
+  userEdit: () => '/user/settings/profile-edit',
 }
