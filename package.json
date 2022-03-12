@@ -61,6 +61,7 @@
     "dotenv-webpack": "^7.1.0",
     "eslint": "7.10.0",
     "eslint-import-resolver-typescript": "^2.5.0",
+    "firebase-tools": "^10.2.2",
     "fork-ts-checker-webpack-plugin": "^7.2.1",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
