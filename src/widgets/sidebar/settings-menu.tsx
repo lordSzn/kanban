@@ -1,5 +1,6 @@
-import { Link, Text } from '@geist-ui/core'
+import { Text } from '@geist-ui/core'
 import { styled } from '@linaria/react'
+import { Link } from 'atomic-router-react'
 import { createStore } from 'effector'
 import { useList } from 'effector-react'
 import React from 'react'
@@ -17,7 +18,9 @@ export const SettingsMenu = () =>
         {menu.items.map((item, idx) => (
           // eslint-disable-next-line react/no-array-index-key
           <SettingItem key={idx}>
-            <Link>{item}</Link>
+            <Link className={linkClasses} to={item.href}>
+              {item.name}
+            </Link>
           </SettingItem>
         ))}
       </>
