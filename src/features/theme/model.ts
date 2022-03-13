@@ -1,7 +1,7 @@
 import { createEvent, createStore, sample } from 'effector'
 import { persist } from 'effector-storage/local'
 
-type Theme = 'light' | 'dark'
+export type Theme = 'light' | 'dark'
 
 export const themeToggled = createEvent()
 export const themeChoice = createEvent<string | string[]>()

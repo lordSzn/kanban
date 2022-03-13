@@ -1,13 +1,16 @@
 import { GeistUIThemes, useTheme } from '@geist-ui/core'
 import { CornerUpLeft } from '@icon-park/react'
 import { styled } from '@linaria/react'
+import { useStore } from 'effector-react'
 import React from 'react'
+import { $theme } from '~/features/theme'
 import { paths } from '~/shared/lib/paths'
 import { CustomLink } from '~/shared/ui'
 import { SettingsMenu } from './settings-menu'
 
 export const Sidebar = () => {
   const theme = useTheme()
+  const type = useStore($theme)
   return (
     <>
       <LeftMenu theme={theme} data-theme={theme.type}>
@@ -15,7 +18,7 @@ export const Sidebar = () => {
           Settings
         </GoBackLink>
         <CollapseBar>
-          <SettingsMenu />
+          <SettingsMenu type={type} />
         </CollapseBar>
       </LeftMenu>
     </>

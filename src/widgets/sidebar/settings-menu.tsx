@@ -5,11 +5,12 @@ import { Link } from 'atomic-router-react'
 import { createStore } from 'effector'
 import { useList } from 'effector-react'
 import React from 'react'
+import { Theme } from '~/features/theme'
 import { menuSettings } from './menu-lists'
 
 export const $menuList = createStore(menuSettings)
 
-export const SettingsMenu = () =>
+export const SettingsMenu = ({ type }: { type: Theme }) =>
   useList($menuList, (menu, idx) => {
     const icon = menu.icon
     const title = <Text ml={0.35}>{menu.label}</Text>
@@ -19,7 +20,12 @@ export const SettingsMenu = () =>
         {menu.items.map((item, idx) => (
           // eslint-disable-next-line react/no-array-index-key
           <SettingItem key={idx}>
-            <Link className={linkClasses} activeClassName={activeLinkClasses} to={item.href}>
+            <Link
+              data-theme={type}
+              className={linkClasses}
+              activeClassName={activeLinkClasses}
+              to={item.href}
+            >
               {item.name}
             </Link>
           </SettingItem>
@@ -70,6 +76,10 @@ const linkClasses = css`
 
   &:hover {
     background-color: rgba(234, 234, 234, 0.5);
+  }
+
+  &[data-theme='dark'] {
+    color: inherit;
   }
 `
 
