@@ -15,7 +15,7 @@ export const ProjectPreview: FC<Props> = ({ project, className }) => {
 
   return (
     <Link className={className} to={paths.project(project.projectID)}>
-      <CardStyled data-theme={type} width="300px" shadow>
+      <CardStyled data-theme={type} width="300px" height="340px" shadow>
         <Image height="200px" width="300px" src={project.photoUrl} alt="project preview" />
         <Text h4 mb={0}>
           {project.title}
