@@ -5,18 +5,9 @@ import { styled } from '@linaria/react'
 import { sample } from 'effector'
 import React from 'react'
 import { checkAuthenticated } from '~/entities/session'
-import {
-  authenticationWithGithubFx,
-  githubAuthClicked,
-} from '~/features/auth/auth-by-github'
-import {
-  authenticationWithGoogleFx,
-  googleAuthClicked,
-} from '~/features/auth/auth-by-google'
-import {
-  authenticationWithTwitterFx,
-  twitterAuthClicked,
-} from '~/features/auth/auth-by-twitter'
+import { authenticationWithGithubFx, githubAuthClicked } from '~/features/auth/auth-by-github'
+import { authenticationWithGoogleFx, googleAuthClicked } from '~/features/auth/auth-by-google'
+import { authenticationWithTwitterFx, twitterAuthClicked } from '~/features/auth/auth-by-twitter'
 import { ButtonControl, PageContentCentred } from '~/shared/ui'
 import { WorkspacePage } from '../workspace'
 import { loginRoute } from './route'
