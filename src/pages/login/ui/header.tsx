@@ -8,7 +8,9 @@ export const Header = () => {
   return (
     <HeaderWrapper data-theme={theme.type}>
       <HeaderContainer>
-        <Text h2>Mirio</Text>
+        <Text h2 margin="0">
+          Mirio
+        </Text>
         <Container>
           <div>
             <Link mr={1.2} rel="noopener" target="_blank" href="https://github.com/lordSzn">
