@@ -65,6 +65,7 @@
     "fork-ts-checker-webpack-plugin": "^7.2.1",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
+    "madge": "^5.0.1",
     "mini-css-extract-plugin": "^2.5.3",
     "prettier": "2.3.0",
     "ts-jest": "^27.1.3",
