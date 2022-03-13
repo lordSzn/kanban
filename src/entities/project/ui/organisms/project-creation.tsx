@@ -53,12 +53,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
           <Button width="70px" mr={0.4} onClick={() => close()}>
             cancel
           </Button>
-          <Button
-            type="success"
-            loading={loading}
-            width="70px"
-            onClick={() => formSubmitted}
-          >
+          <Button type="success" loading={loading} width="70px" onClick={() => formSubmitted()}>
             submit
           </Button>
         </ButtonGroup>
