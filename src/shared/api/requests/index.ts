@@ -9,6 +9,7 @@ import {
   getDocs,
   getFirestore,
 } from 'firebase/firestore'
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 export interface Project {
   projectID: string
@@ -98,14 +99,14 @@ export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], v
   },
 })
 
-export type CreatedProject = Pick<Project, 'title' | 'description'>
+export type CreatedProject = Omit<Project, 'projectID' | 'isFinished'>
 
 export const projectCreateFx = createEffect<CreatedProject, Project, void>({
-  handler: async ({ title, description }) => {
+  handler: async ({ title, description, photoUrl }) => {
     const docRef = await addDoc(collection(getFirestore(), 'projects'), {
       title,
       description,
-      photoUrl: '',
+      photoUrl,
       isFinished: false,
     })
 
@@ -113,7 +114,7 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
       title,
       description,
       projectID: docRef.id,
-      photoUrl: '',
+      photoUrl,
       isFinished: false,
     }
 
@@ -159,5 +160,17 @@ export const baseAuthenticateFx = createEffect<{ provider: AuthProvider }, User>
       email: user.email || '',
       photoUrl: user.photoURL || '',
     }
+  },
+})
+
+export const uploadImageFx = createEffect<File, { photoUrl: string }>({
+  handler: async (image) => {
+    const storage = getStorage()
+    const mountainImagesRef = ref(storage, `projects/${image.name}`)
+
+    const imageRef = await uploadBytes(mountainImagesRef, image)
+    const photoUrl = await getDownloadURL(imageRef.ref)
+
+    return { photoUrl }
   },
 })
