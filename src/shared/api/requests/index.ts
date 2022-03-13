@@ -99,10 +99,16 @@ export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], v
   },
 })
 
-export type CreatedProject = Omit<Project, 'projectID' | 'isFinished'>
+export type CreatedProject = Pick<Project, 'title' | 'description'> & { image: File }
 
 export const projectCreateFx = createEffect<CreatedProject, Project, void>({
-  handler: async ({ title, description, photoUrl }) => {
+  handler: async ({ title, description, image }) => {
+    const storage = getStorage()
+    const mountainImagesRef = ref(storage, `projects/${image.name}`)
+
+    const imageRef = await uploadBytes(mountainImagesRef, image)
+    const photoUrl = await getDownloadURL(imageRef.ref)
+
     const docRef = await addDoc(collection(getFirestore(), 'projects'), {
       title,
       description,
@@ -160,17 +166,5 @@ export const baseAuthenticateFx = createEffect<{ provider: AuthProvider }, User>
       email: user.email || '',
       photoUrl: user.photoURL || '',
     }
-  },
-})
-
-export const uploadImageFx = createEffect<File, { photoUrl: string }>({
-  handler: async (image) => {
-    const storage = getStorage()
-    const mountainImagesRef = ref(storage, `projects/${image.name}`)
-
-    const imageRef = await uploadBytes(mountainImagesRef, image)
-    const photoUrl = await getDownloadURL(imageRef.ref)
-
-    return { photoUrl }
   },
 })
