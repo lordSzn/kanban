@@ -7,6 +7,7 @@ const source = resolve(root, 'src')
 
 exports.src = source
 exports.context = root
+exports.favicon = resolve(root, 'public/favicon.png')
 exports.build = resolve(root, 'build')
 exports.entryMain = resolve(source, 'index.tsx')
 exports.indexHTML = resolve(source, 'index.html')
