@@ -5,6 +5,7 @@ import React from 'react'
 import { $currentUser } from '~/entities/session'
 import { Logout } from '~/entities/session/ui'
 import { SwitchTheme } from '~/features/theme/ui'
+import { userEditRoute } from '~/features/user/edit'
 import { PopoverAction } from '~/shared/ui'
 
 export const UserSettings = () => {
@@ -20,7 +21,7 @@ export const UserSettings = () => {
         <SwitchTheme />
       </Popover.Item>
       <Popover.Item>
-        <PopoverAction text="Settings" icon={<Settings />} />
+        <PopoverAction text="Settings" icon={<Settings />} onClick={() => userEditRoute.open({})} />
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
