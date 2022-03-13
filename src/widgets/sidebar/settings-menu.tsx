@@ -1,4 +1,5 @@
 import { Text } from '@geist-ui/core'
+import { css } from '@linaria/core'
 import { styled } from '@linaria/react'
 import { Link } from 'atomic-router-react'
 import { createStore } from 'effector'
@@ -46,15 +47,26 @@ const SettingsLabel = styled.div`
 
 const SettingItem = styled.div`
   margin: 1px;
-  padding: 0.5rem 0 0.5rem 1.8rem;
-  border-radius: 7px;
 
-  cursor: pointer;
-  transition: background 0.2s cubic-bezier(0.33, 0.96, 0.49, 1.01);
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
 
   &:last-child {
     margin-bottom: 2rem;
   }
+`
+
+const linkClasses = css`
+  display: block;
+
+  padding: 0.5rem 0 0.5rem 1.8rem;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+  transition: background 0.2s cubic-bezier(0.33, 0.96, 0.49, 1.01);
 
   &:hover {
     background-color: rgba(234, 234, 234, 0.5);
