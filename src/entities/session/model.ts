@@ -18,7 +18,9 @@ export const sessionDeleteFx = createEffect({
 
 export const logout = createEvent()
 
-export const $currentUser = createStore<User | null>(null).reset(logout)
+export const $currentUser = createStore<User | null>(null)
+  .on(sessionGetFx, (_, user) => user)
+  .reset(logout)
 export const $isAuthenticated = $currentUser.map(Boolean)
 
 persist({
