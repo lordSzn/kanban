@@ -7,9 +7,7 @@ import { getFileUrl } from './library'
 
 export const $projects = createStore<Project[]>([])
   .on(loadProjectsFx.doneData, (_, projects) => projects)
-  .on(projectCreateFx.doneData, (projects, newProject) =>
-    projects.concat(newProject)
-  )
+  .on(projectCreateFx.doneData, (projects, newProject) => projects.concat(newProject))
 
 export const $activeProjects = $projects.map((projects) =>
   projects.filter(({ isFinished }) => !isFinished)
@@ -55,16 +53,9 @@ sample({
   target: $photoUrl,
 })
 
-export const $validCreatedProject = combine(
-  [$title, $description],
-  ([title, description]) => {
-    return (
-      title.trim().length > 5 &&
-      description.trim().length > 10 &&
-      description.trim().length < 25
-    )
-  }
-)
+export const $validCreatedProject = combine([$title, $description], ([title, description]) => {
+  return title.trim().length > 5 && description.trim().length > 10 && description.trim().length < 25
+})
 
 export const $createdProject = combine({
   title: $title,
