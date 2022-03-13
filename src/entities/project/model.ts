@@ -19,15 +19,12 @@ export const $finishedProjects = $projects.map((projects) =>
 export const showCreationForm = createEvent<MouseEvent>()
 export const hideCreationForm = createEvent()
 
-export const formSubmitted = createEvent()
-
 export const $visibleDraftProject = createStore(false)
   .on(showCreationForm, () => true)
   .on(hideCreationForm, () => false)
   .reset(projectCreateFx.done)
 
-export const $saveProjectLoading = projectCreateFx.pending
-
+export const formSubmitted = createEvent()
 export const titleChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
 export const photoUploaded = createEvent<File[]>()
@@ -53,19 +50,41 @@ sample({
   target: $photoUrl,
 })
 
-export const $validCreatedProject = combine([$title, $description], ([title, description]) => {
-  return title.trim().length > 5 && description.trim().length > 10 && description.trim().length < 25
-})
+export const $saveProjectLoading = projectCreateFx.pending
 
-export const $createdProject = combine({
+export const checkValidForm = ({
+  title,
+  description,
+  image,
+}: {
+  title: string
+  description: string
+  image: File | null
+}) => {
+  return (
+    title.trim().length > 5 &&
+    description.trim().length > 10 &&
+    description.trim().length < 25 &&
+    image !== null
+  )
+}
+
+interface CreatedProject {
+  title: string
+  description: string
+  image: File
+}
+
+export const $form = combine({
   title: $title,
   description: $description,
+  image: $photo,
 })
 
 sample({
   clock: formSubmitted,
-  source: $createdProject,
-  filter: $validCreatedProject,
+  source: $form,
+  filter: (form): form is CreatedProject => checkValidForm(form),
   target: projectCreateFx,
 })
 
