@@ -19,7 +19,7 @@ export const SettingsMenu = () =>
         {menu.items.map((item, idx) => (
           // eslint-disable-next-line react/no-array-index-key
           <SettingItem key={idx}>
-            <Link className={linkClasses} to={item.href}>
+            <Link className={linkClasses} activeClassName={activeLinkClasses} to={item.href}>
               {item.name}
             </Link>
           </SettingItem>
@@ -71,4 +71,8 @@ const linkClasses = css`
   &:hover {
     background-color: rgba(234, 234, 234, 0.5);
   }
+`
+
+const activeLinkClasses = css`
+  background-color: rgba(234, 234, 234, 0.5);
 `
