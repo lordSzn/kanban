@@ -1,4 +1,4 @@
-name: Deploy firebase hosting
+name: Deploy to firebase hosting
 
 on:
   push:
@@ -7,10 +7,9 @@ on:
     branches: [master]
       
 jobs:
-  build: 
+  deploy: 
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    
+    timeout-minutes: 30 
     steps:
       - uses: actions/checkout@v2 
 
@@ -19,20 +18,13 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install dependency
-        uses: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
       
       - name: Run tests
-        uses: yarn test
+        run: yarn test
       
-      - name: Run lint
-        uses: yarn lint
-      
-      - name: Check dependency
-        uses: yarn deps 
-
       - name: Build
-        uses: yarn build
+        run: yarn build
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
