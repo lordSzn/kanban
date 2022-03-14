@@ -10,11 +10,14 @@ export const userNameChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
 export const emailChanged = createEvent<string>()
 
-export const $fullname = createStore('')
-export const $userName = createStore('').on($fullname, (_, fullname) => fullname.split(' ')[0])
-export const $description = createStore('')
+export const $fullname = createStore('').on(fullnameChanged, (_, fullname) => fullname)
+export const $userName = createStore('')
+  .on($fullname, (_, fullname) => fullname.split(' ')[0])
+  .on(userNameChanged, (_, username) => username)
+
+export const $description = createStore('').on(descriptionChanged, (_, description) => description)
+export const $email = createStore('').on(emailChanged, (_, email) => email)
 export const $photo = createStore('')
-export const $email = createStore('')
 
 export const formSubmitted = createEvent()
 
