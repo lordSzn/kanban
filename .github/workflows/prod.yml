@@ -12,14 +12,13 @@ jobs:
     timeout-minutes: 30
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2 
+      - uses: actions/checkout@v2 
 
       - name: Install nodejs
         uses: actions/setup-node@v2
-        with: 
+        with:
           node-version: '14'
-      
+
       - name: Install dependency
         uses: yarn install --frozen-lockfile
       
@@ -35,7 +34,7 @@ jobs:
       - name: Build
         uses: yarn build
 
-      - name: Deploy to firebase
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
