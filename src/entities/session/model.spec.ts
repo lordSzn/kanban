@@ -5,7 +5,9 @@ import { checkAuthenticated, sessionGetFx, $isAuthenticated } from './model'
 describe('check authenticated', () => {
   it('stop logic if not authorized', async () => {
     const scope = fork({
-      handlers: new Map().set(sessionGetFx, () => null),
+      handlers: new Map().set(sessionGetFx, () => {
+        throw 'session is null'
+      }),
     })
 
     expect(scope.getState($isAuthenticated)).toBeFalsy()
@@ -73,7 +75,9 @@ describe('check authenticated', () => {
   it('redirect to the logic page if not anonymous', async () => {
     const scope = fork({
       values: new Map().set($currentUser, null),
-      handlers: new Map().set(sessionGetFx, () => null),
+      handlers: new Map().set(sessionGetFx, () => {
+        throw 'session is null'
+      }),
     })
 
     expect(scope.getState($isAuthenticated)).toBeFalsy()
