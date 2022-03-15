@@ -1,21 +1,42 @@
-import { attach, createEffect, createEvent, createStore, sample, Unit } from 'effector'
+import { createEffect, createEvent, createStore, sample, Unit } from 'effector'
 import { persist } from 'effector-storage/local'
-import { getAuth } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import type { User as FirebaseUser } from 'firebase/auth'
 import type { User } from '~/shared/api/requests'
+import { appStarted } from '~/shared/config/run-logic'
 
-export const sessionGetFx = createEffect<void, User>({
+export const sessionUpdated = createEvent<FirebaseUser | null>()
+
+export const sessionGetSuccess = createEvent<User>()
+export const sessionFailure = createEvent()
+
+export const subscribeSessionFx = createEffect({
   handler: async () => {
-    const user = await getAuth().currentUser
-
-    if (user == null) throw 'session is null'
-
-    return {
-      fullname: user.displayName || 'user',
-      email: user.email || '',
-      photoUrl: user.photoURL || '',
-      description: '',
-    }
+    return onAuthStateChanged(getAuth(), sessionUpdated)
   },
+})
+
+sample({
+  clock: appStarted,
+  target: subscribeSessionFx,
+})
+
+sample({
+  clock: sessionUpdated,
+  filter: Boolean,
+  fn: (user) => ({
+    fullname: user.displayName || 'user',
+    email: user.email || '',
+    photoUrl: user.photoURL || '',
+    description: '',
+  }),
+  target: sessionGetSuccess,
+})
+
+sample({
+  clock: sessionUpdated,
+  filter: (session) => session === null,
+  target: sessionFailure,
 })
 
 export const sessionDeleteFx = createEffect({
@@ -27,8 +48,8 @@ export const sessionDeleteFx = createEffect({
 export const logout = createEvent()
 
 export const $currentUser = createStore<User | null>(null)
-  .on(sessionGetFx.doneData, (_, user) => user)
-  .reset(sessionDeleteFx.done)
+  .on(sessionGetSuccess, (_, user) => user)
+  .reset(sessionDeleteFx.done, sessionFailure)
 export const $isAuthenticated = $currentUser.map(Boolean)
 
 persist({
@@ -48,60 +69,40 @@ export const checkAuthenticated = <T>(config: {
   then: Unit<T | void>
   else?: Unit<T | void>
 }) => {
-  const currentUserGetFx = attach({ effect: sessionGetFx })
-
   const elseLogic = config.else ?? createEvent()
 
   const checkIsAuthenticated = config.if === 'authorized'
   const checkIsAnonymous = !checkIsAuthenticated
 
-  sample({
-    clock: config.when,
-    filter: $isAuthenticated.map((is) => !is),
-    target: currentUserGetFx,
-  })
-
   if (checkIsAuthenticated) {
     sample({
-      clock: config.when,
+      source: config.when,
       filter: $isAuthenticated,
+      fn: () => {},
       target: config.then,
     })
 
     sample({
-      clock: currentUserGetFx.doneData,
-      filter: (user) => user === null,
-      fn: () => undefined,
+      source: config.when,
+      filter: $isAuthenticated.map((is) => !is),
+      fn: () => {},
       target: elseLogic,
-    })
-
-    sample({
-      clock: currentUserGetFx.doneData,
-      filter: (user) => user !== null,
-      fn: () => undefined,
-      target: config.then,
     })
   }
 
   if (checkIsAnonymous) {
     sample({
-      clock: config.when,
+      source: config.when,
       filter: $isAuthenticated,
+      fn: () => {},
       target: elseLogic,
     })
 
     sample({
-      clock: currentUserGetFx.doneData,
-      filter: (user) => user === null,
-      fn: () => undefined,
+      source: config.when,
+      filter: $isAuthenticated.map((is) => !is),
+      fn: () => {},
       target: config.then,
-    })
-
-    sample({
-      clock: currentUserGetFx.doneData,
-      filter: (user) => user !== null,
-      fn: () => undefined,
-      target: elseLogic,
     })
   }
 }
