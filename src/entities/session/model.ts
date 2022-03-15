@@ -3,10 +3,18 @@ import { persist } from 'effector-storage/local'
 import { getAuth } from 'firebase/auth'
 import type { User } from '~/shared/api/requests'
 
-export const sessionGetFx = createEffect({
+export const sessionGetFx = createEffect<void, User>({
   handler: async () => {
     const user = await getAuth().currentUser
-    return user
+
+    if (user == null) throw 'session is null'
+
+    return {
+      fullname: user.displayName || 'user',
+      email: user.email || '',
+      photoUrl: user.photoURL || '',
+      description: '',
+    }
   },
 })
 
@@ -19,7 +27,7 @@ export const sessionDeleteFx = createEffect({
 export const logout = createEvent()
 
 export const $currentUser = createStore<User | null>(null)
-  .on(sessionGetFx, (_, user) => user)
+  .on(sessionGetFx.doneData, (_, user) => user)
   .reset(logout)
 export const $isAuthenticated = $currentUser.map(Boolean)
 
