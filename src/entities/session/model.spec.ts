@@ -39,7 +39,7 @@ describe('check authenticated', () => {
 
   it('at the start of the logic redirect if authorized', async () => {
     const scope = fork({
-      values: new Map().set($currentUser, { user: 'stub' }),
+      handlers: new Map().set(sessionGetFx, () => ({ user: 'stub' })),
     })
 
     expect(scope.getState($isAuthenticated)).toBeTruthy()
