@@ -1,13 +1,11 @@
 import { allSettled, createEvent, fork } from 'effector'
-import { $currentUser } from '~/entities/session'
-import { checkAuthenticated, sessionGetFx, $isAuthenticated } from './model'
+import { User } from 'firebase/auth'
+import { checkAuthenticated, $isAuthenticated, sessionUpdated, subscribeSessionFx } from './model'
 
 describe('check authenticated', () => {
   it('stop logic if not authorized', async () => {
     const scope = fork({
-      handlers: new Map().set(sessionGetFx, () => {
-        throw 'session is null'
-      }),
+      handlers: new Map().set(subscribeSessionFx, () => sessionUpdated(null)),
     })
 
     expect(scope.getState($isAuthenticated)).toBeFalsy()
@@ -41,10 +39,15 @@ describe('check authenticated', () => {
 
   it('at the start of the logic redirect if authorized', async () => {
     const scope = fork({
-      handlers: new Map().set(sessionGetFx, () => ({ user: 'stub' })),
+      handlers: new Map().set(subscribeSessionFx, () =>
+        sessionUpdated({
+          displayName: 'john due',
+          email: 'test',
+          photoURL: 'image',
+          emailVerified: true,
+        } as User)
+      ),
     })
-
-    expect(scope.getState($isAuthenticated)).toBeTruthy()
 
     const pageLoad = createEvent()
 
@@ -74,13 +77,14 @@ describe('check authenticated', () => {
 
   it('redirect to the logic page if not anonymous', async () => {
     const scope = fork({
-      values: new Map().set($currentUser, null),
-      handlers: new Map().set(sessionGetFx, () => {
-        throw 'session is null'
-      }),
+      handlers: new Map().set(subscribeSessionFx, () =>
+        sessionUpdated({
+          displayName: 'john due',
+          email: 'test',
+          photoURL: 'image',
+        } as User)
+      ),
     })
-
-    expect(scope.getState($isAuthenticated)).toBeFalsy()
 
     const pageLoad = createEvent()
     const loginRouteOpen = createEvent()
