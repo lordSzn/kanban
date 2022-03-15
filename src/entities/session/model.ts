@@ -28,7 +28,7 @@ export const logout = createEvent()
 
 export const $currentUser = createStore<User | null>(null)
   .on(sessionGetFx.doneData, (_, user) => user)
-  .reset(logout)
+  .reset(sessionDeleteFx.done)
 export const $isAuthenticated = $currentUser.map(Boolean)
 
 persist({
