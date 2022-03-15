@@ -16,7 +16,7 @@ sample({
 
 export const Logout = () => {
   return (
-    <Link to={paths.login()} className={linkClasses}>
+    <Link to={paths.login()} onClick={() => logoutClicked()} className={linkClasses}>
       <LogOut />
       <Text span data-element="text">
         Sign out
