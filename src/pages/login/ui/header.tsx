@@ -29,6 +29,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1rem;
 
   height: 4rem;
   width: 100%;
