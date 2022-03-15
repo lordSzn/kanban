@@ -2,6 +2,7 @@ import { createHistoryRouter } from 'atomic-router'
 import { Route } from 'atomic-router-react'
 import { sample } from 'effector'
 import React from 'react'
+import { redirectSessionFailure } from '~/entities/session'
 import { userEditRoute } from '~/features/user/edit'
 import { NotFoundPage } from '~/pages/error-not-found'
 import { SettingsPage } from '~/pages/settings/profile'
@@ -22,6 +23,12 @@ export const router = createHistoryRouter({
 })
 
 router.setHistory(history)
+
+sample({
+  clock: redirectSessionFailure,
+  fn: () => ({}),
+  target: LoginPage.loginRoute.open,
+})
 
 sample({
   clock: router.routeNotFound,

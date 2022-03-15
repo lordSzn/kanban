@@ -5,6 +5,8 @@ import type { User as FirebaseUser } from 'firebase/auth'
 import type { User } from '~/shared/api/requests'
 import { appStarted } from '~/shared/config/run-logic'
 
+export const redirectSessionFailure = createEvent()
+
 export const sessionUpdated = createEvent<FirebaseUser | null>()
 
 export const sessionGetSuccess = createEvent<User>()

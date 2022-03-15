@@ -1,7 +1,14 @@
 import { combine, sample } from 'effector'
+import { redirectSessionFailure, checkAuthenticated } from '~/entities/session'
 import { loadFavoritesProjectsFx, loadProjectsFx } from '~/shared/api/requests'
 import { showMessage } from '~/shared/lib/toast'
 import { workspaceRoute } from '../route'
+
+checkAuthenticated({
+  when: workspaceRoute.opened,
+  if: 'anonymous',
+  then: redirectSessionFailure,
+})
 
 export const $pending = combine(
   [loadProjectsFx.pending, loadFavoritesProjectsFx.pending],
