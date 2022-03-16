@@ -6,7 +6,9 @@ import { BaseTemplate } from '~/shared/ui'
 export const NotFound = () => {
   return (
     <BaseTemplate header={<Header />}>
-      <HeroTitle>Page not found</HeroTitle>
+      <Preview>
+        <HeroTitle>Page not found</HeroTitle>
+      </Preview>
     </BaseTemplate>
   )
 }
@@ -14,16 +16,16 @@ export const NotFound = () => {
 export const Header = () => {
   return (
     <Grid.Container gap={2} alignItems="center">
-      <Grid xs={8}>
+      <Grid xs={9}>
         <Text h2>Mirio</Text>
       </Grid>
-      <Grid xs={7} justify="space-between">
+      <Grid xs={6} justify="space-between">
         <Link>Contact</Link>
         <Link>Open source</Link>
         <Link>Effector</Link>
         <Link>Geist ui</Link>
       </Grid>
-      <Grid xs={8} justify="flex-end">
+      <Grid xs={9} justify="flex-end">
         <Button type="abort" auto scale={0.897}>
           Login
         </Button>
@@ -38,4 +40,14 @@ export const Header = () => {
 const HeroTitle = styled.span`
   font-size: 72px;
   font-weight: 800;
+
+  margin-top: 10rem;
+`
+
+const Preview = styled.div`
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
 `
