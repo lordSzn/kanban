@@ -1,4 +1,5 @@
-import { combine, sample } from 'effector'
+import { sample } from 'effector'
+import { every } from 'patronum'
 import { redirectSessionFailure, checkAuthenticated } from '~/entities/session'
 import { loadFavoritesProjectsFx, loadProjectsFx } from '~/shared/api/requests'
 import { showMessage } from '~/shared/lib/toast'
@@ -10,10 +11,10 @@ checkAuthenticated({
   then: redirectSessionFailure,
 })
 
-export const $pending = combine(
-  [loadProjectsFx.pending, loadFavoritesProjectsFx.pending],
-  ([loadProjects, loadFavorites]) => loadProjects && loadFavorites
-)
+export const $pending = every({
+  stores: [loadProjectsFx.pending, loadFavoritesProjectsFx.pending],
+  predicate: true,
+})
 
 sample({
   clock: workspaceRoute.opened,
