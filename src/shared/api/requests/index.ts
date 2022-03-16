@@ -1,5 +1,12 @@
 import { createEffect } from 'effector'
-import { AuthProvider, getAuth, signInWithPopup, UserCredential } from 'firebase/auth'
+import {
+  AuthProvider,
+  getAuth,
+  signInWithPopup,
+  updateEmail,
+  updateProfile,
+  UserCredential,
+} from 'firebase/auth'
 import {
   addDoc,
   collection,
@@ -166,5 +173,55 @@ export const baseAuthenticateFx = createEffect<{ provider: AuthProvider }, User>
       email: user.email || '',
       photoUrl: user.photoURL || '',
     }
+  },
+})
+
+export const updateUserEmailFx = createEffect<{ changedEmail: string }, { newEmail: string }>({
+  handler: async ({ changedEmail }) => {
+    const user = getAuth().currentUser
+
+    if (user == null) throw 'user is null'
+
+    await updateEmail(user, changedEmail)
+
+    return {
+      newEmail: changedEmail,
+    }
+  },
+})
+
+interface UpdatedUserProfile {
+  fullname: string
+  photoUrl?: string
+  description?: string
+}
+
+export const updateUserProfileFx = createEffect<UpdatedUserProfile, UpdatedUserProfile>({
+  handler: async ({ fullname, photoUrl }) => {
+    const user = getAuth().currentUser
+
+    if (user == null) throw 'user is null'
+
+    await updateProfile(user, {
+      displayName: fullname,
+      photoURL: photoUrl,
+    })
+
+    return {
+      fullname,
+      photoUrl,
+    }
+  },
+})
+
+export const uploadAvatarProfileFx = createEffect<{ image: File }, { photoUrl: string }>({
+  handler: async ({ image }) => {
+    const storage = getStorage()
+    const mountainImagesRef = ref(storage, `projects/${image.name}`)
+
+    const imageRef = await uploadBytes(mountainImagesRef, image)
+    const photoUrl = await getDownloadURL(imageRef.ref)
+
+    return { photoUrl }
   },
 })

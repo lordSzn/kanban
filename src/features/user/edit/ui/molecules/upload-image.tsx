@@ -1,15 +1,17 @@
 import { Avatar, Tooltip } from '@geist-ui/core'
 import React, { FC } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { DropzoneOptions, useDropzone } from 'react-dropzone'
 
 interface Props {
   src?: string
+  onChange?: DropzoneOptions['onDrop']
 }
 
-export const UserUploadImage: FC<Props> = ({ src }) => {
+export const UserUploadImage: FC<Props> = ({ src, onChange }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     maxFiles: 1,
+    onDrop: onChange,
   })
 
   return (

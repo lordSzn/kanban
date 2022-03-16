@@ -5,26 +5,30 @@ import {
   $email,
   $fullname,
   $photo,
-  $userName,
+  avatarChanged,
   emailChanged,
+  formSubmitted,
   fullnameChanged,
-  userNameChanged,
 } from '../../model'
 import { ControlField } from '../atoms'
 import { UserUploadImage } from '../molecules'
 
 export const UserEditForm = () => {
   const fullname = useStore($fullname)
-  const userName = useStore($userName)
   const photo = useStore($photo)
   const email = useStore($email)
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        formSubmitted()
+      }}
+    >
       <Text h2 mb={0.7}>
         Profile
       </Text>
       <Divider mb={3.7} />
-      <UserUploadImage src={photo} />
+      <UserUploadImage src={photo} onChange={(file) => avatarChanged(file)} />
       <Spacer h={1.8} />
       <ControlField
         htmlType="text"
@@ -34,13 +38,6 @@ export const UserEditForm = () => {
         onChange={(e) => fullnameChanged(e.target.value)}
       />
       <Spacer h={1} />
-      <ControlField
-        htmlType="text"
-        label="Username"
-        value={userName}
-        placeholder="username"
-        onChange={(e) => userNameChanged(e.target.value)}
-      />
       <Spacer h={1} />
       <ControlField
         htmlType="email"
@@ -50,7 +47,7 @@ export const UserEditForm = () => {
         onChange={(e) => emailChanged(e.target.value)}
       />
       <Spacer h={1.42} />
-      <Button auto scale={0.967} type="success">
+      <Button htmlType="submit" auto scale={0.967} type="success">
         Submit
       </Button>
     </form>
