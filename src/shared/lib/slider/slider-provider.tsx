@@ -1,19 +1,10 @@
-import {
-  useKeenSlider,
-  KeenSliderOptions,
-  KeenSliderHooks,
-} from 'keen-slider/react'
+import { useKeenSlider, KeenSliderOptions, KeenSliderHooks } from 'keen-slider/react'
 import React, { FC, useState } from 'react'
 import { SliderNavigation, NavigationSliderProps } from './slider-navigation'
 
-type KeenParams =
-  | KeenSliderOptions<unknown, unknown, KeenSliderHooks>
-  | undefined
+type KeenParams = KeenSliderOptions<unknown, unknown, KeenSliderHooks> | undefined
 
-type NavigationProps = Pick<
-  NavigationSliderProps,
-  'onNext' | 'onPrev' | 'navigationClassName'
->
+type NavigationProps = Pick<NavigationSliderProps, 'onNext' | 'onPrev' | 'navigationClassName'>
 
 interface Props {
   className?: string
@@ -40,6 +31,7 @@ export const SliderProvider: FC<Props & KeenParams & NavigationProps> = ({
   })
 
   const isShowNavigation = mounted && navigation
+
   return (
     <>
       <div
