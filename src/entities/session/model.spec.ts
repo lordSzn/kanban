@@ -1,11 +1,10 @@
 import { allSettled, createEvent, fork } from 'effector'
-import { User } from 'firebase/auth'
-import { checkAuthenticated, $isAuthenticated, sessionUpdated, subscribeSessionFx } from './model'
+import { checkAuthenticated, $isAuthenticated, $currentUser } from './model'
 
 describe('check authenticated', () => {
   it('stop logic if not authorized', async () => {
     const scope = fork({
-      handlers: new Map().set(subscribeSessionFx, () => sessionUpdated(null)),
+      values: new Map().set($currentUser, null),
     })
 
     expect(scope.getState($isAuthenticated)).toBeFalsy()
@@ -39,14 +38,7 @@ describe('check authenticated', () => {
 
   it('at the start of the logic redirect if authorized', async () => {
     const scope = fork({
-      handlers: new Map().set(subscribeSessionFx, () =>
-        sessionUpdated({
-          displayName: 'john due',
-          email: 'test',
-          photoURL: 'image',
-          emailVerified: true,
-        } as User)
-      ),
+      values: new Map().set($currentUser, { email: 'test@email.com', fullname: 'kek' }),
     })
 
     const pageLoad = createEvent()
@@ -77,32 +69,61 @@ describe('check authenticated', () => {
 
   it('redirect to the logic page if not anonymous', async () => {
     const scope = fork({
-      handlers: new Map().set(subscribeSessionFx, () =>
-        sessionUpdated({
-          displayName: 'john due',
-          email: 'test',
-          photoURL: 'image',
-        } as User)
-      ),
+      values: new Map().set($currentUser, { email: 'test@email.com', fullname: 'kek' }),
     })
 
     const pageLoad = createEvent()
+
     const loginRouteOpen = createEvent()
+    const stopLogic = createEvent()
 
     const redirectMock = jest.fn()
+    const stopLogicMock = jest.fn()
 
     loginRouteOpen.watch(redirectMock)
+    stopLogic.watch(stopLogicMock)
 
     checkAuthenticated({
       when: pageLoad,
       if: 'anonymous',
       then: loginRouteOpen,
+      else: stopLogic,
     })
 
     await allSettled(pageLoad, {
       scope,
     })
 
-    expect(redirectMock).toBeCalledTimes(1)
+    expect(scope.getState($isAuthenticated)).toBeTruthy()
+    expect(redirectMock).toBeCalledTimes(0)
+    expect(stopLogicMock).toBeCalledTimes(1)
+  })
+
+  it('redirect to login when anonymous', async () => {
+    const scope = fork({
+      values: new Map().set($currentUser, null),
+    })
+
+    expect(scope.getState($isAuthenticated)).toBeFalsy()
+
+    const pageLoad = createEvent()
+
+    const toLogin = createEvent()
+    const toLoginMock = jest.fn()
+
+    toLogin.watch(toLoginMock)
+
+    checkAuthenticated({
+      when: pageLoad,
+      if: 'anonymous',
+      then: toLogin,
+    })
+
+    await allSettled(pageLoad, {
+      scope,
+    })
+
+    expect(scope.getState($isAuthenticated)).toBeFalsy()
+    expect(toLoginMock).toBeCalledTimes(1)
   })
 })
