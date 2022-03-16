@@ -18,6 +18,12 @@ export const subscribeSessionFx = createEffect({
   },
 })
 
+export const sessionDeleteFx = createEffect({
+  handler: async () => {
+    await getAuth().signOut()
+  },
+})
+
 sample({
   clock: appStarted,
   target: subscribeSessionFx,
@@ -39,12 +45,6 @@ sample({
   clock: sessionUpdated,
   filter: (session) => session === null,
   target: sessionFailure,
-})
-
-export const sessionDeleteFx = createEffect({
-  handler: async () => {
-    await getAuth().signOut
-  },
 })
 
 export const logout = createEvent()
