@@ -74,7 +74,6 @@ export const checkAuthenticated = <T>(config: {
   const elseLogic = config.else ?? createEvent()
 
   const checkIsAuthenticated = config.if === 'authorized'
-  const checkIsAnonymous = !checkIsAuthenticated
 
   if (checkIsAuthenticated) {
     sample({
@@ -90,9 +89,7 @@ export const checkAuthenticated = <T>(config: {
       fn: () => {},
       target: elseLogic,
     })
-  }
-
-  if (checkIsAnonymous) {
+  } else {
     sample({
       source: config.when,
       filter: $isAuthenticated,
