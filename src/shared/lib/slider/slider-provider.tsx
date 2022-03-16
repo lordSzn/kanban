@@ -26,7 +26,8 @@ export const SliderProvider: FC<Props & KeenParams & NavigationProps> = ({
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     created: () => started(true),
     destroyed: () => started(false),
-    slideChanged: (slider) => setCurrentSlider(slider.track.details.rel),
+    detailsChanged: (slider) => setCurrentSlider(slider.track.details.progress),
+
     ...options,
   })
 

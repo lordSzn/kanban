@@ -22,8 +22,7 @@ export const SliderNavigation = ({
   currentSlide,
 }: NavigationSliderProps) => {
   const leftDisabled = currentSlide === 0
-  // @fix
-  const rightDisabled = currentSlide === 2
+  const rightDisabled = currentSlide === 1
 
   return (
     <>
@@ -56,6 +55,7 @@ const arrowNavigation = css`
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   &:disabled {
     opacity: 0.3;
