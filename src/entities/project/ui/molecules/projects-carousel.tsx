@@ -6,16 +6,13 @@ interface Props {
   navigation?: boolean
 }
 
-export const ProjectsCarousel: FC<Props> = ({
-  children,
-  navigation = true,
-}) => {
+export const ProjectsCarousel: FC<Props> = ({ children, navigation = true }) => {
   const upMd = useMediaQuery('md', { match: 'up' })
   const isShowNavigation = navigation && upMd
 
   return (
     <SliderProvider
-      slides={{ perView: 4 }}
+      slides={{ perView: 4, spacing: 5 }}
       navigation={isShowNavigation}
       onNext={(slider) => slider.next()}
       onPrev={(slider) => slider.prev()}
