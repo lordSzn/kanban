@@ -1,17 +1,7 @@
-import {
-  attach,
-  createEffect,
-  createEvent,
-  createStore,
-  sample,
-} from 'effector'
+import { attach, createEffect, createEvent, createStore, sample } from 'effector'
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
 
-export const initFirebase = <T extends FirebaseOptions>({
-  config,
-}: {
-  config: T
-}) => {
+export const initFirebase = <T extends FirebaseOptions>({ config }: { config: T }) => {
   const $credentials = createStore(config)
   const run = createEvent()
 

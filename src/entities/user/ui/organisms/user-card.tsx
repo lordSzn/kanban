@@ -10,15 +10,7 @@ interface Props {
 
 export const UserCard: FC<Props> = ({ user, className }) => {
   if (user === null) {
-    return (
-      <AvatarStyled
-        isSquare
-        text="NN"
-        className={className}
-        width={1.38}
-        height={1.38}
-      />
-    )
+    return <AvatarStyled isSquare text="NN" className={className} width={1.38} height={1.38} />
   }
 
   const fallback = user.fullname.charAt(0).toUpperCase()

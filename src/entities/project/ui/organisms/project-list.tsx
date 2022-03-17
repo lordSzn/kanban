@@ -18,12 +18,7 @@ export const ProjectList: FC<Props> = ({ projects, loading }) => {
   }
 
   if (projects.length === 0) {
-    return (
-      <EmptyBlock
-        title="Your have no projects"
-        message="Create a new project"
-      />
-    )
+    return <EmptyBlock title="Your have no projects" message="Create a new project" />
   }
 
   return (
