@@ -5,12 +5,10 @@ interface Props {
   children: ReactNode
 }
 
-export const PaperSlide = forwardRef<HTMLDivElement, Props>(
-  ({ children, className = '' }, ref) => {
-    return (
-      <div ref={ref} className={`keen-slider__slide ${className}`}>
-        {children}
-      </div>
-    )
-  }
-)
+export const PaperSlide = forwardRef<HTMLDivElement, Props>(({ children, className = '' }, ref) => {
+  return (
+    <div ref={ref} className={`keen-slider__slide ${className}`}>
+      {children}
+    </div>
+  )
+})

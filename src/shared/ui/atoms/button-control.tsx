@@ -7,21 +7,9 @@ interface Props {
   label: string
 }
 
-export const ButtonControl = ({
-  icon,
-  onClick,
-  label,
-  type,
-}: Props & ButtonProps) => {
+export const ButtonControl = ({ icon, onClick, label, type }: Props & ButtonProps) => {
   return (
-    <Button
-      type={type}
-      icon={icon}
-      mb={0.89}
-      shadow
-      width="100%"
-      onClick={onClick}
-    >
+    <Button type={type} icon={icon} mb={0.89} shadow width="100%" onClick={onClick}>
       {label}
     </Button>
   )

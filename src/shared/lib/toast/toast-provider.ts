@@ -5,10 +5,7 @@ import { useLayoutEffect } from 'react'
 type Toaster = (toast: ToastInput) => void
 
 const saveHandle = createEvent<Toaster>()
-const $handler = createStore<Toaster | null>(null).on(
-  saveHandle,
-  (_, handler) => handler
-)
+const $handler = createStore<Toaster | null>(null).on(saveHandle, (_, handler) => handler)
 
 export const ToastProvider = () => {
   const { setToast } = useToasts()
@@ -25,10 +22,7 @@ export const showToastFx = attach({
   effect: (toaster, toast) => toaster?.(toast),
 })
 
-export const showMessage = <T>(config: {
-  when: Unit<T>
-  toast: (settings: T) => ToastInput
-}) => {
+export const showMessage = <T>(config: { when: Unit<T>; toast: (settings: T) => ToastInput }) => {
   sample({
     clock: config.when,
     fn: config.toast,
