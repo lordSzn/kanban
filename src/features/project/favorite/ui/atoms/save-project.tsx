@@ -2,7 +2,7 @@ import { HeartFill, Heart } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStoreMap } from 'effector-react'
 import React, { FC } from 'react'
-import { $favoriteIdx } from '../../model'
+import { $favoriteIdx, favoriteAdd, favoriteRemove } from '../../model'
 
 interface Props {
   projectID: string
@@ -19,8 +19,24 @@ export const SaveProject: FC<Props> = ({ projectID, className, size }) => {
 
   const label = isFavorite ? <HeartFill size={size} color="red" /> : <Heart size={size} />
 
+  if (isFavorite) {
+    return (
+      <Button
+        className={className}
+        data-favorite={isFavorite}
+        onClick={() => favoriteRemove({ favoriteID: projectID })}
+      >
+        {label}
+      </Button>
+    )
+  }
+
   return (
-    <Button className={className} data-favorite={isFavorite}>
+    <Button
+      className={className}
+      data-favorite={isFavorite}
+      onClick={() => favoriteAdd({ favoriteID: projectID })}
+    >
       {label}
     </Button>
   )
