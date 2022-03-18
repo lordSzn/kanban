@@ -28,15 +28,15 @@ sample({
   target: saveFavoriteProjectFx,
 })
 
+sample({
+  source: favoriteRemove,
+  target: removeFavoriteProjectFx,
+})
+
 showMessage({
   when: saveFavoriteProjectFx.doneData,
   toast: () => ({
     type: 'success',
     text: 'project add to favorite',
   }),
-})
-
-sample({
-  source: favoriteRemove,
-  target: removeFavoriteProjectFx,
 })
