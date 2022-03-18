@@ -19,8 +19,8 @@ export const $favoriteIdx = $favoriteProjectsId.map((projects) =>
   projects.map(({ projectID }) => projectID)
 )
 
-export const $favoritesProjects = combine([$projects, $favoriteIdx], ([projects, favoriteId]) => {
-  return projects.filter((project) => favoriteId.includes(project.projectID))
+export const $favoritesProjects = combine([$projects, $favoriteIdx], ([projects, favoritesId]) => {
+  return projects.filter((project) => favoritesId.includes(project.projectID))
 })
 
 sample({
