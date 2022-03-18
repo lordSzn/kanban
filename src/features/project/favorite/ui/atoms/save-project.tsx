@@ -8,7 +8,7 @@ interface Props {
   size?: number
 }
 
-export const FavoriteButton: FC<Props> = ({ isFavorite, className, size }) => {
+export const SaveProject: FC<Props> = ({ isFavorite, className, size }) => {
   const label = isFavorite ? <HeartFill size={size} color="red" /> : <Heart size={size} />
   return (
     <Button className={className} data-favorite={isFavorite}>
