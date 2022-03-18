@@ -2,7 +2,6 @@ import { sample } from 'effector'
 import { every } from 'patronum'
 import { redirectSessionFailure, checkAuthenticated } from '~/entities/session'
 import { loadFavoritesProjectsFx, loadProjectsFx } from '~/shared/api/requests'
-import { showMessage } from '~/shared/lib/toast'
 import { workspaceRoute } from '../route'
 
 checkAuthenticated({
@@ -19,13 +18,4 @@ export const $pending = every({
 sample({
   clock: workspaceRoute.opened,
   target: [loadProjectsFx, loadFavoritesProjectsFx],
-})
-
-showMessage({
-  when: workspaceRoute.opened,
-  toast: () => ({
-    type: 'success',
-    text: 'Welcome to workspace page',
-    delay: 3000,
-  }),
 })
