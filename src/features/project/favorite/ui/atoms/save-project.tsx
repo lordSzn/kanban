@@ -1,4 +1,4 @@
-import { HeartFill, Heart } from '@geist-ui/icons'
+import { Like } from '@icon-park/react'
 import { styled } from '@linaria/react'
 import { useStoreMap } from 'effector-react'
 import React, { FC } from 'react'
@@ -17,7 +17,11 @@ export const SaveProject: FC<Props> = ({ projectID, className, size }) => {
     fn: (favorites, [projectID]) => favorites.includes(projectID),
   })
 
-  const label = isFavorite ? <HeartFill size={size} color="red" /> : <Heart size={size} />
+  const label = isFavorite ? (
+    <Like size={size} theme="filled" color="#ff0000" />
+  ) : (
+    <Like size={size} />
+  )
 
   if (isFavorite) {
     return (
