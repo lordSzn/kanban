@@ -93,6 +93,7 @@ export const loadTasksLifecycleFx = createEffect<Firestore, TaskLifecycle[], voi
 
 export interface FavoritesProjects {
   projectID: string
+  id: string
 }
 
 export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], void>({
@@ -100,9 +101,41 @@ export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], v
     const FavoritesProjectsColumn = collection(getFirestore(), 'favorites-projects')
     const FavoritesProjectsSnapshots = await getDocs(FavoritesProjectsColumn)
 
-    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) => doc.data())
+    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }))
 
     return FavoritesProjectsList as FavoritesProjects[]
+  },
+})
+
+export const saveFavoriteProjectFx = createEffect<{ favoriteID: string }, FavoritesProjects, void>({
+  handler: async ({ favoriteID }) => {
+    const favoriteColumn = collection(getFirestore(), 'favorites-projects')
+
+    await addDoc(favoriteColumn, {
+      projectID: favoriteID,
+    })
+
+    return {
+      projectID: favoriteID,
+      id: favoriteColumn.id,
+    }
+  },
+})
+
+export const removeFavoriteProjectFx = createEffect<
+  { docId: string; projectId: string },
+  { projectId: string },
+  void
+>({
+  handler: async ({ docId, projectId }) => {
+    await deleteDoc(doc(getFirestore(), 'favorites-projects', docId))
+
+    return {
+      projectId,
+    }
   },
 })
 
@@ -132,26 +165,6 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
     }
 
     return createdProject
-  },
-})
-
-export const saveFavoriteProjectFx = createEffect<{ favoriteID: string }, FavoritesProjects, void>({
-  handler: async ({ favoriteID }) => {
-    const favoriteColumn = collection(getFirestore(), 'favorites-projects')
-
-    await addDoc(favoriteColumn, {
-      projectID: favoriteID,
-    })
-
-    return {
-      projectID: favoriteID,
-    }
-  },
-})
-
-export const removeFavoriteProjectFx = createEffect<{ favoriteID: string }, void, void>({
-  handler: async ({ favoriteID }) => {
-    await deleteDoc(doc(getFirestore(), 'favorites-projects', favoriteID))
   },
 })
 
