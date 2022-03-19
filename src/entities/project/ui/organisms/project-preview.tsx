@@ -1,17 +1,16 @@
 import { Card, Text, Image, useTheme } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import { Link } from 'atomic-router-react'
-import React, { FC, ReactNode } from 'react'
+import React, { FC } from 'react'
 import type { Project } from '~/shared/api/requests'
 import { paths } from '~/shared/lib/paths'
 
 interface Props {
   project: Project
   className?: string
-  extra?: ReactNode
 }
 
-export const ProjectPreview: FC<Props> = ({ project, className, extra }) => {
+export const ProjectPreview: FC<Props> = ({ project, className }) => {
   const { type } = useTheme()
 
   return (
@@ -27,7 +26,6 @@ export const ProjectPreview: FC<Props> = ({ project, className, extra }) => {
           </Text>
         </GroupBody>
       </Link>
-      <Card.Footer>{extra}</Card.Footer>
     </CardStyled>
   )
 }
