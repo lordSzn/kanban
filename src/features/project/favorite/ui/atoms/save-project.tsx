@@ -47,7 +47,7 @@ interface HeartProps {
   icon?: ReactNode
 }
 
-export const HeartButtonBase: FC<HeartProps> = ({ isFavorite, onClick, icon, className }) => {
+const HeartButtonBase: FC<HeartProps> = ({ isFavorite, onClick, icon, className }) => {
   return (
     <button className={className} data-favorite={isFavorite} onClick={onClick}>
       <label data-element="label">{icon}</label>
