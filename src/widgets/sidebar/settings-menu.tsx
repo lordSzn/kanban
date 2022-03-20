@@ -10,7 +10,7 @@ import { menuSettings } from './menu-lists'
 
 export const $menuList = createStore(menuSettings)
 
-export const SettingsMenu = ({ type }: { type: Theme }) =>
+export const SettingsMenu = ({ theme }: { theme: Theme }) =>
   useList($menuList, (menu, idx) => {
     const icon = menu.icon
     const title = <Text ml={0.35}>{menu.label}</Text>
@@ -21,7 +21,7 @@ export const SettingsMenu = ({ type }: { type: Theme }) =>
           // eslint-disable-next-line react/no-array-index-key
           <SettingItem key={idx}>
             <Link
-              data-theme={type}
+              data-theme={theme}
               className={linkClasses}
               activeClassName={activeLinkClasses}
               to={item.href}
