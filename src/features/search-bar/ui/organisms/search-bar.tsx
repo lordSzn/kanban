@@ -1,10 +1,12 @@
-import { KeyCode, KeyMod, useKeyboard, Input } from '@geist-ui/core'
+import { KeyCode, KeyMod, useKeyboard, Input, useMediaQuery } from '@geist-ui/core'
 import { Search } from '@icon-park/react'
+import { styled } from '@linaria/react'
 import React, { useLayoutEffect, useRef } from 'react'
 import { addFieldRef, focusSearchField } from '../..'
 
 export const SearchBar = ({ className }: { className?: string }) => {
   const ref = useRef<HTMLInputElement>(null)
+  const isDownMd = useMediaQuery('md', { match: 'down' })
 
   useLayoutEffect(() => {
     addFieldRef(ref)
@@ -13,6 +15,14 @@ export const SearchBar = ({ className }: { className?: string }) => {
   useKeyboard(() => {
     focusSearchField()
   }, [KeyMod.CtrlCmd, KeyCode.KEY_K])
+
+  if (isDownMd) {
+    return (
+      <Spacer>
+        <Search size={25} />
+      </Spacer>
+    )
+  }
 
   return (
     <>
@@ -28,3 +38,7 @@ export const SearchBar = ({ className }: { className?: string }) => {
     </>
   )
 }
+
+const Spacer = styled.div`
+  margin-right: 1rem;
+`
