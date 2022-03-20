@@ -26,6 +26,9 @@ export const ProjectsCarousel: FC<Props> = ({ children, navigation = true }) => 
         '(max-width: 830px)': {
           slides: { perView: 'auto', spacing: 5 },
         },
+        '(max-width: 650px)': {
+          slides: { perView: 1 },
+        },
       }}
     >
       {children}
