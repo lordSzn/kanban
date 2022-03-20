@@ -1,4 +1,4 @@
-import { Button, Drawer, useMediaQuery } from '@geist-ui/core'
+import { Button, Drawer, GeistUIThemes, useMediaQuery, useTheme } from '@geist-ui/core'
 import { Menu } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
@@ -35,7 +35,8 @@ export const Settings = () => {
 }
 
 export const HeaderBar = () => {
-  const theme = useStore($theme)
+  const type = useStore($theme)
+  const theme = useTheme()
   const [visible, setVisible] = useState(false)
 
   const toggle = useCallback(() => {
@@ -47,13 +48,13 @@ export const HeaderBar = () => {
   }, [])
 
   return (
-    <Header>
+    <Header theme={theme}>
       <HeaderContainer>
         <ButtonStyled icon={<Menu size={25} />} type="abort" auto onClick={toggle} />
       </HeaderContainer>
       <Drawer width="75%" visible={visible} onClose={hide} placement="left">
         <Drawer.Content>
-          <SettingsMenu theme={theme} />
+          <SettingsMenu theme={type} />
         </Drawer.Content>
       </Drawer>
     </Header>
@@ -107,13 +108,15 @@ const MainContent = styled.main`
   }
 `
 
-const Header = styled.header`
+const Header = styled.header<{ theme: GeistUIThemes }>`
   position: fixed;
   top: 0;
   left: 0;
 
   width: 100%;
   height: 3rem;
+
+  border-bottom: 1px solid ${({ theme }) => theme.palette.border};
 `
 
 const HeaderContainer = styled.div`
