@@ -19,10 +19,10 @@ export const Header: FC<Props> = ({ settings }) => {
   return (
     <HeaderContainer data-theme={theme.type}>
       <Grid.Container justify="center" alignItems="center">
-        <Grid md={10} sm={8}>
+        <Grid xs={9} sm={8} md={10}>
           <Text h2>Mirio</Text>
         </Grid>
-        <Grid md={10} sm={12} alignItems="center" justify="flex-end">
+        <Grid xs={13} sm={12} md={10} alignItems="center" justify="flex-end">
           <SubmittedProject />
           <SearchBar />
           <Popover content={settings} disableItemsAutoClose hideArrow>
