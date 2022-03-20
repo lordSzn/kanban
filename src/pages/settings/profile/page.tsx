@@ -17,6 +17,7 @@ checkAuthenticated({
 })
 
 export const Settings = () => {
+  // @fix 1023px media
   const tableScreen = useMediaQuery('md', { match: 'down' })
   return (
     <Container>
