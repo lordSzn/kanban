@@ -45,6 +45,6 @@ const SelectContainer = styled.span`
   align-items: center;
 
   & > [data-element='icon'] {
-    margin: 6px 10px 0 2px;
+    margin: 0 10px 0 2px;
   }
 `
