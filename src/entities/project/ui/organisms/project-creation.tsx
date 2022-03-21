@@ -1,5 +1,5 @@
 import { Button, Divider, Image, Modal, Spacer, Text } from '@geist-ui/core'
-import { Dropbox } from '@icon-park/react'
+import { FilePlus } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC } from 'react'
@@ -40,7 +40,7 @@ export const ProjectCreationForm: FC<Props> = ({ visible, close }) => {
               <Image src={photoUrl} margin="0" width="200px" height="200px" />
             ) : (
               <>
-                <Dropbox size={140} />
+                <FilePlus size={140} />
                 <Text>Drop your photo, here to start uploading</Text>
               </>
             )}

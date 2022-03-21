@@ -1,4 +1,4 @@
-import { Like } from '@icon-park/react'
+import { Heart } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStoreMap } from 'effector-react'
 import React, { FC, ReactNode } from 'react'
@@ -17,7 +17,7 @@ export const SaveProject: FC<Props> = ({ projectID, className, size }) => {
     fn: (favorites, [projectID]) => favorites.includes(projectID),
   })
 
-  const icon = isFavorite ? <Like size={size} theme="filled" /> : <Like size={size} />
+  const icon = isFavorite ? <Heart size={size} /> : <Heart size={size} />
 
   if (isFavorite) {
     return (

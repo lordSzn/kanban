@@ -1,4 +1,4 @@
-import { Left, Right } from '@icon-park/react'
+import { ChevronLeft, ChevronRight } from '@geist-ui/icons'
 import { css } from '@linaria/core'
 import { KeenSliderHooks } from 'keen-slider'
 import { KeenSliderInstance } from 'keen-slider/react'
@@ -32,7 +32,7 @@ export const SliderNavigation = ({
         className={`${arrowNavigation} ${navigationClassName}`}
         disabled={leftDisabled}
       >
-        <Left size={40} />
+        <ChevronLeft size={40} />
       </button>
       <button
         onClick={() => onNext?.(instance)}
@@ -40,7 +40,7 @@ export const SliderNavigation = ({
         className={`${arrowNavigation} ${navigationClassName}`}
         disabled={rightDisabled}
       >
-        <Right size={40} />
+        <ChevronRight size={40} />
       </button>
     </>
   )

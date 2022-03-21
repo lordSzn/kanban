@@ -1,6 +1,5 @@
 import { Button, GeistUIThemes, useMediaQuery, useTheme } from '@geist-ui/core'
-import { Menu } from '@geist-ui/icons'
-import { CornerUpLeft } from '@icon-park/react'
+import { Menu, CornerUpLeft } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React from 'react'

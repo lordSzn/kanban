@@ -1,5 +1,5 @@
 import { Card, Text } from '@geist-ui/core'
-import { EditOne } from '@icon-park/react'
+import { Edit } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 
@@ -13,7 +13,7 @@ export const TaskPreview: FC<Props> = ({ title, description }) => {
     <Card shadow marginBottom={10}>
       <Header>
         <Text h4>{title}</Text>
-        <EditOne />
+        <Edit />
       </Header>
       <Text>{description}</Text>
     </Card>

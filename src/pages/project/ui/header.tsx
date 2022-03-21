@@ -1,4 +1,4 @@
-import { CornerUpLeft } from '@icon-park/react'
+import { CornerUpLeft } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React from 'react'
 import { paths } from '~/shared/lib/paths'

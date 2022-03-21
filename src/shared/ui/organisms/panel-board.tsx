@@ -1,5 +1,5 @@
 import { Text } from '@geist-ui/core'
-import { Tool } from '@icon-park/react'
+import { Tool } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 
