@@ -4,10 +4,25 @@ import React from 'react'
 import { showCreationForm } from '../..'
 
 export const SubmittedProject = () => {
-  const upMD = useMediaQuery('md', { match: 'up' })
+  const tableScreen = useMediaQuery('md', { match: 'down' })
+
+  if (tableScreen) {
+    return (
+      <Button
+        auto
+        ghost
+        type="secondary"
+        mr={1.5}
+        onClick={showCreationForm}
+        scale={0.77}
+        icon={<Plus />}
+      />
+    )
+  }
+
   return (
     <Button auto ghost type="secondary" mr={1.5} onClick={showCreationForm} scale={0.77}>
-      {upMD ? ' Create project' : <Plus />}
+      Create project'
     </Button>
   )
 }
