@@ -22,6 +22,7 @@ module.exports = {
         },
       },
     },
+    minimize: true,
   },
   plugins: [
     new MiniCssExtractPlugin({
