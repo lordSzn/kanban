@@ -1,8 +1,10 @@
 import { variant } from '@effector/reflect'
 import { Loading } from '@geist-ui/core'
 import { styled } from '@linaria/react'
+import { useStore } from 'effector-react'
 import React from 'react'
 import { TaskPreview } from '~/entities/task/ui'
+import { $completedTasks, $idleTasks, $processingTasks } from '~/features/task-lifecycle'
 import { BaseTemplate, GridBoards, PanelBoard } from '~/shared/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'
@@ -24,33 +26,33 @@ export const Project = variant({
 })
 
 export const Boards = () => {
+  const idleTasks = useStore($idleTasks)
+  const processingTasks = useStore($processingTasks)
+  const completedTasks = useStore($completedTasks)
   return (
     <GridBoards
       idle={
         <div>
           <PanelBoardStyled heading="idle" />
-          <TaskPreview
-            title="HTTP is extensible"
-            description="Introduced in HTTP/1.0, HTTP headers make this protocol easy to extend and experiment with. New functionality can even be introduced by a simple agreement between a client and a server about a new header's semantics."
-          />
+          {idleTasks.map((task) => (
+            <TaskPreview key={task.taskID} title={task.title} description={task.description} />
+          ))}
         </div>
       }
       take={
         <div>
           <PanelBoardStyled heading="take" />
-          <TaskPreview
-            title="Hoverable card"
-            description="Introduced in HTTP/1.0, HTTP headers make this protocol easy to extend and experiment with. New functionality can even be introduced by a simple agreement between a client and a server about a new header's semantics."
-          />
+          {processingTasks.map((task) => (
+            <TaskPreview key={task.taskID} title={task.title} description={task.description} />
+          ))}
         </div>
       }
       resolve={
         <div>
           <PanelBoardStyled heading="resolve" />
-          <TaskPreview
-            title="Students"
-            description="Introduced in HTTP/1.0, HTTP headers make this protocol easy to extend and experiment with. New functionality can even be introduced by a simple agreement between a client and a server about a new header's semantics."
-          />
+          {completedTasks.map((task) => (
+            <TaskPreview key={task.taskID} title={task.title} description={task.description} />
+          ))}
         </div>
       }
     />
