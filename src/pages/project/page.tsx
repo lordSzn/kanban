@@ -32,28 +32,28 @@ export const Boards = () => {
   return (
     <GridBoards
       idle={
-        <div>
+        <BoardContainer>
           <PanelBoardStyled heading="idle" />
           {idleTasks.map((task) => (
             <TaskPreview key={task.taskID} title={task.title} description={task.description} />
           ))}
-        </div>
+        </BoardContainer>
       }
       take={
-        <div>
+        <BoardContainer>
           <PanelBoardStyled heading="take" />
           {processingTasks.map((task) => (
             <TaskPreview key={task.taskID} title={task.title} description={task.description} />
           ))}
-        </div>
+        </BoardContainer>
       }
       resolve={
-        <div>
+        <BoardContainer>
           <PanelBoardStyled heading="resolve" />
           {completedTasks.map((task) => (
             <TaskPreview key={task.taskID} title={task.title} description={task.description} />
           ))}
-        </div>
+        </BoardContainer>
       }
     />
   )
@@ -61,4 +61,8 @@ export const Boards = () => {
 
 const PanelBoardStyled = styled(PanelBoard)`
   margin-bottom: 2rem;
+`
+
+export const BoardContainer = styled.div`
+  width: 100%;
 `
