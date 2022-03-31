@@ -61,14 +61,16 @@ export interface TaskLifecycle {
   status: Status
 }
 
-export const loadTasksLifecycleFx = createEffect<Firestore, TaskLifecycle[], void>({
-  handler: async () => {
-    const tasksLifecycleColumn = collection(getFirestore(), 'tasksLifecycle')
+export const loadTasksLifecycleFx = createEffect<{ projectID: string }, TaskLifecycle[], void>({
+  handler: async ({ projectID }) => {
+    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
     const tasksLifecycleSnapshots = await getDocs(tasksLifecycleColumn)
 
     const tasksLifecycleList = tasksLifecycleSnapshots.docs.map((doc) => doc.data())
 
-    return tasksLifecycleList as TaskLifecycle[]
+    const projects = tasksLifecycleList.filter((project) => project.projectID === projectID)
+
+    return projects as TaskLifecycle[]
   },
 })
 
