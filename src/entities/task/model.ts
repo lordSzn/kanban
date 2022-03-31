@@ -1,10 +1,6 @@
 import { createEvent, createStore } from 'effector'
-import type { Task, TaskInfo } from '~/shared/api/requests'
-
-export const addTask = createEvent<TaskInfo>()
-export const taskAdded = createEvent<TaskInfo>()
+import { loadTasksFx, Task } from '~/shared/api/requests'
 
 export const updateTaskInfo = createEvent<{ taskID: string }>()
 
-export const $tasks = createStore<Task[]>([])
-export const $taskInfo = createStore<Record<string, TaskInfo>>({})
+export const $tasks = createStore<Task[]>([]).on(loadTasksFx.doneData, (_, tasks) => tasks)

@@ -7,15 +7,7 @@ import {
   updateProfile,
   UserCredential,
 } from 'firebase/auth'
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  Firestore,
-  getDocs,
-  getFirestore,
-} from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from 'firebase/firestore'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 export interface Project {
@@ -42,33 +34,22 @@ export const loadProjectsFx = createEffect<void, Project[], void>({
 
 export interface Task {
   taskID: string
-  projectID: string
+  title: string
+  description: string
+  label: string[]
 }
 
 export const loadTasksFx = createEffect<void, Task[], void>({
   handler: async () => {
-    const tasksColumn = collection(getFirestore(), 'tasks')
+    const tasksColumn = collection(getFirestore(), 'task-info')
     const tasksSnapshots = await getDocs(tasksColumn)
 
-    const tasksList = tasksSnapshots.docs.map((doc) => doc.data())
+    const tasksList = tasksSnapshots.docs.map((doc) => ({
+      taskID: doc.id,
+      ...doc.data(),
+    }))
 
     return tasksList as Task[]
-  },
-})
-
-export interface TaskInfo {
-  projectID: string
-  taskID: string
-}
-
-export const loadInfoTasksFx = createEffect<void, TaskInfo[], void>({
-  handler: async () => {
-    const tasksInfoColumn = collection(getFirestore(), 'task-info')
-    const tasksInfoSnapshots = await getDocs(tasksInfoColumn)
-
-    const tasksInfoList = tasksInfoSnapshots.docs.map((doc) => doc.data())
-
-    return tasksInfoList as TaskInfo[]
   },
 })
 
@@ -80,14 +61,16 @@ export interface TaskLifecycle {
   status: Status
 }
 
-export const loadTasksLifecycleFx = createEffect<Firestore, TaskLifecycle[], void>({
-  handler: async () => {
-    const tasksLifecycleColumn = collection(getFirestore(), 'tasksLifecycle')
+export const loadTasksLifecycleFx = createEffect<{ projectID: string }, TaskLifecycle[], void>({
+  handler: async ({ projectID }) => {
+    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
     const tasksLifecycleSnapshots = await getDocs(tasksLifecycleColumn)
 
     const tasksLifecycleList = tasksLifecycleSnapshots.docs.map((doc) => doc.data())
 
-    return tasksLifecycleList as TaskLifecycle[]
+    const projects = tasksLifecycleList.filter((project) => project.projectID === projectID)
+
+    return projects as TaskLifecycle[]
   },
 })
 
