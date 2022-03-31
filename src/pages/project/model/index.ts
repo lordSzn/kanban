@@ -7,5 +7,6 @@ export const $pending = pending({ effects: [loadTasksLifecycleFx] })
 
 sample({
   clock: projectRoute.opened,
+  fn: (route) => ({ projectID: route.params.id }),
   target: [loadTasksLifecycleFx, loadTasksFx],
 })
