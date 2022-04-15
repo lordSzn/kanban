@@ -21,6 +21,7 @@ export const UserSettings = () => {
         <SwitchTheme />
       </Popover.Item>
       <Popover.Item>
+        {/* @fix replace button to link */}
         <PopoverAction text="Settings" icon={<Settings />} onClick={() => userEditRoute.open({})} />
       </Popover.Item>
       <Popover.Item line />
