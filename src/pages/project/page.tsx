@@ -9,21 +9,21 @@ import { BaseTemplate, GridBoards, PanelBoard } from '~/shared/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'
 
-export const Project = variant({
+const Content = variant({
   source: $pending.map((pending) => (pending ? 'loading' : 'started')),
   cases: {
-    loading: () => (
-      <BaseTemplate header={<Header />}>
-        <Loading />
-      </BaseTemplate>
-    ),
-    started: () => (
-      <BaseTemplate header={<Header />}>
-        <Boards />
-      </BaseTemplate>
-    ),
+    loading: () => <Loading />,
+    started: () => <Boards />,
   },
 })
+
+export const Project = () => {
+  return (
+    <BaseTemplate header={<Header />}>
+      <Content />
+    </BaseTemplate>
+  )
+}
 
 export const Boards = () => {
   const idleTasks = useStore($idleTasks)
