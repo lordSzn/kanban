@@ -3,4 +3,7 @@ import { loadTasksFx, Task } from '~/shared/api/requests'
 
 export const updateTaskInfo = createEvent<{ taskID: string }>()
 
-export const $tasks = createStore<Record<string, Task>>({})
+export const $tasks = createStore<Record<string, Task>>({}).on(
+  loadTasksFx.doneData,
+  (_, tasks) => tasks
+)
