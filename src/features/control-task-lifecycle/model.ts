@@ -1,6 +1,3 @@
-import { combine, createEvent, createStore } from 'effector'
-import { $tasks } from '~/entities/task'
+import { createTaskLifeCycleState } from './library'
 
-export const takeTask = createEvent<{ taskID: string }>()
-export const resolveTask = createEvent<{ taskID: string }>()
-
+export const taskLifecycle = createTaskLifeCycleState()
