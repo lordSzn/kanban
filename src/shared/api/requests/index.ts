@@ -33,23 +33,29 @@ export const loadProjectsFx = createEffect<void, Project[], void>({
 })
 
 export interface Task {
-  taskID: string
   title: string
   description: string
   label: string[]
 }
 
-export const loadTasksFx = createEffect<void, Task[], void>({
+export const loadTasksFx = createEffect<void, Record<string, Task>, void>({
   handler: async () => {
     const tasksColumn = collection(getFirestore(), 'task-info')
     const tasksSnapshots = await getDocs(tasksColumn)
 
-    const tasksList = tasksSnapshots.docs.map((doc) => ({
-      taskID: doc.id,
-      ...doc.data(),
-    }))
+    const tasks: Record<string, Task> = {}
 
-    return tasksList as Task[]
+    const tasksList = tasksSnapshots.docs.map((doc) => ({
+      taskId: doc.id,
+      ...doc.data(),
+    })) as Array<Task & { taskId: string }>
+
+    for (const task of tasksList) {
+      const { taskId, ...meta } = task
+      tasks[taskId] = { ...meta }
+    }
+
+    return tasks
   },
 })
 
