@@ -7,7 +7,16 @@ import {
   updateProfile,
   UserCredential,
 } from 'firebase/auth'
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 export interface Project {
@@ -63,20 +72,21 @@ export type Status = 'idle' | 'take' | 'resolve'
 
 export interface TaskLifecycle {
   projectID: string
-  taskID: string
+  taskId: string
   status: Status
 }
 
 export const loadTasksLifecycleFx = createEffect<{ projectID: string }, TaskLifecycle[], void>({
   handler: async ({ projectID }) => {
     const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
-    const tasksLifecycleSnapshots = await getDocs(tasksLifecycleColumn)
+    const taskLifecycle = query(tasksLifecycleColumn, where('projectID', '==', projectID))
 
-    const tasksLifecycleList = tasksLifecycleSnapshots.docs.map((doc) => doc.data())
+    const boards = await getDocs(taskLifecycle)
 
-    const projects = tasksLifecycleList.filter((project) => project.projectID === projectID)
-
-    return projects as TaskLifecycle[]
+    return boards.docs.map((doc) => ({
+      projectID: doc.id,
+      ...doc.data(),
+    })) as TaskLifecycle[]
   },
 })
 
