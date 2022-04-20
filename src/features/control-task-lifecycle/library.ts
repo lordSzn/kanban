@@ -1,7 +1,8 @@
 import type { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { attach, createEvent, createStore, sample } from 'effector'
 import { splitMap } from 'patronum'
-import type { Status, TaskLifecycle } from '~/shared/api/requests'
+import type { Status, Task, TaskLifecycle } from '~/shared/api/requests'
+import { NormalizedTasks } from './types'
 
 export const changeTaskStatus = (
   tasks: TaskLifecycle[],
@@ -9,6 +10,24 @@ export const changeTaskStatus = (
   status: Status
 ): TaskLifecycle[] => {
   return tasks.map((task) => (task.taskId === id ? { ...task, status } : task))
+}
+
+export const formatTasksStructure = (meta: Record<string, Task>, tasks: TaskLifecycle[]) => {
+  const structure: Record<string, NormalizedTasks[]> = {}
+
+  for (const task of tasks) {
+    const { status, ...ids } = task
+    const taskMeta = { ...ids, ...meta[task.taskId] }
+
+    if (status in structure) {
+      structure[status].push(taskMeta)
+    } else {
+      structure[status] = []
+      structure[status].push(taskMeta)
+    }
+  }
+
+  return structure as Record<Status, NormalizedTasks[]>
 }
 
 export type TaskMoveitem = Pick<TaskLifecycle, 'taskId' | 'status'> & { target: Status }
