@@ -71,18 +71,6 @@ export const createTaskLifeCycleState = () => {
     target: $lifecycle,
   })
 
-  const $idleTasks = createStore<TaskLifecycle[]>([]).on($lifecycle, (_, tasks) =>
-    tasks.filter((task) => task.status === 'idle')
-  )
-
-  const $takeTasks = createStore<TaskLifecycle[]>([]).on($lifecycle, (_, tasks) =>
-    tasks.filter((task) => task.status === 'take')
-  )
-
-  const $resolveTasks = createStore<TaskLifecycle[]>([]).on($lifecycle, (_, tasks) =>
-    tasks.filter((task) => task.status === 'resolve')
-  )
-
   const dragStarted = createEvent<DragStartEvent>()
   const dragOver = createEvent<DragOverEvent>()
   const dragEnded = createEvent<DragEndEvent>()
@@ -94,9 +82,6 @@ export const createTaskLifeCycleState = () => {
     dragEnded,
     dragOver,
     $lifecycle,
-    $idleTasks,
-    $takeTasks,
-    $resolveTasks,
     removeItem,
     dragStarted,
   }
