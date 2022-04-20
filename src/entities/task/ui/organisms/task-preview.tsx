@@ -6,11 +6,12 @@ import React, { FC } from 'react'
 interface Props {
   title: string
   description: string
+  className?: string
 }
 
-export const TaskPreview: FC<Props> = ({ title, description }) => {
+export const TaskPreview: FC<Props> = ({ title, description, className }) => {
   return (
-    <Card shadow marginBottom={10}>
+    <Card shadow marginBottom={10} className={className}>
       <Header>
         <Text h4>{title}</Text>
         <Edit />
