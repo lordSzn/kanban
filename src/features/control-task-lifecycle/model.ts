@@ -2,7 +2,7 @@ import { combine, createStore, sample } from 'effector'
 import { $tasks } from '~/entities/task'
 import { loadTasksLifecycleFx } from '~/shared/api/requests'
 import type { Status } from '~/shared/api/requests'
-import { createTaskLifeCycleState, formatTasksStructure } from './library'
+import { createTaskLifeCycleState, createTasksStructure } from './library'
 
 export const taskLifecycleState = createTaskLifeCycleState()
 
@@ -12,7 +12,7 @@ sample({
 })
 
 export const $normalizeTasks = combine([$tasks, taskLifecycleState.$lifecycle], ([meta, tasks]) =>
-  formatTasksStructure(meta, tasks)
+  createTasksStructure(meta, tasks)
 )
 
 // @tempore solution

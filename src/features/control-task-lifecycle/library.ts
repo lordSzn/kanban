@@ -12,7 +12,7 @@ export const changeTaskStatus = (
   return tasks.map((task) => (task.taskId === id ? { ...task, status } : task))
 }
 
-export const formatTasksStructure = (meta: Record<string, Task>, tasks: TaskLifecycle[]) => {
+export const createTasksStructure = (meta: Record<string, Task>, tasks: TaskLifecycle[]) => {
   const structure: Record<string, NormalizedTasks[]> = {}
 
   for (const task of tasks) {
