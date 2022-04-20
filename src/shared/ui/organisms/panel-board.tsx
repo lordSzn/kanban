@@ -1,5 +1,4 @@
 import { Text } from '@geist-ui/core'
-import { Tool } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React, { FC } from 'react'
 
@@ -15,7 +14,6 @@ export const PanelBoard: FC<Props> = ({ heading, className, amount = 0 }) => {
       <Text span font="20px">
         {heading} ({amount})
       </Text>
-      <Tool />
     </Container>
   )
 }

@@ -1,11 +1,10 @@
 import { variant } from '@effector/reflect'
-import { Loading } from '@geist-ui/core'
-import { styled } from '@linaria/react'
+import { Grid, Loading } from '@geist-ui/core'
 import { useStore } from 'effector-react'
 import React from 'react'
-import { TaskPreview } from '~/entities/task/ui'
-import { $completedTasks, $idleTasks, $processingTasks } from '~/features/control-task-lifecycle'
-import { BaseTemplate, GridBoards, PanelBoard } from '~/shared/ui'
+import { $boards, $normalizeTasks } from '~/features/control-task-lifecycle'
+import { Board } from '~/features/control-task-lifecycle/ui'
+import { BaseTemplate } from '~/shared/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'
 
@@ -26,43 +25,16 @@ export const Project = () => {
 }
 
 export const Boards = () => {
-  const idleTasks = useStore($idleTasks)
-  const processingTasks = useStore($processingTasks)
-  const completedTasks = useStore($completedTasks)
+  const boards = useStore($boards)
+  const tasks = useStore($normalizeTasks)
+
   return (
-    <GridBoards
-      idle={
-        <BoardContainer>
-          <PanelBoardStyled heading="idle" />
-          {idleTasks.map((task) => (
-            <TaskPreview key={task.taskID} title={task.title} description={task.description} />
-          ))}
-        </BoardContainer>
-      }
-      take={
-        <BoardContainer>
-          <PanelBoardStyled heading="take" />
-          {processingTasks.map((task) => (
-            <TaskPreview key={task.taskID} title={task.title} description={task.description} />
-          ))}
-        </BoardContainer>
-      }
-      resolve={
-        <BoardContainer>
-          <PanelBoardStyled heading="resolve" />
-          {completedTasks.map((task) => (
-            <TaskPreview key={task.taskID} title={task.title} description={task.description} />
-          ))}
-        </BoardContainer>
-      }
-    />
+    <Grid.Container gap={10} justify="center" height="100px">
+      {boards.map((board) => (
+        <Grid xs={6} key={board}>
+          <Board title={board} tasks={tasks[board]} />
+        </Grid>
+      ))}
+    </Grid.Container>
   )
 }
-
-const PanelBoardStyled = styled(PanelBoard)`
-  margin-bottom: 2rem;
-`
-
-export const BoardContainer = styled.div`
-  width: 100%;
-`
