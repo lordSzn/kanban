@@ -16,9 +16,11 @@ export type ID = Pick<TaskLifecycle, 'taskId'>
 
 export const createTaskLifeCycleState = () => {
   const addItems = createEvent<TaskLifecycle>()
+  const initItems = createEvent<TaskLifecycle[]>()
   const removeItem = createEvent<ID>()
 
   const $lifecycle = createStore<TaskLifecycle[]>([])
+    .on(initItems, (_, tasks) => tasks)
     .on(addItems, (prevTasks, tasks) => prevTasks.concat(tasks))
     .on(removeItem, (tasks, { taskId }) => tasks.filter((task) => task.taskId !== taskId))
 
@@ -69,17 +71,33 @@ export const createTaskLifeCycleState = () => {
     target: $lifecycle,
   })
 
+  const $idleTasks = createStore<TaskLifecycle[]>([]).on($lifecycle, (_, tasks) =>
+    tasks.filter((task) => task.status === 'idle')
+  )
+
+  const $takeTasks = createStore<TaskLifecycle[]>([]).on($lifecycle, (_, tasks) =>
+    tasks.filter((task) => task.status === 'take')
+  )
+
+  const $resolveTasks = createStore<TaskLifecycle[]>([]).on($lifecycle, (_, tasks) =>
+    tasks.filter((task) => task.status === 'resolve')
+  )
+
   const dragStarted = createEvent<DragStartEvent>()
   const dragOver = createEvent<DragOverEvent>()
   const dragEnded = createEvent<DragEndEvent>()
 
   return {
     addItems,
+    initItems,
     taskMoved,
+    dragEnded,
+    dragOver,
     $lifecycle,
+    $idleTasks,
+    $takeTasks,
+    $resolveTasks,
     removeItem,
     dragStarted,
-    dragOver,
-    dragEnded,
   }
 }
