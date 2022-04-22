@@ -70,7 +70,8 @@ export const createTaskLifeCycleState = () => {
       const targetElement = lifecycle.find((task) => task.taskId === overElement)
 
       if (!targetElement) {
-        throw new Error(`${overElement} ${fromRaised} not provided`)
+        const board = overElement as Status
+        return changeTaskStatus(lifecycle, fromRaised, board)
       }
 
       return changeTaskStatus(lifecycle, fromRaised, targetElement.status)
