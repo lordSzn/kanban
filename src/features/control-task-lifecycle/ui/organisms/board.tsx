@@ -1,9 +1,8 @@
 import {
-  DndContext,
+    DndContext,
   DragOverlay,
   MouseSensor,
   TouchSensor,
-  useDraggable,
   useDroppable,
   useSensor,
   useSensors,
@@ -34,10 +33,11 @@ export const BoardsBaseStruts: FC<{ extra?: ReactNode }> = ({ extra }) => {
     tasks[label].map((task) => task.taskId)
 
   return (
-    <Grid.Container gap={10} justify="center" mt={1}>
+    <Grid.Container gap={10} justify="center" mt={1} height="100%">
       <DndContext
         sensors={sensors}
         onDragStart={taskLifecycleState.dragStarted}
+        onDragOver={taskLifecycleState.dragOver}
         onDragEnd={taskLifecycleState.dragEnded}
       >
         {boards.map((board) => (
@@ -63,8 +63,9 @@ export const Board: FC<{ title: string; extra: ReactNode; amount: number }> = ({
   children,
   amount,
 }) => {
+  const { setNodeRef } = useDroppable({ id: title })
   return (
-    <div style={{ width: '100%' }}>
+    <div ref={setNodeRef} style={{ width: '100%' }}>
       <PanelBoard heading={title} amount={amount}>
         {extra}
       </PanelBoard>

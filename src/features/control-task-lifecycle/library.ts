@@ -59,6 +59,24 @@ export const createTaskLifeCycleState = () => {
     },
   })
 
+  interface MoveTaskOver {
+    fromRaised: string
+    overElement: string
+  }
+
+  const moveTaskOverFx = attach({
+    source: $lifecycle,
+    effect: (lifecycle, { fromRaised, overElement }: MoveTaskOver) => {
+      const targetElement = lifecycle.find((task) => task.taskId === overElement)
+
+      if (!targetElement) {
+        throw new Error(`${overElement} ${fromRaised} not provided`)
+      }
+
+      return changeTaskStatus(lifecycle, fromRaised, targetElement.status)
+    },
+  })
+
   const { take, resolve } = splitMap({
     source: taskMoved,
     cases: {
@@ -86,7 +104,7 @@ export const createTaskLifeCycleState = () => {
   })
 
   sample({
-    clock: [takeTaskFx.doneData, resolveTaskFx.doneData],
+    clock: [takeTaskFx.doneData, resolveTaskFx.doneData, moveTaskOverFx.doneData],
     target: $lifecycle,
   })
 
@@ -102,6 +120,17 @@ export const createTaskLifeCycleState = () => {
     target: $activeItemId,
   })
 
+  sample({
+    clock: dragOver,
+    filter: ({ active, over }) => Boolean(over) && over?.id !== active.id,
+    fn: ({ active, over }) => ({
+      fromRaised: active.id,
+      // @fix type guard // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      overElement: over!.id,
+    }),
+    target: moveTaskOverFx,
+  })
+
   return {
     addItems,
     initItems,
@@ -112,5 +141,6 @@ export const createTaskLifeCycleState = () => {
     removeItem,
     dragStarted,
     $activeItemId,
+    moveTaskOverFx,
   }
 }
