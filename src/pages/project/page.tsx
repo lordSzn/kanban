@@ -4,6 +4,7 @@ import { useStore } from 'effector-react'
 import React from 'react'
 import { $boards, $normalizeTasks } from '~/features/control-task-lifecycle'
 import { Board } from '~/features/control-task-lifecycle/ui'
+import { BoardsBaseStruts } from '~/features/control-task-lifecycle/ui/organisms/board'
 import { BaseTemplate } from '~/shared/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'
@@ -25,16 +26,9 @@ export const Project = () => {
 }
 
 export const Boards = () => {
-  const boards = useStore($boards)
-  const tasks = useStore($normalizeTasks)
-
   return (
     <Grid.Container gap={10} justify="center" height="100px">
-      {boards.map((board) => (
-        <Grid xs={6} key={board}>
-          <Board title={board} tasks={tasks[board]} />
-        </Grid>
-      ))}
+      <BoardsBaseStruts />
     </Grid.Container>
   )
 }
