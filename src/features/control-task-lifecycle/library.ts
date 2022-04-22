@@ -94,6 +94,14 @@ export const createTaskLifeCycleState = () => {
   const dragOver = createEvent<DragOverEvent>()
   const dragEnded = createEvent<DragEndEvent>()
 
+  const $activeItemId = createStore<string | null>(null).reset(dragEnded)
+
+  sample({
+    clock: dragStarted,
+    fn: (e) => e.active.id,
+    target: $activeItemId,
+  })
+
   return {
     addItems,
     initItems,
@@ -103,5 +111,6 @@ export const createTaskLifeCycleState = () => {
     $lifecycle,
     removeItem,
     dragStarted,
+    $activeItemId,
   }
 }
