@@ -125,8 +125,7 @@ export const createTaskLifeCycleState = () => {
     filter: ({ active, over }) => isDefined(over) && notPositionRepeat(over.id, active.id),
     fn: ({ active, over }) => ({
       fromRaisedId: active.id,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      overElement: over!.id,
+      overElement: over?.id as string,
     }),
     target: taskDragEndedFx,
   })
