@@ -2,7 +2,8 @@ import type { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { attach, createEvent, createStore, sample } from 'effector'
 import { splitMap } from 'patronum'
 import type { Status, Task, TaskLifecycle } from '~/shared/api/requests'
-import { NormalizedTasks } from './types'
+import { isDefined } from '~/shared/lib/type-guard/index'
+import type { NormalizedTasks } from './types'
 
 export const changeTaskStatus = (
   tasks: TaskLifecycle[],
@@ -123,10 +124,11 @@ export const createTaskLifeCycleState = () => {
 
   sample({
     clock: dragOver,
-    filter: ({ active, over }) => Boolean(over) && over?.id !== active.id,
+    filter: ({ active, over }) => isDefined(over) && over.id !== active.id,
     fn: ({ active, over }) => ({
       fromRaised: active.id,
-      // @fix type guard // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // @fix type guard
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       overElement: over!.id,
     }),
     target: moveTaskOverFx,
