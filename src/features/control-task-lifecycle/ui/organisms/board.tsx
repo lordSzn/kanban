@@ -16,21 +16,18 @@ import React, { CSSProperties, FC, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { $tasks } from '~/entities/task'
 import { TaskPreview } from '~/entities/task/ui'
-import { Status } from '~/shared/api/requests'
+import { Status, TaskLifecycle } from '~/shared/api/requests'
 import { PanelBoard } from '~/shared/ui'
-import { $boards, $normalizeTasks, taskLifecycleState } from '../../model'
-import type { NormalizedTasks } from '../../types'
+import { $taskLifecycle, taskLifecycleState } from '../../model'
 
 export const BoardsBaseStruts: FC<{ extra?: ReactNode }> = ({ extra }) => {
-  const boards = useStore($boards)
-  const tasks = useStore($normalizeTasks)
+  const boards = useStore($taskLifecycle)
 
   const mouseSensor = useSensor(MouseSensor)
   const touchSensor = useSensor(TouchSensor)
   const sensors = useSensors(mouseSensor, touchSensor)
 
-  const flatTaskList = (tasks: Record<Status, NormalizedTasks[]>, label: Status) =>
-    tasks[label].map((task) => task.taskId)
+  const flatTaskList = (tasks: TaskLifecycle[]) => tasks.map((task) => task.taskId)
 
   return (
     <Grid.Container gap={10} justify="center" mt={1} height="100%">
@@ -40,12 +37,12 @@ export const BoardsBaseStruts: FC<{ extra?: ReactNode }> = ({ extra }) => {
         onDragOver={taskLifecycleState.dragOver}
         onDragEnd={taskLifecycleState.dragEnded}
       >
-        {boards.map((board) => (
+        {Object.entries(boards).map(([board, tasks]) => (
           <Grid xs={6} key={board}>
-            <Board amount={tasks[board].length} title={board} extra={extra}>
-              <SortableContext items={flatTaskList(tasks, board)}>
-                {tasks[board].map((task) => (
-                  <TaskDraggable key={task.taskId} task={task} />
+            <Board amount={boards[board as Status].length} title={board} extra={extra}>
+              <SortableContext items={flatTaskList(tasks)}>
+                {tasks.map((task) => (
+                  <TaskDraggable key={task.taskId} taskId={task.taskId} />
                 ))}
               </SortableContext>
             </Board>
@@ -75,9 +72,16 @@ export const Board: FC<{ title: string; extra: ReactNode; amount: number }> = ({
   )
 }
 
-export const TaskDraggable: FC<{ task: NormalizedTasks }> = ({ task }) => {
+export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
   const { setNodeRef, listeners, attributes, transform, transition } = useSortable({
-    id: task.taskId,
+    id: taskId,
+  })
+
+  const task = useStoreMap({
+    store: $tasks,
+    keys: [taskId],
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    fn: (tasks, [id]) => tasks[id] ?? { title: 'not found', description: 'not found' },
   })
 
   const style: CSSProperties = {
@@ -87,7 +91,7 @@ export const TaskDraggable: FC<{ task: NormalizedTasks }> = ({ task }) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <TaskPreviewStyled key={task.taskId} title={task.title} description={task.description} />
+      <TaskPreviewStyled key={taskId} title={task.title} description={task.description} />
     </div>
   )
 }

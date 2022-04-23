@@ -1,8 +1,6 @@
 import { combine, createStore, sample } from 'effector'
-import { $tasks } from '~/entities/task'
-import { loadTasksLifecycleFx } from '~/shared/api/requests'
-import type { Status } from '~/shared/api/requests'
-import { createTaskLifeCycleState, createTasksStructure } from './library'
+import { loadTasksLifecycleFx, TaskLifecycle } from '~/shared/api/requests'
+import { createTaskLifeCycleState } from './library'
 
 export const taskLifecycleState = createTaskLifeCycleState()
 
@@ -11,9 +9,23 @@ sample({
   target: taskLifecycleState.initItems,
 })
 
-export const $normalizeTasks = combine([$tasks, taskLifecycleState.$lifecycle], ([meta, tasks]) =>
-  createTasksStructure(meta, tasks)
+export const $idleTasks = createStore<TaskLifecycle[]>([]).on(
+  taskLifecycleState.$lifecycle,
+  (_, tasks) => tasks.filter((task) => task.status === 'idle')
 )
 
-// @tempore solution
-export const $boards = createStore<Status[]>(['idle', 'take', 'resolve'])
+export const $inProcessingTasks = createStore<TaskLifecycle[]>([]).on(
+  taskLifecycleState.$lifecycle,
+  (_, tasks) => tasks.filter((task) => task.status === 'take')
+)
+
+export const $completedTasks = createStore<TaskLifecycle[]>([]).on(
+  taskLifecycleState.$lifecycle,
+  (_, tasks) => tasks.filter((task) => task.status === 'resolve')
+)
+
+export const $taskLifecycle = combine({
+  idle: $idleTasks,
+  take: $inProcessingTasks,
+  resolve: $completedTasks,
+})
