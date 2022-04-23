@@ -1,6 +1,6 @@
 import type { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { attach, createEvent, createStore, sample } from 'effector'
-import { debug, splitMap } from 'patronum'
+import { splitMap } from 'patronum'
 import type { Status, TaskLifecycle } from '~/shared/api/requests'
 import { isDefined } from '~/shared/lib/type-guard/index'
 
@@ -49,19 +49,6 @@ export const createTaskLifeCycleState = () => {
     overElement: string
   }
 
-  const taskMoveFx = attach({
-    source: $lifecycle,
-    effect: (lifecycle, { fromRaisedId, overElement }: MoveTask) => {
-      const isTask = lifecycle.some((task) => task.taskId === overElement)
-
-      const targetBoard = isTask ? findBoardStatus(lifecycle, overElement) : overElement
-
-      if (!targetBoard) throw new Error(`${targetBoard} not provided`)
-
-      return changeTaskStatus(lifecycle, fromRaisedId, targetBoard as Status)
-    },
-  })
-
   const taskDragEndedFx = attach({
     source: $lifecycle,
     effect: (lifecycle, { fromRaisedId, overElement }: MoveTask) => {
@@ -104,7 +91,7 @@ export const createTaskLifeCycleState = () => {
   })
 
   sample({
-    clock: [takeTaskFx.doneData, resolveTaskFx.doneData, taskMoveFx.doneData],
+    clock: [takeTaskFx.doneData, resolveTaskFx.doneData],
     target: $lifecycle,
   })
 
