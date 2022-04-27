@@ -7,8 +7,8 @@ import { checkAuthenticated, redirectSessionFailure } from '~/entities/session'
 import { $theme } from '~/features/theme'
 import { userEditRoute } from '~/features/user/edit'
 import { UserEditForm } from '~/features/user/edit/ui'
-import { Sidebar } from '~/shared/widgets/sidebar'
-import { SettingsMenu } from '~/shared/widgets/sidebar/settings-menu'
+import { Sidebar } from '~/widgets/sidebar'
+import { SettingsMenu } from '~/widgets/sidebar/settings-menu'
 
 checkAuthenticated({
   when: userEditRoute.opened,
