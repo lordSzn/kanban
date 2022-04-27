@@ -20,7 +20,7 @@ import { Status, TaskLifecycle } from '~/shared/api/requests'
 import { PanelBoard } from '~/shared/ui'
 import { $taskLifecycle, taskLifecycleState } from '../../model'
 
-export const BoardsBaseStruts: FC<{ extra?: ReactNode }> = ({ extra }) => {
+export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
   const boards = useStore($taskLifecycle)
 
   const mouseSensor = useSensor(MouseSensor)
