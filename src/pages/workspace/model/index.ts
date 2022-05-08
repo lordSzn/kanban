@@ -17,5 +17,6 @@ export const $pending = every({
 
 sample({
   clock: workspaceRoute.opened,
+  filter: workspaceRoute.$isOpened,
   target: [loadProjectsFx, loadFavoritesProjectsFx],
 })
