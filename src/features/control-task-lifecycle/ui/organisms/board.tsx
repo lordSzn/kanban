@@ -1,4 +1,5 @@
 import {
+  closestCenter,
   DndContext,
   DragOverlay,
   MouseSensor,
@@ -7,7 +8,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
-import { SortableContext, useSortable } from '@dnd-kit/sortable'
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Grid, Spacer } from '@geist-ui/core'
 import { styled } from '@linaria/react'
@@ -36,11 +37,12 @@ export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
         onDragStart={taskLifecycleState.dragStarted}
         onDragOver={taskLifecycleState.dragOver}
         onDragEnd={taskLifecycleState.dragEnded}
+        collisionDetection={closestCenter}
       >
         {Object.entries(boards).map(([board, tasks]) => (
           <Grid xs={6} key={board}>
             <Board amount={boards[board as Status].length} title={board} extra={extra}>
-              <SortableContext items={flatTaskList(tasks)}>
+              <SortableContext items={flatTaskList(tasks)} strategy={verticalListSortingStrategy}>
                 {tasks.map((task) => (
                   <TaskDraggable key={task.taskId} taskId={task.taskId} />
                 ))}
