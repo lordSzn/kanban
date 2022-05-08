@@ -2,7 +2,7 @@ import type { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import { attach, createEvent, createStore, sample } from 'effector'
 import { splitMap } from 'patronum'
 import type { Status, TaskLifecycle } from '~/shared/api/requests'
-import { isDefined } from '~/shared/lib/type-guard/index'
+import { isDefined } from '~/shared/lib/type-guard'
 
 export const changeTaskStatus = (
   tasks: TaskLifecycle[],

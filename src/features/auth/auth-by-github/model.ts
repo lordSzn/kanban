@@ -1,7 +1,7 @@
 import { attach, createEvent, createStore, sample } from 'effector'
 import { GithubAuthProvider } from 'firebase/auth'
 import { $currentUser } from '~/entities/session'
-import { baseAuthenticateFx } from '~/shared/api/requests/index'
+import { baseAuthenticateFx } from '~/shared/api/requests'
 
 export const githubAuthClicked = createEvent()
 

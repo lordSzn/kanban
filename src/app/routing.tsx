@@ -4,11 +4,9 @@ import { sample } from 'effector'
 import React from 'react'
 import { redirectSessionFailure } from '~/entities/session'
 import { userEditRoute } from '~/features/user/edit'
-import { NotFoundPage } from '~/pages/error-not-found'
-import { SettingsPage } from '~/pages/settings/profile'
+import { ProjectPage, WorkspacePage, LoginPage, NotFoundPage, SettingsPage } from '~/pages'
 import { paths } from '~/shared/lib/paths'
 import { history } from '~/shared/lib/routing-history'
-import { ProjectPage, WorkspacePage, LoginPage } from '../pages'
 
 export const routes = [
   { path: paths.workspace(), route: WorkspacePage.workspaceRoute, view: WorkspacePage.Workspace },

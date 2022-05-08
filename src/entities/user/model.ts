@@ -1,5 +1,5 @@
 import { createEvent, createStore } from 'effector'
-import { User } from '~/shared/api/requests'
+import type { User } from '~/shared/api/requests'
 
 export const updateUser = createEvent<User>()
 

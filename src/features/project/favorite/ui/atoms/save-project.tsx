@@ -32,7 +32,7 @@ export const SaveProject: FC<Props> = ({ projectID, className, size }) => {
 
   return (
     <HeartButton
-      icon={icon}
+      icon={<Heart size={size} />}
       className={className}
       isFavorite={isFavorite}
       onClick={() => favoriteAdd({ favoriteID: projectID })}
