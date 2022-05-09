@@ -1,12 +1,20 @@
 import { attach, combine, createEvent, createStore, sample } from 'effector'
 import { addTaskFx, addTaskToLifecycleFx, loadTasksFx, Task } from '~/shared/api/requests'
 
+export const showTaskForm = createEvent()
+export const hideTaskForm = createEvent()
 
 export const titleChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
+
 export const updateTasksInfo = createEvent<Record<string, Task>>()
 export const taskSaveFx = attach({ effect: addTaskFx })
 export const taskSave = createEvent()
+
+export const $isOpenForm = createStore(false)
+  .on(showTaskForm, () => true)
+  .on(hideTaskForm, () => false)
+  .reset(taskSaveFx.doneData)
 
 export const $tasks = createStore<Record<string, Task>>({})
   .on(loadTasksFx.doneData, (_, tasks) => tasks)
