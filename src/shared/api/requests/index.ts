@@ -68,6 +68,26 @@ export const loadTasksFx = createEffect<void, Record<string, Task>, void>({
   },
 })
 
+export const addTaskFx = createEffect<Task, string>({
+  handler: async (task) => {
+    const column = collection(getFirestore(), 'task-info')
+
+    const { id } = await addDoc(column, task)
+
+    return id
+  },
+})
+
+export const addTaskToLifecycleFx = createEffect<TaskLifecycle, TaskLifecycle>({
+  handler: async (taskLifecycle) => {
+    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
+
+    await addDoc(tasksLifecycleColumn, taskLifecycle)
+
+    return taskLifecycle
+  },
+})
+
 export type Status = 'idle' | 'take' | 'resolve'
 
 export interface TaskLifecycle {
