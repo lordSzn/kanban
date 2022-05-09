@@ -8,12 +8,13 @@ interface Props {
   className?: string
 }
 
-export const PanelBoard: FC<Props> = ({ heading, className, amount = 0 }) => {
+export const PanelBoard: FC<Props> = ({ heading, className, amount, children = 0 }) => {
   return (
     <Container className={className}>
       <Text span font="20px">
         {heading} ({amount})
       </Text>
+      {children}
     </Container>
   )
 }

@@ -26,6 +26,7 @@ export const Boards = () => {
   return (
     <Grid.Container gap={10} justify="center" height="100px">
       <BoardsBaseStructs />
+      <BoardsBaseStructs extra={<Create />} />
     </Grid.Container>
   )
 }
