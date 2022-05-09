@@ -17,12 +17,10 @@ export const SaveProject: FC<Props> = ({ projectID, className, size }) => {
     fn: (favorites, [projectID]) => favorites.includes(projectID),
   })
 
-  const icon = isFavorite ? <Heart size={size} /> : <Heart size={size} />
-
   if (isFavorite) {
     return (
       <HeartButton
-        icon={icon}
+        icon={<Heart size={size} />}
         className={className}
         isFavorite={isFavorite}
         onClick={() => favoriteRemove({ favoriteID: projectID })}

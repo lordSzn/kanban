@@ -1,1 +1,1 @@
-export { Board } from './board'
+export { BoardsBaseStructs } from './board'

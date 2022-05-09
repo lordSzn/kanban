@@ -8,8 +8,8 @@ import { checkAuthenticated } from '~/entities/session'
 import { authenticationWithGithubFx, githubAuthClicked } from '~/features/auth/auth-by-github'
 import { authenticationWithGoogleFx, googleAuthClicked } from '~/features/auth/auth-by-google'
 import { authenticationWithTwitterFx, twitterAuthClicked } from '~/features/auth/auth-by-twitter'
+import { WorkspacePage } from '~/pages'
 import { ButtonControl, PageContentCentred } from '~/shared/ui'
-import { WorkspacePage } from '../workspace'
 import { loginRoute } from './route'
 import { Header } from './ui'
 
@@ -49,9 +49,8 @@ export const Login = () => {
 
 const FormSubmitted = styled.form`
   max-width: 28rem;
-  margin: 0 auto;
+  margin: 10rem auto 0;
   text-align: center;
-  margin-top: 10rem;
 `
 
 const GoogleSubmit = reflect({

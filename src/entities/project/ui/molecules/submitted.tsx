@@ -22,7 +22,7 @@ export const SubmittedProject = () => {
 
   return (
     <Button auto ghost type="secondary" mr={1.5} onClick={showCreationForm} scale={0.77}>
-      Create project'
+      Create project
     </Button>
   )
 }

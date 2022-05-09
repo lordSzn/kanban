@@ -1,7 +1,7 @@
 import { variant } from '@effector/reflect'
 import { Grid, Loading } from '@geist-ui/core'
 import React from 'react'
-import { BoardsBaseStructs } from '~/features/control-task-lifecycle/ui/organisms/board'
+import { BoardsBaseStructs } from '~/features/control-task-lifecycle/ui'
 import { BaseTemplate } from '~/shared/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'

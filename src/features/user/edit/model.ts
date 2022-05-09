@@ -68,10 +68,7 @@ sample({
 sample({
   clock: uploadAvatarProfileFx.doneData,
   source: $form,
-  fn: (form, { photoUrl }) => ({
-    ...form,
-    photoUrl,
-  }),
+  fn: (form, { photoUrl }) => ({ ...form, photoUrl }),
   target: updateUserProfileFx,
 })
 

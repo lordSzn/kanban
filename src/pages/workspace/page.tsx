@@ -4,8 +4,8 @@ import React from 'react'
 import { $activeProjects, $finishedProjects } from '~/entities/project'
 import { ProjectList } from '~/entities/project/ui'
 import { $favoritesProjects } from '~/features/project/favorite'
+import { Header } from '~/widgets/header'
 import { UserSettings } from '~/widgets/settings/menu-settings'
-import { Header } from '../../widgets/header'
 import { $pending } from './model'
 
 export const Workspace = () => {
