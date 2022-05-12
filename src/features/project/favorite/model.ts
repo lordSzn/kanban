@@ -1,4 +1,4 @@
-import { combine, createEvent, createStore, sample } from 'effector'
+import { attach, combine, createEvent, createStore, sample } from 'effector'
 import { $projects } from '~/entities/project'
 import {
   loadFavoritesProjectsFx,
@@ -11,38 +11,39 @@ import { showMessage } from '~/shared/lib/toast'
 export const favoriteAdd = createEvent<{ favoriteID: string }>()
 export const favoriteRemove = createEvent<{ favoriteID: string }>()
 
-export const $favoriteProjectsId = createStore<FavoritesProjects[]>([])
-  .on(loadFavoritesProjectsFx.doneData, (_, projectsID) => projectsID)
-  .on(saveFavoriteProjectFx.doneData, (favorites, addedId) => favorites.concat(addedId))
-  .on(removeFavoriteProjectFx.doneData, (favorites, { projectId }) =>
-    favorites.filter((project) => project.projectID !== projectId)
-  )
-
-export const $favoriteIdx = $favoriteProjectsId.map((projects) =>
-  projects.map(({ projectID }) => projectID)
-)
-
-export const $favoritesProjects = combine([$projects, $favoriteIdx], ([projects, favoritesId]) => {
-  return projects.filter((project) => favoritesId.includes(project.projectID))
-})
+export const saveFavoriteFx = attach({ effect: saveFavoriteProjectFx })
+export const removeFavoriteFx = attach({ effect: removeFavoriteProjectFx })
 
 sample({
   source: favoriteAdd,
-  target: saveFavoriteProjectFx,
+  target: saveFavoriteFx,
 })
+
+export const $favorites = createStore<FavoritesProjects[]>([])
+  .on(loadFavoritesProjectsFx.doneData, (_, favorites) => favorites)
+  .on(saveFavoriteFx.doneData, (favorites, addedId) => favorites.concat(addedId))
+  .on(removeFavoriteFx.doneData, (favorites, { projectId }) =>
+    favorites.filter((project) => project.projectID !== projectId)
+  )
 
 sample({
   clock: favoriteRemove,
-  source: $favoriteProjectsId,
+  source: $favorites,
   fn: (favorites, { favoriteID }) => {
     const docIdx = favorites.map(({ projectID }) => projectID)
     const idx = docIdx.indexOf(favoriteID)
     return {
-      docId: favorites[idx].id,
+      docId: favorites[idx].favoriteId,
       projectId: favorites[idx].projectID,
     }
   },
-  target: removeFavoriteProjectFx,
+  target: removeFavoriteFx,
+})
+
+export const $favoriteIdx = $favorites.map((projects) => projects.map(({ projectID }) => projectID))
+
+export const $favoritesProjects = combine([$projects, $favoriteIdx], ([projects, favoritesId]) => {
+  return projects.filter((project) => favoritesId.includes(project.projectID))
 })
 
 showMessage({

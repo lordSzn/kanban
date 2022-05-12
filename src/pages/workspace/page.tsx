@@ -26,7 +26,7 @@ export const Workspace = () => {
             <FinishedProjects />
           </Tabs.Item>
           <Tabs.Item label="important" value="3">
-            <FavoritesProjectsList />
+            <FavoritesProjects />
           </Tabs.Item>
         </Tabs>
       </Grid>
@@ -42,7 +42,7 @@ const ActiveProjects = reflect({
   },
 })
 
-const FavoritesProjectsList = reflect({
+const FavoritesProjects = reflect({
   view: ProjectList,
   bind: {
     projects: $favoritesProjects,

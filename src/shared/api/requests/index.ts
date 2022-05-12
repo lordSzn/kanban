@@ -112,7 +112,7 @@ export const loadTasksLifecycleFx = createEffect<{ projectID: string }, TaskLife
 
 export interface FavoritesProjects {
   projectID: string
-  id: string
+  favoriteId: string
 }
 
 export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], void>({
@@ -122,7 +122,7 @@ export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], v
 
     const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) => ({
       ...doc.data(),
-      id: doc.id,
+      favoriteId: doc.id,
     }))
 
     return FavoritesProjectsList as FavoritesProjects[]
@@ -139,7 +139,7 @@ export const saveFavoriteProjectFx = createEffect<{ favoriteID: string }, Favori
 
     return {
       projectID: favoriteID,
-      id: favoriteColumn.id,
+      favoriteId: favoriteColumn.id,
     }
   },
 })
@@ -175,15 +175,13 @@ export const projectCreateFx = createEffect<CreatedProject, Project, void>({
       isFinished: false,
     })
 
-    const createdProject = {
+    return {
       title,
       description,
       projectID: docRef.id,
       photoUrl,
       isFinished: false,
     }
-
-    return createdProject
   },
 })
 
