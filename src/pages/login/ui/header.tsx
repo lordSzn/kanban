@@ -12,13 +12,11 @@ export const Header = () => {
           Mirio
         </Text>
         <Container>
-          <div>
-            <Link mr={1.2} rel="noopener" target="_blank" href="https://github.com/lordSzn">
-              Contact
-            </Link>
-            <Link mr={1.2}>Sign Up</Link>
-            <ThemeChoice />
-          </div>
+          <Link mr={1.2} rel="noopener" target="_blank" href="https://github.com/lordSzn">
+            Contact
+          </Link>
+          <Link mr={1.2}>Sign Up</Link>
+          <ThemeChoice />
         </Container>
       </HeaderContainer>
     </HeaderWrapper>
