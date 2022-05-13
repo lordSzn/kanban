@@ -1,7 +1,6 @@
 import { Card, Text } from '@geist-ui/core'
-import { Edit } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
-import React, { FC } from 'react'
+import React, { forwardRef } from 'react'
 
 interface Props {
   title: string
@@ -9,17 +8,16 @@ interface Props {
   className?: string
 }
 
-export const TaskPreview: FC<Props> = ({ title, description, className }) => {
+export const TaskPreview = forwardRef<'div', Props>(({ title, description, className }, ref) => {
   return (
-    <Card shadow marginBottom={10} className={className}>
+    <Card ref={ref} shadow marginBottom={10} className={className}>
       <Header>
         <Text h4>{title}</Text>
-        <Edit />
       </Header>
       <Text>{description}</Text>
     </Card>
   )
-}
+})
 
 const Header = styled.div`
   display: flex;
