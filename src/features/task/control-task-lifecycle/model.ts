@@ -1,5 +1,10 @@
 import { combine, createStore, sample } from 'effector'
-import { addTaskToLifecycleFx, loadTasksLifecycleFx, TaskLifecycle } from '~/shared/api/requests'
+import {
+  addTaskToLifecycleFx,
+  loadTasksLifecycleFx,
+  removeTaskFx,
+  TaskLifecycle,
+} from '~/shared/api/requests'
 import { createTaskLifeCycleState } from './library'
 
 export const taskLifecycleState = createTaskLifeCycleState()
@@ -12,6 +17,12 @@ sample({
 sample({
   clock: addTaskToLifecycleFx.doneData,
   target: taskLifecycleState.addItems,
+})
+
+sample({
+  clock: removeTaskFx.done,
+  fn: ({ params }) => ({ taskId: params.taskId }),
+  target: taskLifecycleState.removeItem,
 })
 
 export const $idleTasks = createStore<TaskLifecycle[]>([]).on(

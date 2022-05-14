@@ -1,5 +1,4 @@
 import { attach, combine, createEvent, createStore, sample } from 'effector'
-import { debug } from 'patronum'
 import {
   addTaskFx,
   addTaskToLifecycleFx,
@@ -31,6 +30,14 @@ export const $isOpenForm = createStore(false)
 export const $tasks = createStore<Record<string, Task>>({})
   .on(loadTasksFx.doneData, (_, tasks) => tasks)
   .on(updateTasksInfo, (tasks, task) => ({ ...tasks, ...task }))
+  .on(removeTaskFx.done, (tasks, { params }) => {
+    const cloneTasks = { ...tasks }
+    if (params.taskId in cloneTasks) {
+      delete cloneTasks[params.taskId]
+    }
+
+    return cloneTasks
+  })
 
 export const $title = createStore('')
   .on(titleChanged, (_, title) => title)
@@ -55,8 +62,6 @@ sample({
   target: taskRemoveFx,
 })
 
-debug(taskRemoveFx.done, taskRemoveFx.fail)
-
 sample({
   clock: taskSave,
   source: $task,
@@ -71,6 +76,11 @@ sample({
   filter: Boolean,
   fn: (task, taskId) => ({ [taskId]: task }),
   target: updateTasksInfo,
+})
+
+showMessage({
+  when: taskSaveFx.done,
+  toast: () => ({ type: 'success', text: 'task saved' }),
 })
 
 showMessage({
