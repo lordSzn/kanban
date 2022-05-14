@@ -15,16 +15,13 @@ import { styled } from '@linaria/react'
 import { useStore, useStoreMap } from 'effector-react'
 import React, { CSSProperties, FC, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { $tasks, taskRemove } from '~/entities/task'
+import { $tasks } from '~/entities/task'
 import { TaskPreview } from '~/entities/task/ui'
 import { Status, TaskLifecycle } from '~/shared/api/requests'
 import { PanelBoard } from '~/shared/ui'
 import { $taskLifecycle, taskLifecycleState } from '../../model'
 
-export const BoardsBaseStructs: FC<{ extra?: ReactNode; contextMenu: ReactNode }> = ({
-  extra,
-  contextMenu,
-}) => {
+export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
   const boards = useStore($taskLifecycle)
 
   //issue https://github.com/clauderic/dnd-kit/issues/355#issuecomment-874881817
@@ -89,10 +86,7 @@ export const Board: FC<{ title: string; extra: ReactNode; amount: number }> = ({
   )
 }
 
-export const TaskDraggable: FC<{ taskId: string; contextMenu: ReactNode }> = ({
-  taskId,
-  contextMenu,
-}) => {
+export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
   const { setNodeRef, listeners, attributes, transform, transition } = useSortable({
     id: taskId,
   })
@@ -111,10 +105,10 @@ export const TaskDraggable: FC<{ taskId: string; contextMenu: ReactNode }> = ({
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <TaskPreviewStyled
+        taskId={taskId}
         key={taskId}
         title={task.title}
         description={task.description}
-        contextMenu={contextMenu}
       />
     </div>
   )
@@ -129,7 +123,7 @@ export const Overlay: FC = () => {
   })
   return createPortal(
     <DragOverlay>
-      {task && <TaskPreview title={task.title} description={task.description} />}
+      {task && <TaskPreview taskId={activeId!} title={task.title} description={task.description} />}
     </DragOverlay>,
     document.body
   )
