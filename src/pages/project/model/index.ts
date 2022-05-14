@@ -1,5 +1,6 @@
 import { sample } from 'effector'
 import { pending } from 'patronum'
+import { checkAuthenticated, redirectSessionFailure } from '~/entities/session'
 import {
   addTaskFx,
   addTaskToLifecycleFx,
@@ -10,6 +11,12 @@ import {
 import { projectRoute } from '../route'
 
 export const $pending = pending({ effects: [loadTasksLifecycleFx] })
+
+checkAuthenticated({
+  when: projectRoute.opened,
+  if: 'anonymous',
+  then: redirectSessionFailure,
+})
 
 sample({
   clock: projectRoute.opened,
