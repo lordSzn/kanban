@@ -100,7 +100,6 @@ export const TaskDraggable: FC<{ taskId: string; contextMenu: ReactNode }> = ({
   const task = useStoreMap({
     store: $tasks,
     keys: [taskId],
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     fn: (tasks, [id]) => tasks[id] ?? { title: 'not found', description: 'not found' },
   })
 

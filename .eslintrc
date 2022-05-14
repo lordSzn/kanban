@@ -17,5 +17,9 @@
         "alwaysTryTypes": true
       }
     }
+  },
+  "rules": {
+    "@typescript-eslint/no-unnecessary-condition": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }
