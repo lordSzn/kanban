@@ -27,7 +27,9 @@ export const ContextMenu = () => {
           <Edit2 size={17} color="var(--currentColor)" />
           <ItemLabel>Change</ItemLabel>
         </MenuItem>
-        <Divider />
+      </MenuGroup>
+      <Divider />
+      <MenuGroup>
         <MenuItem>
           <Link size={17} color="var(--currentColor)" />
           <ItemLabel>Copy link</ItemLabel>
