@@ -6,6 +6,7 @@ import { $isOpenForm, hideTaskForm, taskSave } from '~/entities/task'
 import { Create, DescriptionField, TitleField } from '~/entities/task/ui'
 import { BoardsBaseStructs } from '~/features/task/control-task-lifecycle/ui'
 import { BaseTemplate } from '~/shared/ui'
+import { ContextMenu } from '~/widgets/context-menu/context-menu'
 import { $pending } from './model'
 import { Header } from './ui/header'
 
@@ -46,7 +47,7 @@ export const CreateTaskModal = () => {
 export const Boards = () => {
   return (
     <Grid.Container gap={10} justify="center" height="100px">
-      <BoardsBaseStructs extra={<Create />} />
+      <BoardsBaseStructs extra={<Create />} contextMenu={ContextMenu} />
       <CreateTaskModal />
     </Grid.Container>
   )

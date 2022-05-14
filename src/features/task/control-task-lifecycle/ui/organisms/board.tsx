@@ -15,17 +15,32 @@ import { styled } from '@linaria/react'
 import { useStore, useStoreMap } from 'effector-react'
 import React, { CSSProperties, FC, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { $tasks } from '~/entities/task'
+import { $tasks, taskRemove } from '~/entities/task'
 import { TaskPreview } from '~/entities/task/ui'
 import { Status, TaskLifecycle } from '~/shared/api/requests'
 import { PanelBoard } from '~/shared/ui'
 import { $taskLifecycle, taskLifecycleState } from '../../model'
 
-export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
+export const BoardsBaseStructs: FC<{ extra?: ReactNode; contextMenu: ReactNode }> = ({
+  extra,
+  contextMenu,
+}) => {
   const boards = useStore($taskLifecycle)
 
-  const mouseSensor = useSensor(MouseSensor)
-  const touchSensor = useSensor(TouchSensor)
+  //issue https://github.com/clauderic/dnd-kit/issues/355#issuecomment-874881817
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      tolerance: 5,
+      delay: 50,
+    },
+  })
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      tolerance: 0,
+      delay: 150,
+    },
+  })
+
   const sensors = useSensors(mouseSensor, touchSensor)
 
   const flatTaskList = (tasks: TaskLifecycle[]) => tasks.map((task) => task.taskId)
@@ -44,7 +59,7 @@ export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
             <Board amount={boards[board as Status].length} title={board} extra={extra}>
               <SortableContext items={flatTaskList(tasks)} strategy={verticalListSortingStrategy}>
                 {tasks.map((task) => (
-                  <TaskDraggable key={task.taskId} taskId={task.taskId} />
+                  <TaskDraggable key={task.taskId} taskId={task.taskId} contextMenu={contextMenu} />
                 ))}
               </SortableContext>
             </Board>
@@ -74,7 +89,10 @@ export const Board: FC<{ title: string; extra: ReactNode; amount: number }> = ({
   )
 }
 
-export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
+export const TaskDraggable: FC<{ taskId: string; contextMenu: ReactNode }> = ({
+  taskId,
+  contextMenu,
+}) => {
   const { setNodeRef, listeners, attributes, transform, transition } = useSortable({
     id: taskId,
   })
@@ -93,7 +111,12 @@ export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <TaskPreviewStyled key={taskId} title={task.title} description={task.description} />
+      <TaskPreviewStyled
+        key={taskId}
+        title={task.title}
+        description={task.description}
+        contextMenu={contextMenu}
+      />
     </div>
   )
 }
