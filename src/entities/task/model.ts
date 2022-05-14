@@ -1,5 +1,13 @@
 import { attach, combine, createEvent, createStore, sample } from 'effector'
-import { addTaskFx, addTaskToLifecycleFx, loadTasksFx, Task } from '~/shared/api/requests'
+import { debug } from 'patronum'
+import {
+  addTaskFx,
+  addTaskToLifecycleFx,
+  loadTasksFx,
+  removeTaskFx,
+  Task,
+} from '~/shared/api/requests'
+import { showMessage } from '~/shared/lib/toast'
 
 export const showTaskForm = createEvent()
 export const hideTaskForm = createEvent()
@@ -8,8 +16,12 @@ export const titleChanged = createEvent<string>()
 export const descriptionChanged = createEvent<string>()
 
 export const updateTasksInfo = createEvent<Record<string, Task>>()
-export const taskSaveFx = attach({ effect: addTaskFx })
+
 export const taskSave = createEvent()
+export const taskSaveFx = attach({ effect: addTaskFx })
+
+export const taskRemove = createEvent<{ taskId: string }>()
+export const taskRemoveFx = attach({ effect: removeTaskFx })
 
 export const $isOpenForm = createStore(false)
   .on(showTaskForm, () => true)
@@ -39,6 +51,13 @@ export const $task = combine({
 })
 
 sample({
+  clock: taskRemove,
+  target: taskRemoveFx,
+})
+
+debug(taskRemoveFx.done, taskRemoveFx.fail)
+
+sample({
   clock: taskSave,
   source: $task,
   filter: $taskValid,
@@ -52,4 +71,9 @@ sample({
   filter: Boolean,
   fn: (task, taskId) => ({ [taskId]: task }),
   target: updateTasksInfo,
+})
+
+showMessage({
+  when: taskRemoveFx.done,
+  toast: () => ({ type: 'success', text: 'task removed' }),
 })
