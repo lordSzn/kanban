@@ -24,8 +24,20 @@ import { $taskLifecycle, taskLifecycleState } from '../../model'
 export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
   const boards = useStore($taskLifecycle)
 
-  const mouseSensor = useSensor(MouseSensor)
-  const touchSensor = useSensor(TouchSensor)
+  //issue https://github.com/clauderic/dnd-kit/issues/355#issuecomment-874881817
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      tolerance: 5,
+      delay: 50,
+    },
+  })
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      tolerance: 0,
+      delay: 150,
+    },
+  })
+
   const sensors = useSensors(mouseSensor, touchSensor)
 
   const flatTaskList = (tasks: TaskLifecycle[]) => tasks.map((task) => task.taskId)
@@ -82,7 +94,6 @@ export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
   const task = useStoreMap({
     store: $tasks,
     keys: [taskId],
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     fn: (tasks, [id]) => tasks[id] ?? { title: 'not found', description: 'not found' },
   })
 
@@ -93,7 +104,12 @@ export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <TaskPreviewStyled key={taskId} title={task.title} description={task.description} />
+      <TaskPreviewStyled
+        taskId={taskId}
+        key={taskId}
+        title={task.title}
+        description={task.description}
+      />
     </div>
   )
 }
@@ -107,7 +123,7 @@ export const Overlay: FC = () => {
   })
   return createPortal(
     <DragOverlay>
-      {task && <TaskPreview title={task.title} description={task.description} />}
+      {task && <TaskPreview taskId={activeId!} title={task.title} description={task.description} />}
     </DragOverlay>,
     document.body
   )

@@ -78,6 +78,21 @@ export const addTaskFx = createEffect<Task, string>({
   },
 })
 
+export const removeTaskFx = createEffect<{ taskId: string }, void>({
+  handler: async ({ taskId }) => {
+    await deleteDoc(doc(getFirestore(), 'task-info', taskId))
+
+    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
+    const taskLifecycleQuery = query(tasksLifecycleColumn, where('taskId', '==', taskId))
+
+    const tasks = await getDocs(taskLifecycleQuery)
+
+    const [taskRef] = tasks.docs.map((doc) => doc.ref)
+
+    await deleteDoc(taskRef)
+  },
+})
+
 export const addTaskToLifecycleFx = createEffect<TaskLifecycle, TaskLifecycle>({
   handler: async (taskLifecycle) => {
     const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
