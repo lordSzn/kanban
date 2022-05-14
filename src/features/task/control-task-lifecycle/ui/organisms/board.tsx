@@ -59,7 +59,7 @@ export const BoardsBaseStructs: FC<{ extra?: ReactNode; contextMenu: ReactNode }
             <Board amount={boards[board as Status].length} title={board} extra={extra}>
               <SortableContext items={flatTaskList(tasks)} strategy={verticalListSortingStrategy}>
                 {tasks.map((task) => (
-                  <TaskDraggable key={task.taskId} taskId={task.taskId} contextMenu={contextMenu} />
+                  <TaskDraggable key={task.taskId} taskId={task.taskId} />
                 ))}
               </SortableContext>
             </Board>
