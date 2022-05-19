@@ -36,11 +36,10 @@ const Main = styled.main`
 `
 
 const Footer = styled.footer`
-  padding: 0 calc(1.34 * 16px) 0 calc(1.34 * 16px);
+  padding: 0 calc(1.34 * 16px);
   position: absolute;
   bottom: 0;
   width: 100%;
   height: auto;
-  padding: 0;
   margin: 0;
 `
