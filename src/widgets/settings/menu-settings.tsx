@@ -1,12 +1,10 @@
 import { Popover, User } from '@geist-ui/core'
-import { Settings } from '@geist-ui/icons'
 import { useStore } from 'effector-react'
 import React from 'react'
 import { $currentUser } from '~/entities/session'
 import { Logout } from '~/entities/session/ui'
 import { SwitchTheme } from '~/features/theme/ui'
-import { userEditRoute } from '~/features/user/edit'
-import { PopoverAction } from '~/shared/ui'
+import { UserEdit } from '~/features/user/edit/ui'
 
 export const UserSettings = () => {
   const user = useStore($currentUser)
@@ -21,8 +19,7 @@ export const UserSettings = () => {
         <SwitchTheme />
       </Popover.Item>
       <Popover.Item>
-        {/* @fix replace button to link */}
-        <PopoverAction text="Settings" icon={<Settings />} onClick={() => userEditRoute.open({})} />
+        <UserEdit />
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
