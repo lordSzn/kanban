@@ -7,7 +7,7 @@ export const initFirebase = <T extends FirebaseOptions>({ config }: { config: T 
 
   const initFirebaseFx = createEffect<FirebaseOptions, FirebaseApp, void>({
     handler: async (credentials) => {
-      const app = initializeApp({
+      return initializeApp({
         apiKey: credentials.apiKey,
         authDomain: credentials.authDomain,
         projectId: credentials.projectId,
@@ -15,8 +15,6 @@ export const initFirebase = <T extends FirebaseOptions>({ config }: { config: T 
         messagingSenderId: credentials.measurementId,
         appId: credentials.appId,
       })
-
-      return app
     },
   })
 

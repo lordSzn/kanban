@@ -1,8 +1,8 @@
-import { useKeenSlider, KeenSliderOptions, KeenSliderHooks } from 'keen-slider/react'
+import { useKeenSlider, KeenSliderOptions } from 'keen-slider/react'
 import React, { FC, useState } from 'react'
 import { SliderNavigation, NavigationSliderProps } from './slider-navigation'
 
-type KeenParams = KeenSliderOptions<unknown, unknown, KeenSliderHooks> | undefined
+type KeenParams = KeenSliderOptions<unknown, unknown> | undefined
 
 type NavigationProps = Pick<NavigationSliderProps, 'onNext' | 'onPrev' | 'navigationClassName'>
 
