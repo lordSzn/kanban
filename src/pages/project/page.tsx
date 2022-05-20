@@ -1,11 +1,10 @@
 import { variant } from '@effector/reflect'
-import { Grid, Loading, Modal, Spacer } from '@geist-ui/core'
+import { Loading, Modal, Spacer } from '@geist-ui/core'
 import { useStore } from 'effector-react'
 import React from 'react'
 import { $isOpenForm, hideTaskForm, taskSave } from '~/entities/task'
 import { Create, DescriptionField, TitleField } from '~/entities/task/ui'
 import { BoardsBaseStructs } from '~/features/task/control-task-lifecycle/ui'
-import { BaseTemplate } from '~/shared/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'
 
@@ -19,9 +18,19 @@ const Content = variant({
 
 export const Project = () => {
   return (
-    <BaseTemplate header={<Header />}>
+    <>
+      <Header />
       <Content />
-    </BaseTemplate>
+      <CreateTaskModal />
+    </>
+  )
+}
+
+export const Boards = () => {
+  return (
+    <>
+      <BoardsBaseStructs extra={<Create />} />
+    </>
   )
 }
 
@@ -40,14 +49,5 @@ export const CreateTaskModal = () => {
       </Modal.Action>
       <Modal.Action onClick={() => taskSave()}>Submit</Modal.Action>
     </Modal>
-  )
-}
-
-export const Boards = () => {
-  return (
-    <Grid.Container gap={10} justify="center" height="100px">
-      <BoardsBaseStructs extra={<Create />} />
-      <CreateTaskModal />
-    </Grid.Container>
   )
 }

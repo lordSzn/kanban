@@ -11,6 +11,7 @@ import {
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Grid, Spacer } from '@geist-ui/core'
+import { css } from '@linaria/core'
 import { styled } from '@linaria/react'
 import { useStore, useStoreMap } from 'effector-react'
 import React, { CSSProperties, FC, ReactNode } from 'react'
@@ -24,13 +25,8 @@ import { $taskLifecycle, taskLifecycleState } from '../../model'
 export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
   const boards = useStore($taskLifecycle)
 
+  const touchSensor = useSensor(TouchSensor)
   //issue https://github.com/clauderic/dnd-kit/issues/355#issuecomment-874881817
-  const touchSensor = useSensor(TouchSensor, {
-    activationConstraint: {
-      tolerance: 5,
-      delay: 50,
-    },
-  })
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       tolerance: 0,
@@ -43,7 +39,7 @@ export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
   const flatTaskList = (tasks: TaskLifecycle[]) => tasks.map((task) => task.taskId)
 
   return (
-    <Grid.Container gap={10} justify="center" mt={1} height="100%">
+    <Grid.Container className={container} gap={4} width="100%" wrap="nowrap">
       <DndContext
         sensors={sensors}
         onDragStart={taskLifecycleState.dragStarted}
@@ -52,7 +48,7 @@ export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
         collisionDetection={closestCenter}
       >
         {Object.entries(boards).map(([board, tasks]) => (
-          <Grid xs={6} key={board}>
+          <Grid sm={6} className={column} key={board}>
             <Board amount={boards[board as Status].length} title={board} extra={extra}>
               <SortableContext items={flatTaskList(tasks)} strategy={verticalListSortingStrategy}>
                 {tasks.map((task) => (
@@ -67,6 +63,20 @@ export const BoardsBaseStructs: FC<{ extra?: ReactNode }> = ({ extra }) => {
     </Grid.Container>
   )
 }
+
+const container = css`
+  overflow: auto;
+  padding: 24px 0 0 29px;
+  min-height: 100vh;
+
+  @media (min-width: 1023px) {
+    justify-content: center;
+  }
+`
+
+const column = css`
+  min-width: 347px;
+`
 
 export const Board: FC<{ title: string; extra: ReactNode; amount: number }> = ({
   title,
