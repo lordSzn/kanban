@@ -1,4 +1,4 @@
-import { Button, Card, Popover, Text } from '@geist-ui/core'
+import { Button, Card, Popover, Text, useMediaQuery } from '@geist-ui/core'
 import { Copy, Edit2, Link, MoreHorizontal, Trash2 } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React, { forwardRef, useState } from 'react'
@@ -57,11 +57,12 @@ export const MoreOptions = ({ taskId }: { taskId: string }) => {
 
 export const TaskPreview = forwardRef<'div', Props>(
   ({ taskId, title, description, className }, ref) => {
+    const upMd = useMediaQuery('md', { match: 'up' })
     return (
       <Card ref={ref} shadow marginBottom={10} className={className}>
         <Header>
           <Text h4>{title}</Text>
-          <MoreOptions taskId={taskId} />
+          {upMd && <MoreOptions taskId={taskId} />}
         </Header>
         <Text>{description}</Text>
       </Card>
