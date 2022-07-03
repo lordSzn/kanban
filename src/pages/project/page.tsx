@@ -8,28 +8,20 @@ import { BoardsBaseStructs } from '~/features/task/control-task-lifecycle/ui'
 import { $pending } from './model'
 import { Header } from './ui/header'
 
-const Content = variant({
+export const Project = variant({
   source: $pending.map((pending) => (pending ? 'loading' : 'started')),
   cases: {
     loading: () => <Loading />,
-    started: () => <Boards />,
+    started: () => <Content />,
   },
 })
 
-export const Project = () => {
+const Content = () => {
   return (
     <>
       <Header />
-      <Content />
-      <CreateTaskModal />
-    </>
-  )
-}
-
-export const Boards = () => {
-  return (
-    <>
       <BoardsBaseStructs extra={<Create />} />
+      <CreateTaskModal />
     </>
   )
 }
