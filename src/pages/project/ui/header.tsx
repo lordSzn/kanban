@@ -13,7 +13,8 @@ import { useStore } from 'effector-react'
 import React, { FC, useCallback, useState } from 'react'
 import { $currentUser } from '~/entities/session'
 import { showTaskForm } from '~/entities/task'
-import { paths } from '~/shared/lib/paths'
+import { FavoriteAdd } from '~/features/project/favorite/ui'
+import { projectRoute } from '../route'
 
 const ButtonStyled = styled(Button)`
   z-index: 1500;
@@ -25,6 +26,7 @@ const ButtonStyled = styled(Button)`
 
 export const Header = () => {
   const [isOpen, setOpen] = useState(false)
+  const params = useStore(projectRoute.$params)
 
   const theme = useTheme()
   const mdDown = useMediaQuery('md', { match: 'down' })
@@ -35,7 +37,8 @@ export const Header = () => {
   return (
     <Container theme={theme}>
       {mdDown && <ButtonStyled type="abort" auto scale={0.8} icon={<Menu />} onClick={toggle} />}
-      <Text>Board</Text>
+      <Text mr={0.4}>Board</Text>
+      <FavoriteAdd projectID={params.id} />
       <Sidebar isOpen={isOpen} onClose={close} />
     </Container>
   )
@@ -55,6 +58,11 @@ const Container = styled.header<{ theme: GeistUIThemes }>`
 
 const Sidebar: FC<{ isOpen: boolean; onClose(): void }> = ({ isOpen, onClose }) => {
   const viewer = useStore($currentUser)
+  const handleClick = useCallback(() => {
+    onClose()
+    showTaskForm()
+  }, [])
+
   return (
     <Drawer width="55%" visible={isOpen} placement="left" onClose={onClose}>
       <Drawer.Content pb={0.6}>
@@ -64,15 +72,12 @@ const Sidebar: FC<{ isOpen: boolean; onClose(): void }> = ({ isOpen, onClose }) 
           <Avatar src={viewer?.photoUrl} />
         </UserPanel>
         <Button
-          type="secondary"
           ghost
+          type="secondary"
           scale={0.6}
           width="100%"
           icon={<Edit />}
-          onClick={() => {
-            onClose()
-            showTaskForm()
-          }}
+          onClick={handleClick}
         >
           New task
         </Button>
