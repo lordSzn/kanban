@@ -4,6 +4,7 @@ import { checkAuthenticated, redirectSessionFailure } from '~/entities/session'
 import {
   addTaskFx,
   addTaskToLifecycleFx,
+  loadFavoritesProjectsFx,
   loadTasksFx,
   loadTasksLifecycleFx,
   Status,
@@ -22,7 +23,7 @@ sample({
   clock: projectRoute.opened,
   filter: projectRoute.$isOpened,
   fn: (route) => ({ projectID: route.params.id }),
-  target: [loadTasksLifecycleFx, loadTasksFx],
+  target: [loadTasksLifecycleFx, loadTasksFx, loadFavoritesProjectsFx],
 })
 
 sample({
