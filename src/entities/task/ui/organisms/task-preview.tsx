@@ -1,4 +1,4 @@
-import { Button, Card, Popover, Text, useMediaQuery } from '@geist-ui/core'
+import { Badge, Button, Card, Popover, Text, useMediaQuery } from '@geist-ui/core'
 import { Copy, Edit2, Link, MoreHorizontal, Trash2 } from '@geist-ui/icons'
 import { styled } from '@linaria/react'
 import React, { forwardRef, useState } from 'react'
@@ -10,6 +10,7 @@ interface Props {
   title: string
   description: string
   className?: string
+  labels?: Array<{ name: string; color: string }>
 }
 
 export const ContextMenu = ({ taskId }: { taskId: string }) => {
@@ -56,7 +57,7 @@ export const MoreOptions = ({ taskId }: { taskId: string }) => {
 }
 
 export const TaskPreview = forwardRef<'div', Props>(
-  ({ taskId, title, description, className }, ref) => {
+  ({ taskId, title, description, className, labels }, ref) => {
     const upMd = useMediaQuery('md', { match: 'up' })
     return (
       <Card ref={ref} shadow marginBottom={10} className={className}>
@@ -65,9 +66,20 @@ export const TaskPreview = forwardRef<'div', Props>(
           {upMd && <MoreOptions taskId={taskId} />}
         </Header>
         <Text>{description}</Text>
+        {labels && <Labels labels={labels} />}
       </Card>
     )
   }
+)
+
+const Labels = ({ labels }: { labels: Array<{ name: string; color: string }> }) => (
+  <>
+    {labels.map((label) => (
+      <Badge mr={0.4} style={{ backgroundColor: label.color }} key={label.name}>
+        {label.name}
+      </Badge>
+    ))}
+  </>
 )
 
 const Header = styled.div`

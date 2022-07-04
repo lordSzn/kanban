@@ -119,6 +119,7 @@ export const TaskDraggable: FC<{ taskId: string }> = ({ taskId }) => {
         key={taskId}
         title={task.title}
         description={task.description}
+        labels={task.labels}
       />
     </div>
   )
@@ -133,7 +134,14 @@ export const Overlay: FC = () => {
   })
   return createPortal(
     <DragOverlay>
-      {task && <TaskPreview taskId={activeId!} title={task.title} description={task.description} />}
+      {task && (
+        <TaskPreview
+          taskId={activeId!}
+          title={task.title}
+          description={task.description}
+          labels={task.labels}
+        />
+      )}
     </DragOverlay>,
     document.body
   )

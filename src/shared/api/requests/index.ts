@@ -44,7 +44,7 @@ export const loadProjectsFx = createEffect<void, Project[], void>({
 export interface Task {
   title: string
   description: string
-  label: string[]
+  labels?: Array<{ name: string; color: string }>
 }
 
 export const loadTasksFx = createEffect<void, Record<string, Task>, void>({
