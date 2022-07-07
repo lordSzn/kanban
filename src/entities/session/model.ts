@@ -33,9 +33,10 @@ sample({
   clock: sessionUpdated,
   filter: Boolean,
   fn: (user) => ({
-    fullname: user.displayName || 'user',
-    email: user.email || '',
-    photoUrl: user.photoURL || '',
+    uid: user.uid,
+    fullname: user.displayName ?? 'no name',
+    email: user.email ?? '',
+    photoUrl: user.photoURL ?? '',
     description: '',
   }),
   target: sessionGetSuccess,
