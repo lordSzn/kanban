@@ -3,6 +3,7 @@ import { persist } from 'effector-storage/local'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import type { User as FirebaseUser } from 'firebase/auth'
 import type { User } from '~/shared/api/requests'
+import { setUidForRequest } from '~/shared/api/requests/request'
 import { appStarted } from '~/shared/config/run-logic'
 
 export const redirectSessionFailure = createEvent()
@@ -54,6 +55,13 @@ export const $currentUser = createStore<User | null>(null)
   .on(sessionGetSuccess, (_, user) => user)
   .reset(sessionDeleteFx.done, sessionFailure)
 export const $isAuthenticated = $currentUser.map(Boolean)
+
+sample({
+  clock: $currentUser,
+  filter: Boolean,
+  fn: (user) => user.uid,
+  target: setUidForRequest,
+})
 
 persist({
   store: $currentUser,
