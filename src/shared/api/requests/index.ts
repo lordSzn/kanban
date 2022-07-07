@@ -18,6 +18,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { createRequestFx } from '~/shared/api/requests/request'
 
 export interface Project {
   projectID: string
@@ -27,18 +28,16 @@ export interface Project {
   photoUrl: string
 }
 
-export const loadProjectsFx = createEffect<void, Project[], void>({
-  handler: async () => {
-    const projectsColumn = collection(getFirestore(), 'projects')
-    const projectsSnapshots = await getDocs(projectsColumn)
+export const loadProjectsFx = createRequestFx<void, Project[]>(async (_, uid) => {
+  const projectsColumn = collection(getFirestore(), `users/${uid}/projects`)
+  const projectsSnapshots = await getDocs(projectsColumn)
 
-    const projectsList = projectsSnapshots.docs.map((doc) => ({
-      projectID: doc.id,
-      ...doc.data(),
-    }))
+  const projectsList = projectsSnapshots.docs.map((doc) => ({
+    projectID: doc.id,
+    ...doc.data(),
+  }))
 
-    return projectsList as Project[]
-  },
+  return projectsList as Project[]
 })
 
 export interface Task {
@@ -47,61 +46,55 @@ export interface Task {
   labels?: Array<{ name: string; color: string }>
 }
 
-export const loadTasksFx = createEffect<void, Record<string, Task>, void>({
-  handler: async () => {
-    const tasksColumn = collection(getFirestore(), 'task-info')
-    const tasksSnapshots = await getDocs(tasksColumn)
+export const loadTasksFx = createRequestFx<void, Record<string, Task>>(async (_, uid) => {
+  const tasksColumn = collection(getFirestore(), `users/${uid}/task-info`)
+  const tasksSnapshots = await getDocs(tasksColumn)
 
-    const tasks: Record<string, Task> = {}
+  const tasks: Record<string, Task> = {}
 
-    const tasksList = tasksSnapshots.docs.map((doc) => ({
-      taskId: doc.id,
-      ...doc.data(),
-    })) as Array<Task & { taskId: string }>
+  const tasksList = tasksSnapshots.docs.map((doc) => ({
+    taskId: doc.id,
+    ...doc.data(),
+  })) as Array<Task & { taskId: string }>
 
-    for (const task of tasksList) {
-      const { taskId, ...meta } = task
-      tasks[taskId] = { ...meta }
-    }
+  for (const task of tasksList) {
+    const { taskId, ...meta } = task
+    tasks[taskId] = { ...meta }
+  }
 
-    return tasks
-  },
+  return tasks
 })
 
-export const addTaskFx = createEffect<Task, string>({
-  handler: async (task) => {
-    const column = collection(getFirestore(), 'task-info')
+export const addTaskFx = createRequestFx<Task, string>(async (task, uid) => {
+  const column = collection(getFirestore(), `users/${uid}/task-info`)
 
-    const { id } = await addDoc(column, task)
+  const { id } = await addDoc(column, task)
 
-    return id
-  },
+  return id
 })
 
-export const removeTaskFx = createEffect<{ taskId: string }, void>({
-  handler: async ({ taskId }) => {
-    await deleteDoc(doc(getFirestore(), 'task-info', taskId))
+export const removeTaskFx = createRequestFx<{ taskId: string }, void>(async ({ taskId }, uid) => {
+  await deleteDoc(doc(getFirestore(), 'task-info', taskId))
 
-    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
-    const taskLifecycleQuery = query(tasksLifecycleColumn, where('taskId', '==', taskId))
+  const tasksLifecycleColumn = collection(getFirestore(), `users/${uid}/task-lifecycle`)
+  const taskLifecycleQuery = query(tasksLifecycleColumn, where('taskId', '==', taskId))
 
-    const tasks = await getDocs(taskLifecycleQuery)
+  const tasks = await getDocs(taskLifecycleQuery)
 
-    const [taskRef] = tasks.docs.map((doc) => doc.ref)
+  const [taskRef] = tasks.docs.map((doc) => doc.ref)
 
-    await deleteDoc(taskRef)
-  },
+  await deleteDoc(taskRef)
 })
 
-export const addTaskToLifecycleFx = createEffect<TaskLifecycle, TaskLifecycle>({
-  handler: async (taskLifecycle) => {
-    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
+export const addTaskToLifecycleFx = createRequestFx<TaskLifecycle, TaskLifecycle>(
+  async (taskLifecycle, uid) => {
+    const tasksLifecycleColumn = collection(getFirestore(), `users/${uid}/task-lifecycle`)
 
     await addDoc(tasksLifecycleColumn, taskLifecycle)
 
     return taskLifecycle
-  },
-})
+  }
+)
 
 export type Status = 'idle' | 'take' | 'resolve'
 
@@ -111,98 +104,98 @@ export interface TaskLifecycle {
   status: Status
 }
 
-export const loadTasksLifecycleFx = createEffect<{ projectID: string }, TaskLifecycle[], void>({
-  handler: async ({ projectID }) => {
-    const tasksLifecycleColumn = collection(getFirestore(), 'task-lifecycle')
-    const taskLifecycle = query(tasksLifecycleColumn, where('projectID', '==', projectID))
+export const loadTasksLifecycleFx = createRequestFx<{ projectID: string }, TaskLifecycle[]>(
+  async (params, uid) => {
+    const tasksLifecycleColumn = collection(getFirestore(), `users/${uid}/task-lifecycle`)
 
-    const boards = await getDocs(taskLifecycle)
+    const taskLifecycleQuery = query(
+      tasksLifecycleColumn,
+      where('projectID', '==', params.projectID)
+    )
+
+    const boards = await getDocs(taskLifecycleQuery)
 
     return boards.docs.map((doc) => ({
       projectID: doc.id,
       ...doc.data(),
     })) as TaskLifecycle[]
-  },
-})
+  }
+)
 
 export interface FavoritesProjects {
   documentId: string
   projectId: string
 }
 
-export const loadFavoritesProjectsFx = createEffect<void, FavoritesProjects[], void>({
-  handler: async () => {
-    const FavoritesProjectsColumn = collection(getFirestore(), 'favorites-projects')
+export const loadFavoritesProjectsFx = createRequestFx<void, FavoritesProjects[]>(
+  async (_, uid) => {
+    const FavoritesProjectsColumn = collection(getFirestore(), `users/${uid}/favorites-projects`)
     const FavoritesProjectsSnapshots = await getDocs(FavoritesProjectsColumn)
 
-    const FavoritesProjectsList = FavoritesProjectsSnapshots.docs.map((doc) => ({
+    return FavoritesProjectsSnapshots.docs.map((doc) => ({
       ...doc.data(),
       documentId: doc.id,
-    }))
+    })) as FavoritesProjects[]
+  }
+)
 
-    return FavoritesProjectsList as FavoritesProjects[]
-  },
-})
-
-export const saveFavoriteProjectFx = createEffect<
+export const saveFavoriteProjectFx = createRequestFx<
   { body: { projectId: string } },
-  FavoritesProjects,
-  void
->({
-  handler: async ({ body }) => {
-    const favoriteColumn = collection(getFirestore(), 'favorites-projects')
+  FavoritesProjects
+>(async (params, uid) => {
+  const { body } = params
+  const favoriteColumn = collection(getFirestore(), `users/${uid}/favorites-projects`)
 
-    const doc = await addDoc(favoriteColumn, {
-      projectId: body.projectId,
-    })
+  const doc = await addDoc(favoriteColumn, {
+    projectId: body.projectId,
+  })
 
-    return {
-      projectId: body.projectId,
-      documentId: doc.id,
-    }
-  },
+  return {
+    projectId: body.projectId,
+    documentId: doc.id,
+  }
 })
 
-export const removeFavoriteProjectFx = createEffect<
+export const removeFavoriteProjectFx = createRequestFx<
   { body: { documentId: string; projectId: string } },
-  { projectId: string },
-  void
->({
-  handler: async ({ body }) => {
-    await deleteDoc(doc(getFirestore(), 'favorites-projects', body.documentId))
+  { projectId: string }
+>(async (params, uid) => {
+  const { body } = params
 
-    return { projectId: body.projectId }
-  },
+  await deleteDoc(doc(getFirestore(), `users/${uid}/favorites-projects`, body.documentId))
+
+  return { projectId: body.projectId }
 })
 
 export type CreatedProject = Pick<Project, 'title' | 'description'> & { image: File }
 
-export const projectCreateFx = createEffect<CreatedProject, Project, void>({
-  handler: async ({ title, description, image }) => {
-    const storage = getStorage()
-    const mountainImagesRef = ref(storage, `projects/${image.name}`)
+export const projectCreateFx = createRequestFx<CreatedProject, Project>(async (params, uid) => {
+  const { title, image, description } = params
 
-    const imageRef = await uploadBytes(mountainImagesRef, image)
-    const photoUrl = await getDownloadURL(imageRef.ref)
+  const storage = getStorage()
+  const mountainImagesRef = ref(storage, `projects/${image.name}`)
 
-    const docRef = await addDoc(collection(getFirestore(), 'projects'), {
-      title,
-      description,
-      photoUrl,
-      isFinished: false,
-    })
+  const imageRef = await uploadBytes(mountainImagesRef, image)
+  const photoUrl = await getDownloadURL(imageRef.ref)
 
-    return {
-      title,
-      description,
-      projectID: docRef.id,
-      photoUrl,
-      isFinished: false,
-    }
-  },
+  const docRef = await addDoc(collection(getFirestore(), `users/${uid}/projects`), {
+    title,
+    description,
+    photoUrl,
+    isFinished: false,
+  })
+
+  return {
+    title,
+    description,
+    projectID: docRef.id,
+    photoUrl,
+    isFinished: false,
+  }
 })
 
 export interface User {
+  uid: string
   fullname: string
   email?: string
   photoUrl?: string
@@ -216,9 +209,10 @@ export const baseAuthenticateFx = createEffect<{ provider: AuthProvider }, User>
     const user = answer.user
 
     return {
-      fullname: user.displayName || 'unknown',
-      email: user.email || '',
-      photoUrl: user.photoURL || '',
+      uid: user.uid,
+      fullname: user.displayName ?? 'no name',
+      email: user.email ?? '',
+      photoUrl: user.photoURL ?? '',
     }
   },
 })
@@ -264,7 +258,8 @@ export const updateUserProfileFx = createEffect<UpdatedUserProfile, UpdatedUserP
 export const uploadAvatarProfileFx = createEffect<{ image: File }, { photoUrl: string }>({
   handler: async ({ image }) => {
     const storage = getStorage()
-    const mountainImagesRef = ref(storage, `projects/${image.name}`)
+
+    const mountainImagesRef = ref(storage, `avatars/${image.name}`)
 
     const imageRef = await uploadBytes(mountainImagesRef, image)
     const photoUrl = await getDownloadURL(imageRef.ref)
