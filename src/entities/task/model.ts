@@ -54,7 +54,7 @@ export const $taskValid = combine([$title, $description], ([title, description])
 export const $task = combine({
   title: $title,
   description: $description,
-  label: $label,
+  labels: $label,
 })
 
 sample({
