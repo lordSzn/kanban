@@ -32,7 +32,7 @@ export const FavoriteAdd: FC<{ projectID: string }> = ({ projectID }) => {
       auto
       type="abort"
       onClick={() => favoriteAdd({ projectId: projectID })}
-      iconRight={<Star fill={fill} />}
+      iconRight={<Star />}
       scale={2 / 3}
     />
   )
