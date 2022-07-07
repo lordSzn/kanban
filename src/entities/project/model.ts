@@ -64,7 +64,7 @@ export const checkValidForm = ({
   return (
     title.trim().length > 5 &&
     description.trim().length > 10 &&
-    description.trim().length < 25 &&
+    description.trim().length < 70 &&
     image !== null
   )
 }

@@ -5,7 +5,14 @@ module.exports = {
     '@babel/preset-react',
     '@linaria',
   ],
-  plugins: [],
+  plugins: [
+    [
+      'effector/babel-plugin',
+      {
+        factories: ['src/shared/api/requests/request', '~/shared/api/requests/request'],
+      },
+    ],
+  ],
   env: {
     test: {
       plugins: [
