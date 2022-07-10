@@ -2,8 +2,8 @@ import { Grid, Popover, Text, useTheme } from '@geist-ui/core'
 import { styled } from '@linaria/react'
 import { useStore } from 'effector-react'
 import React, { FC, ReactNode } from 'react'
-import { $visibleDraftProject, hideCreationForm } from '~/entities/project'
-import { ProjectCreationForm, SubmittedProject } from '~/entities/project/ui'
+import { $isOpenDraftProject, hideCreationForm } from '~/entities/project'
+import { ProjectCreationForm, CreateProject } from '~/entities/project/ui'
 import { $currentUser } from '~/entities/session'
 import { UserCard } from '~/entities/user/ui'
 import { SearchBar } from '~/features/search-bar/ui'
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const Header: FC<Props> = ({ settings }) => {
-  const visibleModal = useStore($visibleDraftProject)
+  const isOpen = useStore($isOpenDraftProject)
   const theme = useTheme()
   const user = useStore($currentUser)
   return (
@@ -23,14 +23,14 @@ export const Header: FC<Props> = ({ settings }) => {
           <Text h2>Mirio</Text>
         </Grid>
         <Grid xs={13} sm={12} md={10} alignItems="center" justify="flex-end">
-          <SubmittedProject />
+          <CreateProject />
           <SearchBar />
           <Popover content={settings} disableItemsAutoClose hideArrow>
             <UserCard user={user} />
           </Popover>
         </Grid>
       </Grid.Container>
-      <ProjectCreationForm visible={visibleModal} close={hideCreationForm} />
+      <ProjectCreationForm visible={isOpen} close={hideCreationForm} />
     </HeaderContainer>
   )
 }

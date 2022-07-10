@@ -1,9 +1,9 @@
 import { Button, useMediaQuery } from '@geist-ui/core'
 import { Plus } from '@geist-ui/icons'
 import React from 'react'
-import { showCreationForm } from '../..'
+import { showCreationForm } from '../../index'
 
-export const SubmittedProject = () => {
+export const CreateProject = () => {
   const tableScreen = useMediaQuery('md', { match: 'down' })
 
   if (tableScreen) {
@@ -13,7 +13,7 @@ export const SubmittedProject = () => {
         ghost
         type="secondary"
         mr={1.5}
-        onClick={showCreationForm}
+        onClick={() => showCreationForm()}
         scale={0.77}
         icon={<Plus />}
       />
@@ -21,7 +21,7 @@ export const SubmittedProject = () => {
   }
 
   return (
-    <Button auto ghost type="secondary" mr={1.5} onClick={showCreationForm} scale={0.77}>
+    <Button auto ghost type="secondary" mr={1.5} onClick={() => showCreationForm()} scale={0.77}>
       Create project
     </Button>
   )

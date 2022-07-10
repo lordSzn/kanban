@@ -167,16 +167,20 @@ export const removeFavoriteProjectFx = createRequestFx<
   return { projectId: body.projectId }
 })
 
-export type CreatedProject = Pick<Project, 'title' | 'description'> & { image: File }
+export type CreatedProject = Pick<Project, 'title' | 'description'> & { photo: File | null }
 
 export const projectCreateFx = createRequestFx<CreatedProject, Project>(async (params, uid) => {
-  const { title, image, description } = params
+  const { title, description, photo } = params
 
-  const storage = getStorage()
-  const mountainImagesRef = ref(storage, `projects/${image.name}`)
+  let photoUrl = ''
 
-  const imageRef = await uploadBytes(mountainImagesRef, image)
-  const photoUrl = await getDownloadURL(imageRef.ref)
+  if (photo !== null) {
+    const storage = getStorage()
+    const mountainImagesRef = ref(storage, `projects/${photo.name}`)
+
+    const imageRef = await uploadBytes(mountainImagesRef, photo)
+    photoUrl = await getDownloadURL(imageRef.ref)
+  }
 
   const docRef = await addDoc(collection(getFirestore(), `users/${uid}/projects`), {
     title,

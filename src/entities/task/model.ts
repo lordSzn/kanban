@@ -1,4 +1,4 @@
-import { attach, combine, createEvent, createStore, sample } from 'effector'
+import { attach, combine, createEvent, createStore, restore, sample } from 'effector'
 import {
   addTaskFx,
   addTaskToLifecycleFx,
@@ -39,13 +39,9 @@ export const $tasks = createStore<Record<string, Task>>({})
     return cloneTasks
   })
 
-export const $title = createStore('')
-  .on(titleChanged, (_, title) => title)
-  .reset(addTaskToLifecycleFx.doneData)
-export const $description = createStore('')
-  .on(descriptionChanged, (_, description) => description)
-  .reset(addTaskToLifecycleFx.doneData)
-export const $label = createStore([]).reset(addTaskToLifecycleFx.doneData)
+export const $title = restore(titleChanged, '').reset(addTaskToLifecycleFx.done)
+export const $description = restore(descriptionChanged, '').reset(addTaskToLifecycleFx.done)
+export const $label = createStore([]).reset(addTaskToLifecycleFx.done)
 
 export const $taskValid = combine([$title, $description], ([title, description]) => {
   return title.trim().length > 1 && description.trim().length > 1
@@ -74,7 +70,7 @@ sample({
   clock: taskSaveFx.doneData,
   source: $task,
   filter: Boolean,
-  fn: (task, taskId) => ({ [taskId]: task }),
+  fn: (task, id) => ({ [id]: task }),
   target: updateTasksInfo,
 })
 
